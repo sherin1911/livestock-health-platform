@@ -1,17 +1,18 @@
+```python
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
-from config import Config
+from backend.config import Config
 
-from routes.auth import auth_bp
-from routes.health_reports import health_reports_bp
-from routes.uploads import uploads_bp
-from routes.investigations import investigations_bp
-from routes.laboratory import laboratory_bp
-from routes.dashboard import dashboard_bp
-from routes.clusters import clusters_bp
-from routes.notifications import notifications_bp
+from backend.routes.auth import auth_bp
+from backend.routes.health_reports import health_reports_bp
+from backend.routes.uploads import uploads_bp
+from backend.routes.investigations import investigations_bp
+from backend.routes.laboratory import laboratory_bp
+from backend.routes.dashboard import dashboard_bp
+from backend.routes.clusters import clusters_bp
+from backend.routes.notifications import notifications_bp
 
 
 # ============================================================
@@ -141,3 +142,4 @@ if __name__ == "__main__":
         port=port,
         debug=False
     )
+```
