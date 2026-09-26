@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Animals | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body
+    class="dashboard-page"
+    data-animals-page
+>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="farmer-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🐄
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    Livestock Health Surveillance
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-low"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    FARMER
+                </span>
+            </span>
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                Farmer
+            </span>
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-end;
+                gap:20px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div class="section-label">
+                    LIVESTOCK
+                </div>
+
+                <h1 class="dashboard-title">
+                    My Animals
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    View animals associated with your
+                    livestock health reports.
+                </p>
+
+            </div>
+
+
+            <a
+                href="report-health.html"
+                class="btn btn-primary"
+            >
+                ➕ Report Animal Health
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
+
+        <section
+            class="dashboard-grid"
+            style="
+                margin-bottom:25px;
+            "
+        >
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🐄
+                </div>
+
+                <div class="dashboard-label">
+                    Total Animals
+                </div>
+
+                <div
+                    id="animalsTotal"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🩺
+                </div>
+
+                <div class="dashboard-label">
+                    Animals with Reports
+                </div>
+
+                <div
+                    id="animalsWithReports"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔴
+                </div>
+
+                <div class="dashboard-label">
+                    High Risk Animals
+                </div>
+
+                <div
+                    id="highRiskAnimals"
+                    class="dashboard-value"
+                    style="
+                        color:#dc2626;
+                    "
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    ✅
+                </div>
+
+                <div class="dashboard-label">
+                    Validated Animals
+                </div>
+
+                <div
+                    id="validatedAnimals"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ADD ANIMAL
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                    margin-bottom:18px;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Add Animal
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Add an animal for quick reference.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="toggleAnimalForm"
+                    class="btn btn-secondary"
+                    style="
+                        padding:9px 13px;
+                        font-size:12px;
+                    "
+                >
+                    + Add Animal
+                </button>
+
+            </div>
+
+
+            <form
+                id="animalForm"
+                style="
+                    display:none;
+                    padding:18px;
+                    border:1px solid #e2e8f0;
+                    border-radius:15px;
+                    background:#f8fafc;
+                "
+            >
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="newAnimalName">
+                            Animal Name
+                        </label>
+
+                        <input
+                            id="newAnimalName"
+                            type="text"
+                            class="form-control"
+                            placeholder="Example: Lakshmi"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="newAnimalSpecies">
+                            Species
+                        </label>
+
+                        <select
+                            id="newAnimalSpecies"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select species
+                            </option>
+
+                            <option value="Cattle">
+                                Cattle
+                            </option>
+
+                            <option value="Buffalo">
+                                Buffalo
+                            </option>
+
+                            <option value="Goat">
+                                Goat
+                            </option>
+
+                            <option value="Sheep">
+                                Sheep
+                            </option>
+
+                            <option value="Poultry">
+                                Poultry
+                            </option>
+
+                            <option value="Pig">
+                                Pig
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="newAnimalTag">
+                            Animal ID / Tag
+                        </label>
+
+                        <input
+                            id="newAnimalTag"
+                            type="text"
+                            class="form-control"
+                            placeholder="Optional tag number"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="newAnimalAge">
+                            Approximate Age
+                        </label>
+
+                        <input
+                            id="newAnimalAge"
+                            type="number"
+                            class="form-control"
+                            placeholder="Age in years"
+                            min="0"
+                            step="0.1"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="newAnimalNotes">
+                        Notes
+                    </label>
+
+                    <textarea
+                        id="newAnimalNotes"
+                        class="form-textarea"
+                        placeholder="Optional notes about the animal"
+                        style="min-height:90px;"
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelAnimalForm"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Animal
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =================================================
+             ANIMAL LIST
+        ================================================== -->
+
+        <section class="dashboard-section">
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                    margin-bottom:20px;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Animal List
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Your saved animals and their health
+                        reporting information.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="refreshAnimals"
+                    class="btn btn-secondary"
+                    style="
+                        padding:9px 13px;
+                        font-size:12px;
+                    "
+                >
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div
+                id="animalsContainer"
+                data-animals-container
+                class="card-grid"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-state-icon">
+                        🐄
+                    </div>
+
+                    <h3>
+                        Loading animals...
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             INFORMATION
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-top:25px;
+                background:#eff6ff;
+                border-color:#bfdbfe;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    align-items:flex-start;
+                    gap:14px;
+                "
+            >
+
+                <div
+                    style="
+                        width:42px;
+                        height:42px;
+                        flex:0 0 42px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:12px;
+                        background:white;
+                        font-size:20px;
+                    "
+                >
+                    ℹ️
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:15px;
+                        "
+                    >
+                        Health Monitoring
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:5px;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.7;
+                        "
+                    >
+                        Animals shown here are linked to the
+                        health observations recorded in this
+                        browser and your submitted reports.
+                        Use the health-report page whenever
+                        you observe a new health concern.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/farmer.js"></script>
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+
+                const form =
+                    document.getElementById(
+                        "animalForm"
+                    );
+
+                const toggleButton =
+                    document.getElementById(
+                        "toggleAnimalForm"
+                    );
+
+                const cancelButton =
+                    document.getElementById(
+                        "cancelAnimalForm"
+                    );
+
+                const refreshButton =
+                    document.getElementById(
+                        "refreshAnimals"
+                    );
+
+
+                /* ==========================================
+                   FORM TOGGLE
+                =========================================== */
+
+                if (toggleButton && form) {
+
+                    toggleButton.addEventListener(
+                        "click",
+                        function () {
+
+                            const isHidden =
+                                form.style.display ===
+                                "none" ||
+                                !form.style.display;
+
+                            form.style.display =
+                                isHidden
+                                    ? "block"
+                                    : "none";
+
+                            toggleButton.textContent =
+                                isHidden
+                                    ? "− Hide Form"
+                                    : "+ Add Animal";
+                        }
+                    );
+                }
+
+
+                /* ==========================================
+                   CANCEL FORM
+                =========================================== */
+
+                if (
+                    cancelButton &&
+                    form
+                ) {
+
+                    cancelButton.addEventListener(
+                        "click",
+                        function () {
+
+                            form.reset();
+
+                            form.style.display =
+                                "none";
+
+                            if (
+                                toggleButton
+                            ) {
+                                toggleButton.textContent =
+                                    "+ Add Animal";
+                            }
+                        }
+                    );
+                }
+
+
+                /* ==========================================
+                   SAVE ANIMAL
+                =========================================== */
+
+                if (form) {
+
+                    form.addEventListener(
+                        "submit",
+                        function (event) {
+
+                            event.preventDefault();
+
+
+                            const name =
+                                document
+                                    .getElementById(
+                                        "newAnimalName"
+                                    )
+                                    .value
+                                    .trim();
+
+
+                            const species =
+                                document
+                                    .getElementById(
+                                        "newAnimalSpecies"
+                                    )
+                                    .value
+                                    .trim();
+
+
+                            const tag =
+                                document
+                                    .getElementById(
+                                        "newAnimalTag"
+                                    )
+                                    .value
+                                    .trim();
+
+
+                            const age =
+                                document
+                                    .getElementById(
+                                        "newAnimalAge"
+                                    )
+                                    .value
+                                    .trim();
+
+
+                            const notes =
+                                document
+                                    .getElementById(
+                                        "newAnimalNotes"
+                                    )
+                                    .value
+                                    .trim();
+
+
+                            if (!name) {
+
+                                showToast(
+                                    "Animal name is required.",
+                                    "error"
+                                );
+
+                                return;
+                            }
+
+
+                            if (!species) {
+
+                                showToast(
+                                    "Please select a species.",
+                                    "error"
+                                );
+
+                                return;
+                            }
+
+
+                            const iconMap = {
+                                Cattle: "🐄",
+                                Buffalo: "🐃",
+                                Goat: "🐐",
+                                Sheep: "🐑",
+                                Poultry: "🐔",
+                                Pig: "🐖",
+                                Other: "🐾"
+                            };
+
+
+                            const animal = {
+                                id:
+                                    Date.now(),
+                                name:
+                                    name,
+                                species:
+                                    species,
+                                tag:
+                                    tag,
+                                age:
+                                    age,
+                                notes:
+                                    notes,
+                                icon:
+                                    iconMap[
+                                        species
+                                    ] || "🐾"
+                            };
+
+
+                            addAnimal(
+                                animal
+                            );
+
+
+                            form.reset();
+
+                            form.style.display =
+                                "none";
+
+
+                            if (
+                                toggleButton
+                            ) {
+                                toggleButton.textContent =
+                                    "+ Add Animal";
+                            }
+
+
+                            renderAnimals();
+
+
+                            showToast(
+                                "Animal saved successfully.",
+                                "success"
+                            );
+
+                        }
+                    );
+                }
+
+
+                /* ==========================================
+                   REFRESH
+                =========================================== */
+
+                if (refreshButton) {
+
+                    refreshButton.addEventListener(
+                        "click",
+                        function () {
+
+                            renderAnimals();
+
+                            updateAnimalSummary();
+
+                            showToast(
+                                "Animal list refreshed.",
+                                "success"
+                            );
+
+                        }
+                    );
+                }
+
+
+                /* ==========================================
+                   SUMMARY
+                =========================================== */
+
+                function updateAnimalSummary() {
+
+                    const animals =
+                        getAnimals();
+
+
+                    const reports =
+                        getReportHistory();
+
+
+                    const total =
+                        animals.length;
+
+
+                    const animalsWithReports =
+                        new Set();
+
+
+                    const highRiskAnimalNames =
+                        new Set();
+
+
+                    const validatedAnimalNames =
+                        new Set();
+
+
+                    reports.forEach(
+                        function (report) {
+
+                            const animalName =
+                                report.animalName ||
+                                report.animal_name;
+
+
+                            if (!animalName) {
+                                return;
+                            }
+
+
+                            animalsWithReports.add(
+                                animalName
+                            );
+
+
+                            const risk =
+                                String(
+                                    report.riskLevel ||
+                                    report.risk_level ||
+                                    report.severity ||
+                                    ""
+                                ).toUpperCase();
+
+
+                            if (
+                                risk === "HIGH"
+                            ) {
+                                highRiskAnimalNames.add(
+                                    animalName
+                                );
+                            }
+
+
+                            const status =
+                                String(
+                                    report.status ||
+                                    ""
+                                ).toUpperCase();
+
+
+                            if (
+                                status ===
+                                "VALIDATED"
+                            ) {
+                                validatedAnimalNames.add(
+                                    animalName
+                                );
+                            }
+
+                        }
+                    );
+
+
+                    const totalElement =
+                        document.getElementById(
+                            "animalsTotal"
+                        );
+
+
+                    const reportsElement =
+                        document.getElementById(
+                            "animalsWithReports"
+                        );
+
+
+                    const highElement =
+                        document.getElementById(
+                            "highRiskAnimals"
+                        );
+
+
+                    const validatedElement =
+                        document.getElementById(
+                            "validatedAnimals"
+                        );
+
+
+                    if (totalElement) {
+                        totalElement.textContent =
+                            total;
+                    }
+
+
+                    if (reportsElement) {
+                        reportsElement.textContent =
+                            animalsWithReports.size;
+                    }
+
+
+                    if (highElement) {
+                        highElement.textContent =
+                            highRiskAnimalNames.size;
+                    }
+
+
+                    if (validatedElement) {
+                        validatedElement.textContent =
+                            validatedAnimalNames.size;
+                    }
+
+                }
+
+
+                /* ==========================================
+                   RENDER + SUMMARY
+                =========================================== */
+
+                renderAnimals();
+
+                updateAnimalSummary();
+
+
+                /* ==========================================
+                   LOAD REPORTS TOO
+                =========================================== */
+
+                try {
+                    await loadMyReports();
+
+                    updateAnimalSummary();
+
+                } catch (error) {
+                    console.error(
+                        "Unable to refresh report data:",
+                        error
+                    );
+                }
+
+            }
+        );
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Government Dashboard | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="government-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🏛️
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    Government Surveillance
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-progress"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    DISTRICT OFFICER
+                </span>
+            </span>
+
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                Government Officer
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <!-- =================================================
+             PAGE HEADING
+        ================================================== -->
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-end;
+                gap:20px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div class="section-label">
+                    GOVERNMENT SURVEILLANCE
+                </div>
+
+                <h1 class="dashboard-title">
+                    Government Dashboard
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Monitor livestock health signals, risk trends,
+                    investigation activity, laboratory validation,
+                    alerts and potential emerging clusters.
+                </p>
+
+            </div>
+
+
+            <div
+                style="
+                    display:flex;
+                    gap:8px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <button
+                    type="button"
+                    id="refreshDashboard"
+                    class="btn btn-secondary"
+                >
+                    🔄 Refresh
+                </button>
+
+
+                <a
+                    href="gis-surveillance.html"
+                    class="btn btn-primary"
+                >
+                    🗺️ GIS Surveillance
+                </a>
+
+
+                <a
+                    href="alerts.html"
+                    class="btn btn-secondary"
+                >
+                    🔔 Alerts
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             LIVE STATUS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-bottom:25px;
+                padding:15px 18px;
+                background:#f8fafc;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <span
+                    id="systemStatusDot"
+                    style="
+                        width:10px;
+                        height:10px;
+                        display:inline-block;
+                        border-radius:50%;
+                        background:#16a34a;
+                    "
+                ></span>
+
+
+                <strong
+                    id="systemStatusText"
+                    style="
+                        font-size:12px;
+                    "
+                >
+                    Surveillance system operational
+                </strong>
+
+
+                <span
+                    style="
+                        color:#94a3b8;
+                        font-size:11px;
+                    "
+                >
+                    Live database summary
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             KPI CARDS
+        ================================================== -->
+
+        <section
+            class="dashboard-grid"
+            style="margin-bottom:25px;"
+        >
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🐄
+                </div>
+
+                <div class="dashboard-label">
+                    Monitored Animals
+                </div>
+
+                <div
+                    id="monitoredAnimals"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    📋
+                </div>
+
+                <div class="dashboard-label">
+                    Total Reports
+                </div>
+
+                <div
+                    id="totalReports"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🚨
+                </div>
+
+                <div class="dashboard-label">
+                    Active Alerts
+                </div>
+
+                <div
+                    id="activeAlerts"
+                    class="dashboard-value"
+                    style="color:#dc2626;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔴
+                </div>
+
+                <div class="dashboard-label">
+                    High Risk Cases
+                </div>
+
+                <div
+                    id="highRiskCases"
+                    class="dashboard-value"
+                    style="color:#dc2626;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🟠
+                </div>
+
+                <div class="dashboard-label">
+                    Medium Risk Cases
+                </div>
+
+                <div
+                    id="mediumRiskCases"
+                    class="dashboard-value"
+                    style="color:#d97706;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🟢
+                </div>
+
+                <div class="dashboard-label">
+                    Low Risk Cases
+                </div>
+
+                <div
+                    id="lowRiskCases"
+                    class="dashboard-value"
+                    style="color:#16a34a;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🩺
+                </div>
+
+                <div class="dashboard-label">
+                    Under Investigation
+                </div>
+
+                <div
+                    id="underInvestigation"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🧪
+                </div>
+
+                <div class="dashboard-label">
+                    Sent to Laboratory
+                </div>
+
+                <div
+                    id="sentToLaboratory"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SURVEILLANCE PIPELINE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div>
+
+                <div class="section-label">
+                    SURVEILLANCE PIPELINE
+                </div>
+
+                <h2>
+                    Case Progress
+                </h2>
+
+                <p
+                    style="
+                        color:#64748b;
+                        font-size:12px;
+                    "
+                >
+                    Track cases from field reporting through
+                    investigation, laboratory validation and
+                    surveillance.
+                </p>
+
+            </div>
+
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(
+                            4,
+                            minmax(0, 1fr)
+                        );
+                    gap:15px;
+                    margin-top:20px;
+                "
+            >
+
+                <div
+                    style="
+                        padding:20px;
+                        border:1px solid #e2e8f0;
+                        border-radius:15px;
+                        background:#f8fafc;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:22px;
+                        "
+                    >
+                        📋
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                        style="margin-top:8px;"
+                    >
+                        Reported
+                    </div>
+
+                    <strong
+                        id="pipelineReported"
+                        style="
+                            display:block;
+                            margin-top:2px;
+                            font-size:24px;
+                        "
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:20px;
+                        border:1px solid #e2e8f0;
+                        border-radius:15px;
+                        background:#f8fafc;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:22px;
+                        "
+                    >
+                        🩺
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                        style="margin-top:8px;"
+                    >
+                        Under Investigation
+                    </div>
+
+                    <strong
+                        id="pipelineInvestigation"
+                        style="
+                            display:block;
+                            margin-top:2px;
+                            font-size:24px;
+                        "
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:20px;
+                        border:1px solid #e2e8f0;
+                        border-radius:15px;
+                        background:#f8fafc;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:22px;
+                        "
+                    >
+                        🧪
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                        style="margin-top:8px;"
+                    >
+                        Laboratory
+                    </div>
+
+                    <strong
+                        id="pipelineLaboratory"
+                        style="
+                            display:block;
+                            margin-top:2px;
+                            font-size:24px;
+                        "
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:20px;
+                        border:1px solid #e2e8f0;
+                        border-radius:15px;
+                        background:#f8fafc;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:22px;
+                        "
+                    >
+                        ✅
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                        style="margin-top:8px;"
+                    >
+                        Validated
+                    </div>
+
+                    <strong
+                        id="pipelineValidated"
+                        style="
+                            display:block;
+                            margin-top:2px;
+                            font-size:24px;
+                        "
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RISK DISTRIBUTION
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div>
+
+                <div class="section-label">
+                    RISK INTELLIGENCE
+                </div>
+
+                <h2>
+                    Risk Distribution
+                </h2>
+
+            </div>
+
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(
+                            3,
+                            minmax(0, 1fr)
+                        );
+                    gap:18px;
+                    margin-top:20px;
+                "
+            >
+
+                <div
+                    style="
+                        padding:22px;
+                        border-radius:17px;
+                        border:1px solid #fecaca;
+                        background:#fef2f2;
+                    "
+                >
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:center;
+                        "
+                    >
+
+                        <strong
+                            style="
+                                color:#991b1b;
+                                font-size:13px;
+                            "
+                        >
+                            HIGH
+                        </strong>
+
+                        <span>
+                            🔴
+                        </span>
+
+                    </div>
+
+                    <div
+                        id="riskHighCount"
+                        style="
+                            margin-top:10px;
+                            color:#dc2626;
+                            font-size:34px;
+                            font-weight:850;
+                        "
+                    >
+                        0
+                    </div>
+
+                    <div
+                        id="riskHighPercent"
+                        style="
+                            color:#991b1b;
+                            font-size:11px;
+                        "
+                    >
+                        0%
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:22px;
+                        border-radius:17px;
+                        border:1px solid #fde68a;
+                        background:#fffbeb;
+                    "
+                >
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:center;
+                        "
+                    >
+
+                        <strong
+                            style="
+                                color:#92400e;
+                                font-size:13px;
+                            "
+                        >
+                            MEDIUM
+                        </strong>
+
+                        <span>
+                            🟠
+                        </span>
+
+                    </div>
+
+                    <div
+                        id="riskMediumCount"
+                        style="
+                            margin-top:10px;
+                            color:#d97706;
+                            font-size:34px;
+                            font-weight:850;
+                        "
+                    >
+                        0
+                    </div>
+
+                    <div
+                        id="riskMediumPercent"
+                        style="
+                            color:#92400e;
+                            font-size:11px;
+                        "
+                    >
+                        0%
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:22px;
+                        border-radius:17px;
+                        border:1px solid #bbf7d0;
+                        background:#f0fdf4;
+                    "
+                >
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:center;
+                        "
+                    >
+
+                        <strong
+                            style="
+                                color:#166534;
+                                font-size:13px;
+                            "
+                        >
+                            LOW
+                        </strong>
+
+                        <span>
+                            🟢
+                        </span>
+
+                    </div>
+
+                    <div
+                        id="riskLowCount"
+                        style="
+                            margin-top:10px;
+                            color:#16a34a;
+                            font-size:34px;
+                            font-weight:850;
+                        "
+                    >
+                        0
+                    </div>
+
+                    <div
+                        id="riskLowPercent"
+                        style="
+                            color:#166534;
+                            font-size:11px;
+                        "
+                    >
+                        0%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CLUSTER INTELLIGENCE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:flex-start;
+                    gap:20px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <div class="section-label">
+                        EARLY-WARNING INTELLIGENCE
+                    </div>
+
+                    <h2>
+                        Cluster Intelligence
+                    </h2>
+
+                    <p
+                        style="
+                            margin-top:4px;
+                            color:#64748b;
+                            font-size:12px;
+                            line-height:1.7;
+                        "
+                    >
+                        Surveillance signals based on recent
+                        reports, repeated symptoms, risk concentration
+                        and location patterns.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="gis-surveillance.html"
+                    class="btn btn-primary"
+                    style="
+                        padding:9px 13px;
+                        font-size:12px;
+                    "
+                >
+                    Open GIS Map
+                </a>
+
+            </div>
+
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(
+                            4,
+                            minmax(0, 1fr)
+                        );
+                    gap:15px;
+                    margin-top:20px;
+                "
+            >
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-label">
+                        Location Clusters
+                    </div>
+
+                    <div
+                        id="locationClusterCount"
+                        class="dashboard-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-label">
+                        Potential Emerging
+                    </div>
+
+                    <div
+                        id="potentialClusterCount"
+                        class="dashboard-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-label">
+                        High Priority
+                    </div>
+
+                    <div
+                        id="highPriorityClusterCount"
+                        class="dashboard-value"
+                        style="
+                            color:#dc2626;
+                        "
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-label">
+                        Symptom Clusters
+                    </div>
+
+                    <div
+                        id="symptomClusterCount"
+                        class="dashboard-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="clusterList"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading cluster intelligence...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DISTRICT SUMMARY
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <div class="section-label">
+                        GEOGRAPHIC SUMMARY
+                    </div>
+
+                    <h2>
+                        Location / District Activity
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="districtContainer"
+                class="table-wrapper"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading location summary...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RECENT REPORTS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <div class="section-label">
+                        RECENT ACTIVITY
+                    </div>
+
+                    <h2>
+                        Recent Health Reports
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="recentReportsContainer"
+                class="table-wrapper"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading recent reports...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ALERTS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <div class="section-label">
+                        SURVEILLANCE ALERTS
+                    </div>
+
+                    <h2>
+                        Recent Alerts
+                    </h2>
+
+                </div>
+
+
+                <a
+                    href="alerts.html"
+                    class="btn btn-secondary"
+                    style="
+                        padding:9px 13px;
+                        font-size:12px;
+                    "
+                >
+                    View All Alerts
+                </a>
+
+            </div>
+
+
+            <div
+                id="dashboardAlerts"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading alerts...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESPONSIBLE SURVEILLANCE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                background:#eff6ff;
+                border-color:#bfdbfe;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    align-items:flex-start;
+                    gap:14px;
+                "
+            >
+
+                <div
+                    style="
+                        width:44px;
+                        height:44px;
+                        flex:0 0 44px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:13px;
+                        background:white;
+                        font-size:21px;
+                    "
+                >
+                    ℹ️
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:16px;
+                        "
+                    >
+                        Surveillance Interpretation
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:6px;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.8;
+                        "
+                    >
+                        Dashboard risk scores and cluster signals
+                        are intended for surveillance prioritisation
+                        and early warning. A potential cluster does
+                        not by itself establish a disease outbreak.
+                        Veterinary investigation, laboratory testing
+                        and appropriate epidemiological review are
+                        required for confirmation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/notifications.js"></script>
+
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                let dashboardData = {
+                    summary: {},
+                    riskDistribution: {},
+                    districts: [],
+                    recentReports: [],
+                    alerts: []
+                };
+
+                let clusterData = {};
+
+
+                /* ==========================================
+                   LOAD COMPLETE DASHBOARD
+                =========================================== */
+
+                async function loadDashboard() {
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/dashboard/overview",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        dashboardData =
+                            response || dashboardData;
+
+
+                        renderSummary(
+                            dashboardData.summary || {}
+                        );
+
+
+                        renderRiskDistribution(
+                            dashboardData.riskDistribution || {}
+                        );
+
+
+                        renderDistricts(
+                            dashboardData.districts || []
+                        );
+
+
+                        renderRecentReports(
+                            dashboardData.recentReports || []
+                        );
+
+
+                        renderAlerts(
+                            dashboardData.alerts || []
+                        );
+
+
+                        setSystemStatus(
+                            true
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Government dashboard error:",
+                            error
+                        );
+
+
+                        setSystemStatus(
+                            false
+                        );
+
+                        showToast(
+                            error.message ||
+                            "Unable to load government dashboard.",
+                            "error"
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   LOAD CLUSTERS
+                =========================================== */
+
+                async function loadClusters() {
+
+                    const container =
+                        document.getElementById(
+                            "clusterList"
+                        );
+
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/clusters/overview?days=14",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        clusterData =
+                            response &&
+                            response.data
+                                ? response.data
+                                : response || {};
+
+
+                        renderClusters(
+                            clusterData
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Cluster loading error:",
+                            error
+                        );
+
+
+                        if (container) {
+
+                            container.innerHTML =
+                                `
+                                <div class="empty-state">
+
+                                    <div class="empty-state-icon">
+                                        ⚠️
+                                    </div>
+
+                                    <h3>
+                                        Unable to load cluster intelligence
+                                    </h3>
+
+                                    <p>
+                                        ${escapeHtml(
+                                            error.message ||
+                                            "Please try again."
+                                        )}
+                                    </p>
+
+                                </div>
+                                `;
+
+                        }
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   SUMMARY
+                =========================================== */
+
+                function renderSummary(
+                    summary
+                ) {
+
+                    setText(
+                        "monitoredAnimals",
+                        summary.monitoredAnimals || 0
+                    );
+
+
+                    setText(
+                        "totalReports",
+                        summary.totalReports || 0
+                    );
+
+
+                    setText(
+                        "activeAlerts",
+                        summary.activeAlerts || 0
+                    );
+
+
+                    setText(
+                        "highRiskCases",
+                        summary.highRiskCases || 0
+                    );
+
+
+                    setText(
+                        "mediumRiskCases",
+                        summary.mediumRiskCases || 0
+                    );
+
+
+                    setText(
+                        "lowRiskCases",
+                        summary.lowRiskCases || 0
+                    );
+
+
+                    setText(
+                        "underInvestigation",
+                        summary.underInvestigation || 0
+                    );
+
+
+                    setText(
+                        "sentToLaboratory",
+                        summary.sentToLaboratory || 0
+                    );
+
+
+                    setText(
+                        "pipelineReported",
+                        summary.totalReports || 0
+                    );
+
+
+                    setText(
+                        "pipelineInvestigation",
+                        summary.underInvestigation || 0
+                    );
+
+
+                    setText(
+                        "pipelineLaboratory",
+                        summary.sentToLaboratory || 0
+                    );
+
+
+                    setText(
+                        "pipelineValidated",
+                        summary.validatedCases || 0
+                    );
+
+                }
+
+
+                /* ==========================================
+                   RISK DISTRIBUTION
+                =========================================== */
+
+                function renderRiskDistribution(
+                    distribution
+                ) {
+
+                    const high =
+                        Number(
+                            distribution.HIGH || 0
+                        );
+
+
+                    const medium =
+                        Number(
+                            distribution.MEDIUM || 0
+                        );
+
+
+                    const low =
+                        Number(
+                            distribution.LOW || 0
+                        );
+
+
+                    const total =
+                        high +
+                        medium +
+                        low;
+
+
+                    setText(
+                        "riskHighCount",
+                        high
+                    );
+
+
+                    setText(
+                        "riskMediumCount",
+                        medium
+                    );
+
+
+                    setText(
+                        "riskLowCount",
+                        low
+                    );
+
+
+                    setText(
+                        "riskHighPercent",
+                        percentage(
+                            high,
+                            total
+                        ) + "%"
+                    );
+
+
+                    setText(
+                        "riskMediumPercent",
+                        percentage(
+                            medium,
+                            total
+                        ) + "%"
+                    );
+
+
+                    setText(
+                        "riskLowPercent",
+                        percentage(
+                            low,
+                            total
+                        ) + "%"
+                    );
+
+                }
+
+
+                /* ==========================================
+                   DISTRICTS
+                =========================================== */
+
+                function renderDistricts(
+                    districts
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "districtContainer"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    if (
+                        !districts.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    🗺️
+                                </div>
+
+                                <h3>
+                                    No location data
+                                </h3>
+
+                                <p>
+                                    Location-based reports will appear here.
+                                </p>
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    const rows =
+                        districts
+                            .map(
+                                function (
+                                    district
+                                ) {
+
+                                    return `
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                ${escapeHtml(
+                                                    district.district ||
+                                                    district.location ||
+                                                    "Unknown"
+                                                )}
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                String(
+                                                    district.totalReports || 0
+                                                )
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="
+                                                    status-badge
+                                                    status-high
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    String(
+                                                        district.highRisk || 0
+                                                    )
+                                                )}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="
+                                                    status-badge
+                                                    status-medium
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    String(
+                                                        district.mediumRisk || 0
+                                                    )
+                                                )}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="
+                                                    status-badge
+                                                    status-low
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    String(
+                                                        district.lowRisk || 0
+                                                    )
+                                                )}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                    container.innerHTML =
+                        `
+                        <table class="data-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Location
+                                    </th>
+
+                                    <th>
+                                        Reports
+                                    </th>
+
+                                    <th>
+                                        High
+                                    </th>
+
+                                    <th>
+                                        Medium
+                                    </th>
+
+                                    <th>
+                                        Low
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+                                ${rows}
+                            </tbody>
+
+                        </table>
+                        `;
+
+                }
+
+
+                /* ==========================================
+                   RECENT REPORTS
+                =========================================== */
+
+                function renderRecentReports(
+                    reports
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "recentReportsContainer"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    if (
+                        !reports.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    📋
+                                </div>
+
+                                <h3>
+                                    No recent reports
+                                </h3>
+
+                                <p>
+                                    New health reports will appear here.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    const rows =
+                        reports
+                            .map(
+                                function (
+                                    report
+                                ) {
+
+                                    const risk =
+                                        String(
+                                            report.riskLevel ||
+                                            report.risk_level ||
+                                            report.severity ||
+                                            "LOW"
+                                        ).toUpperCase();
+
+
+                                    const status =
+                                        String(
+                                            report.status ||
+                                            "PENDING"
+                                        ).toUpperCase();
+
+
+                                    let riskClass =
+                                        "status-low";
+
+
+                                    if (
+                                        risk ===
+                                        "HIGH"
+                                    ) {
+                                        riskClass =
+                                            "status-high";
+                                    } else if (
+                                        risk ===
+                                        "MEDIUM"
+                                    ) {
+                                        riskClass =
+                                            "status-medium";
+                                    }
+
+
+                                    return `
+                                    <tr>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.reportId ||
+                                                report.report_id ||
+                                                report.id ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.animalName ||
+                                                report.animal_name ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.species ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.location ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="
+                                                    status-badge
+                                                    ${riskClass}
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    risk
+                                                )}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                status
+                                            )}
+                                        </td>
+
+                                    </tr>
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                    container.innerHTML =
+                        `
+                        <table class="data-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Report ID
+                                    </th>
+
+                                    <th>
+                                        Animal
+                                    </th>
+
+                                    <th>
+                                        Species
+                                    </th>
+
+                                    <th>
+                                        Location
+                                    </th>
+
+                                    <th>
+                                        Risk
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+                                ${rows}
+                            </tbody>
+
+                        </table>
+                        `;
+
+                }
+
+
+                /* ==========================================
+                   ALERTS
+                =========================================== */
+
+                function renderAlerts(
+                    alerts
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "dashboardAlerts"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    if (
+                        !alerts.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    ✅
+                                </div>
+
+                                <h3>
+                                    No active alerts
+                                </h3>
+
+                                <p>
+                                    There are currently no government
+                                    surveillance notifications.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    container.innerHTML =
+                        "";
+
+
+                    alerts
+                        .slice(0, 6)
+                        .forEach(
+                            function (
+                                alert
+                            ) {
+
+                                const priority =
+                                    String(
+                                        alert.priority ||
+                                        "LOW"
+                                    ).toUpperCase();
+
+
+                                let priorityClass =
+                                    "status-low";
+
+
+                                if (
+                                    priority ===
+                                    "HIGH"
+                                ) {
+                                    priorityClass =
+                                        "status-high";
+                                } else if (
+                                    priority ===
+                                    "MEDIUM"
+                                ) {
+                                    priorityClass =
+                                        "status-medium";
+                                }
+
+
+                                const card =
+                                    document.createElement(
+                                        "div"
+                                    );
+
+
+                                card.className =
+                                    "dashboard-card";
+
+
+                                card.style.marginBottom =
+                                    "12px";
+
+
+                                card.innerHTML =
+                                    `
+                                    <div
+                                        style="
+                                            display:flex;
+                                            justify-content:space-between;
+                                            gap:15px;
+                                            align-items:flex-start;
+                                        "
+                                    >
+
+                                        <div>
+
+                                            <h3
+                                                style="
+                                                    font-size:15px;
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    alert.title ||
+                                                    "Notification"
+                                                )}
+                                            </h3>
+
+                                            <p
+                                                style="
+                                                    margin-top:5px;
+                                                    color:#64748b;
+                                                    font-size:12px;
+                                                    line-height:1.6;
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    alert.message ||
+                                                    ""
+                                                )}
+                                            </p>
+
+                                        </div>
+
+
+                                        <span
+                                            class="
+                                                status-badge
+                                                ${priorityClass}
+                                            "
+                                        >
+                                            ${escapeHtml(
+                                                priority
+                                            )}
+                                        </span>
+
+                                    </div>
+                                    `;
+
+
+                                container.appendChild(
+                                    card
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                /* ==========================================
+                   CLUSTERS
+                =========================================== */
+
+                function renderClusters(
+                    data
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "clusterList"
+                        );
+
+
+                    const locationClusters =
+                        getClusterArray(
+                            data,
+                            [
+                                "locationClusters",
+                                "locations",
+                                "location_clusters"
+                            ]
+                        );
+
+
+                    const symptomClusters =
+                        getClusterArray(
+                            data,
+                            [
+                                "symptomClusters",
+                                "symptoms",
+                                "symptom_clusters"
+                            ]
+                        );
+
+
+                    setText(
+                        "locationClusterCount",
+                        locationClusters.length
+                    );
+
+
+                    setText(
+                        "symptomClusterCount",
+                        symptomClusters.length
+                    );
+
+
+                    let potential =
+                        0;
+
+
+                    let highPriority =
+                        0;
+
+
+                    locationClusters.forEach(
+                        function (
+                            cluster
+                        ) {
+
+                            if (
+                                cluster.potentialEmergingCluster ===
+                                true
+                            ) {
+                                potential += 1;
+                            }
+
+
+                            const priority =
+                                String(
+                                    cluster.priority ||
+                                    ""
+                                ).toUpperCase();
+
+
+                            if (
+                                priority ===
+                                "HIGH PRIORITY"
+                            ) {
+                                highPriority += 1;
+                            }
+
+                        }
+                    );
+
+
+                    setText(
+                        "potentialClusterCount",
+                        potential
+                    );
+
+
+                    setText(
+                        "highPriorityClusterCount",
+                        highPriority
+                    );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    if (
+                        !locationClusters.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    🗺️
+                                </div>
+
+                                <h3>
+                                    No significant location signals
+                                </h3>
+
+                                <p>
+                                    Continue monitoring recent
+                                    livestock health reports.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    container.innerHTML =
+                        "";
+
+
+                    locationClusters
+                        .slice(0, 6)
+                        .forEach(
+                            function (
+                                cluster
+                            ) {
+
+                                container.appendChild(
+                                    createClusterCard(
+                                        cluster
+                                    )
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                function createClusterCard(
+                    cluster
+                ) {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    const score =
+                        Number(
+                            cluster.clusterScore ||
+                            cluster.score ||
+                            0
+                        );
+
+
+                    const priority =
+                        String(
+                            cluster.priority ||
+                            "WATCH"
+                        ).toUpperCase();
+
+
+                    let priorityClass =
+                        "status-low";
+
+
+                    if (
+                        priority ===
+                        "HIGH PRIORITY"
+                    ) {
+                        priorityClass =
+                            "status-high";
+                    } else if (
+                        priority ===
+                        "MODERATE PRIORITY"
+                    ) {
+                        priorityClass =
+                            "status-medium";
+                    }
+
+
+                    const reasons =
+                        Array.isArray(
+                            cluster.signalReasons
+                        )
+                            ? cluster.signalReasons
+                            : [];
+
+
+                    card.className =
+                        "dashboard-card";
+
+
+                    card.style.marginBottom =
+                        "12px";
+
+
+                    card.innerHTML =
+                        `
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:space-between;
+                                align-items:flex-start;
+                                gap:15px;
+                            "
+                        >
+
+                            <div>
+
+                                <h3
+                                    style="
+                                        font-size:16px;
+                                    "
+                                >
+                                    📍 ${escapeHtml(
+                                        cluster.location ||
+                                        "Unknown Location"
+                                    )}
+                                </h3>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        String(
+                                            cluster.reportCount ||
+                                            cluster.totalReports ||
+                                            0
+                                        )
+                                    )}
+                                    reports
+                                </div>
+
+                            </div>
+
+
+                            <span
+                                class="
+                                    status-badge
+                                    ${priorityClass}
+                                "
+                            >
+                                ${escapeHtml(
+                                    priority
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:grid;
+                                grid-template-columns:
+                                    repeat(
+                                        2,
+                                        minmax(0, 1fr)
+                                    );
+                                gap:12px;
+                                margin-top:15px;
+                            "
+                        >
+
+                            <div>
+
+                                <div class="dashboard-label">
+                                    Cluster Score
+                                </div>
+
+                                <strong
+                                    style="
+                                        font-size:20px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        String(
+                                            score
+                                        )
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="dashboard-label">
+                                    Emerging Signal
+                                </div>
+
+                                <strong
+                                    style="
+                                        font-size:12px;
+                                    "
+                                >
+                                    ${
+                                        cluster.potentialEmergingCluster
+                                            ? "Potentially Emerging"
+                                            : "Monitoring"
+                                    }
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        ${
+                            reasons.length
+                                ? `
+                                <div
+                                    style="
+                                        margin-top:15px;
+                                        padding-top:12px;
+                                        border-top:
+                                            1px solid #e2e8f0;
+                                    "
+                                >
+
+                                    <div class="dashboard-label">
+                                        Signal Reasons
+                                    </div>
+
+                                    <div
+                                        style="
+                                            margin-top:5px;
+                                            color:#475569;
+                                            font-size:11px;
+                                            line-height:1.6;
+                                        "
+                                    >
+                                        ${reasons
+                                            .slice(0, 3)
+                                            .map(
+                                                function (
+                                                    reason
+                                                ) {
+                                                    return (
+                                                        "• " +
+                                                        escapeHtml(
+                                                            reason
+                                                        )
+                                                    );
+                                                }
+                                            )
+                                            .join(
+                                                "<br>"
+                                            )}
+                                    </div>
+
+                                </div>
+                                `
+                                : ""
+                        }
+                        `;
+
+
+                    return card;
+
+                }
+
+
+                function getClusterArray(
+                    data,
+                    keys
+                ) {
+
+                    for (
+                        const key of keys
+                    ) {
+
+                        if (
+                            Array.isArray(
+                                data[key]
+                            )
+                        ) {
+                            return data[key];
+                        }
+
+                    }
+
+
+                    return [];
+
+                }
+
+
+                /* ==========================================
+                   SYSTEM STATUS
+                =========================================== */
+
+                function setSystemStatus(
+                    operational
+                ) {
+
+                    const dot =
+                        document.getElementById(
+                            "systemStatusDot"
+                        );
+
+
+                    const text =
+                        document.getElementById(
+                            "systemStatusText"
+                        );
+
+
+                    if (
+                        operational
+                    ) {
+
+                        if (dot) {
+                            dot.style.background =
+                                "#16a34a";
+                        }
+
+
+                        if (text) {
+                            text.textContent =
+                                "Surveillance system operational";
+                        }
+
+                    } else {
+
+                        if (dot) {
+                            dot.style.background =
+                                "#dc2626";
+                        }
+
+
+                        if (text) {
+                            text.textContent =
+                                "Unable to load live surveillance data";
+                        }
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   UTILITIES
+                =========================================== */
+
+                function setText(
+                    id,
+                    value
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (element) {
+                        element.textContent =
+                            String(
+                                value === null ||
+                                value === undefined
+                                    ? 0
+                                    : value
+                            );
+                    }
+
+                }
+
+
+                function percentage(
+                    value,
+                    total
+                ) {
+
+                    if (!total) {
+                        return 0;
+                    }
+
+
+                    return Math.round(
+                        (
+                            value /
+                            total
+                        ) *
+                        100
+                    );
+
+                }
+
+
+                function escapeHtml(
+                    value
+                ) {
+
+                    return String(
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value
+                    )
+                        .replaceAll(
+                            "&",
+                            "&amp;"
+                        )
+                        .replaceAll(
+                            "<",
+                            "&lt;"
+                        )
+                        .replaceAll(
+                            ">",
+                            "&gt;"
+                        )
+                        .replaceAll(
+                            '"',
+                            "&quot;"
+                        )
+                        .replaceAll(
+                            "'",
+                            "&#039;"
+                        );
+
+                }
+
+
+                /* ==========================================
+                   REFRESH BUTTON
+                =========================================== */
+
+                const refreshButton =
+                    document.getElementById(
+                        "refreshDashboard"
+                    );
+
+
+                if (refreshButton) {
+
+                    refreshButton.addEventListener(
+                        "click",
+                        async function () {
+
+                            refreshButton.disabled =
+                                true;
+
+                            refreshButton.textContent =
+                                "⏳ Loading...";
+
+
+                            try {
+
+                                await Promise.all(
+                                    [
+                                        loadDashboard(),
+                                        loadClusters()
+                                    ]
+                                );
+
+                            } finally {
+
+                                refreshButton.disabled =
+                                    false;
+
+                                refreshButton.textContent =
+                                    "🔄 Refresh";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   INITIAL LOAD
+                =========================================== */
+
+                Promise.all(
+                    [
+                        loadDashboard(),
+                        loadClusters()
+                    ]
+                );
+
+            }
+        );
+    </script>
+
+</body>
+</html>

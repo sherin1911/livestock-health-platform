@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | UyirThulir</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+            <div class="auth-card">
+
+                <!-- =================================================
+                     BRAND
+                ================================================== -->
+
+                <div class="auth-brand">
+
+                    <a href="../index.html" class="brand">
+
+                        <div class="brand-icon">
+                            🐄
+                        </div>
+
+                        <div class="brand-text">
+                            <strong>UyirThulir</strong>
+                            <span>
+                                Livestock Health Surveillance
+                            </span>
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     TITLE
+                ================================================== -->
+
+                <h1 class="auth-title">
+                    Welcome Back
+                </h1>
+
+                <p class="auth-subtitle">
+                    Sign in to continue to the Livestock
+                    Health Surveillance Platform.
+                </p>
+
+
+                <!-- =================================================
+                     LANGUAGE
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="languageSelector">
+                        Language
+                    </label>
+
+                    <select
+                        id="languageSelector"
+                        class="form-select language-selector"
+                    >
+                        <option value="en">
+                            English
+                        </option>
+
+                        <option value="ta">
+                            தமிழ்
+                        </option>
+
+                        <option value="mr">
+                            मराठी
+                        </option>
+
+                        <option value="hi">
+                            हिन्दी
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <!-- =================================================
+                     MESSAGE
+                ================================================== -->
+
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                    style="display: none;"
+                ></div>
+
+
+                <!-- =================================================
+                     LOGIN FORM
+                ================================================== -->
+
+                <form
+                    id="loginForm"
+                    data-auth="login"
+                    novalidate
+                >
+
+                    <!-- Username / Email -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username or Email
+                        </label>
+
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter username or email"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div
+                            style="
+                                position: relative;
+                                display: flex;
+                                align-items: center;
+                            "
+                        >
+
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                class="form-control"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                                style="padding-right: 48px;"
+                            >
+
+                            <button
+                                type="button"
+                                data-toggle-password="password"
+                                aria-label="Show or hide password"
+                                style="
+                                    position:absolute;
+                                    right:8px;
+                                    width:36px;
+                                    height:36px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#f1f5f9;
+                                    cursor:pointer;
+                                    font-size:16px;
+                                "
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Submit -->
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            style="width:100%;"
+                        >
+                            Login
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- =================================================
+                     INFORMATION
+                ================================================== -->
+
+                <div
+                    class="alert alert-info"
+                    style="
+                        margin-top:20px;
+                        font-size:11px;
+                    "
+                >
+                    Your dashboard is automatically selected
+                    based on your registered role.
+                </div>
+
+
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+
+                <div class="auth-footer">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+                    <a href="register.html">
+                        Register
+                    </a>
+
+                </div>
+
+
+                <div
+                    style="
+                        margin-top:15px;
+                        text-align:center;
+                        font-size:11px;
+                        color:#94a3b8;
+                    "
+                >
+                    <a href="../index.html">
+                        ← Back to Home
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+
+</body>
+</html>

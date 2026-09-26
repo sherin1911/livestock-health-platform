@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>GIS Surveillance | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="government-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🗺️
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    GIS Surveillance
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-progress"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    DISTRICT OFFICER
+                </span>
+            </span>
+
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                Government Officer
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <!-- =================================================
+             PAGE HEADING
+        ================================================== -->
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-end;
+                gap:20px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div class="section-label">
+                    GEOSPATIAL SURVEILLANCE
+                </div>
+
+                <h1 class="dashboard-title">
+                    GIS Surveillance Map
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Visualise livestock health reports,
+                    risk signals and potential emerging
+                    location clusters.
+                </p>
+
+            </div>
+
+
+            <div
+                style="
+                    display:flex;
+                    gap:8px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <button
+                    type="button"
+                    id="refreshMap"
+                    class="btn btn-secondary"
+                >
+                    🔄 Refresh Map
+                </button>
+
+
+                <a
+                    href="government-dashboard.html"
+                    class="btn btn-secondary"
+                >
+                    ← Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MAP CONTROLS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:20px;"
+        >
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        minmax(0, 1fr)
+                        190px
+                        190px;
+                    gap:12px;
+                    align-items:end;
+                "
+            >
+
+                <div class="form-group" style="margin:0;">
+
+                    <label for="mapSearch">
+                        Search Location
+                    </label>
+
+                    <input
+                        id="mapSearch"
+                        type="text"
+                        class="form-control"
+                        placeholder="Search location or district"
+                    >
+
+                </div>
+
+
+                <div class="form-group" style="margin:0;">
+
+                    <label for="riskFilter">
+                        Risk Filter
+                    </label>
+
+                    <select
+                        id="riskFilter"
+                        class="form-select"
+                    >
+
+                        <option value="ALL">
+                            All Risk Levels
+                        </option>
+
+                        <option value="HIGH">
+                            High Risk
+                        </option>
+
+                        <option value="MEDIUM">
+                            Medium Risk
+                        </option>
+
+                        <option value="LOW">
+                            Low Risk
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group" style="margin:0;">
+
+                    <label for="daysFilter">
+                        Time Window
+                    </label>
+
+                    <select
+                        id="daysFilter"
+                        class="form-select"
+                    >
+
+                        <option value="7">
+                            Last 7 Days
+                        </option>
+
+                        <option
+                            value="14"
+                            selected
+                        >
+                            Last 14 Days
+                        </option>
+
+                        <option value="30">
+                            Last 30 Days
+                        </option>
+
+                        <option value="60">
+                            Last 60 Days
+                        </option>
+
+                        <option value="90">
+                            Last 90 Days
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    display:flex;
+                    gap:15px;
+                    flex-wrap:wrap;
+                    margin-top:18px;
+                "
+            >
+
+                <label
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:7px;
+                        color:#475569;
+                        font-size:12px;
+                        cursor:pointer;
+                    "
+                >
+
+                    <input
+                        id="showReports"
+                        type="checkbox"
+                        checked
+                    >
+
+                    Report Locations
+
+                </label>
+
+
+                <label
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:7px;
+                        color:#475569;
+                        font-size:12px;
+                        cursor:pointer;
+                    "
+                >
+
+                    <input
+                        id="showClusters"
+                        type="checkbox"
+                        checked
+                    >
+
+                    Cluster Signals
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
+
+        <section
+            class="dashboard-grid"
+            style="margin-bottom:20px;"
+        >
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    📍
+                </div>
+
+                <div class="dashboard-label">
+                    Mapped Reports
+                </div>
+
+                <div
+                    id="mappedReports"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔴
+                </div>
+
+                <div class="dashboard-label">
+                    High Risk
+                </div>
+
+                <div
+                    id="mappedHighRisk"
+                    class="dashboard-value"
+                    style="color:#dc2626;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🟠
+                </div>
+
+                <div class="dashboard-label">
+                    Medium Risk
+                </div>
+
+                <div
+                    id="mappedMediumRisk"
+                    class="dashboard-value"
+                    style="color:#d97706;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:25px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🗺️
+                </div>
+
+                <div class="dashboard-label">
+                    Potential Clusters
+                </div>
+
+                <div
+                    id="mappedClusters"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MAP
+        ================================================== -->
+
+        <section class="dashboard-section">
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                    margin-bottom:15px;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Live Surveillance Map
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Recent geolocated health reports and
+                        surveillance cluster signals.
+                    </p>
+
+                </div>
+
+
+                <span
+                    id="mapStatus"
+                    class="
+                        status-badge
+                        status-progress
+                    "
+                >
+                    Loading
+                </span>
+
+            </div>
+
+
+            <div
+                id="map"
+                class="map-container"
+                style="
+                    min-height:600px;
+                "
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             MAP LEGEND
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-top:20px;"
+        >
+
+            <h2>
+                Map Legend
+            </h2>
+
+
+            <div
+                style="
+                    display:flex;
+                    gap:20px;
+                    flex-wrap:wrap;
+                    margin-top:15px;
+                "
+            >
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                        font-size:12px;
+                        color:#475569;
+                    "
+                >
+
+                    <span
+                        style="
+                            width:14px;
+                            height:14px;
+                            border-radius:50%;
+                            display:inline-block;
+                            background:#dc2626;
+                        "
+                    ></span>
+
+                    High Risk Report
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                        font-size:12px;
+                        color:#475569;
+                    "
+                >
+
+                    <span
+                        style="
+                            width:14px;
+                            height:14px;
+                            border-radius:50%;
+                            display:inline-block;
+                            background:#f59e0b;
+                        "
+                    ></span>
+
+                    Medium Risk Report
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                        font-size:12px;
+                        color:#475569;
+                    "
+                >
+
+                    <span
+                        style="
+                            width:14px;
+                            height:14px;
+                            border-radius:50%;
+                            display:inline-block;
+                            background:#16a34a;
+                        "
+                    ></span>
+
+                    Low Risk Report
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                        font-size:12px;
+                        color:#475569;
+                    "
+                >
+
+                    <span
+                        style="
+                            width:14px;
+                            height:14px;
+                            border-radius:50%;
+                            display:inline-block;
+                            border:3px solid #2563eb;
+                        "
+                    ></span>
+
+                    Potential Cluster Signal
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CLUSTER LIST
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-top:20px;"
+        >
+
+            <div>
+
+                <div class="section-label">
+                    EARLY-WARNING INTELLIGENCE
+                </div>
+
+                <h2>
+                    Potential Location Clusters
+                </h2>
+
+                <p
+                    style="
+                        margin-top:4px;
+                        color:#64748b;
+                        font-size:12px;
+                    "
+                >
+                    Cluster signals are calculated from
+                    recent reports, symptom repetition,
+                    risk concentration and location patterns.
+                </p>
+
+            </div>
+
+
+            <div
+                id="clusterList"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading clusters...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORT LIST
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-top:20px;"
+        >
+
+            <div>
+
+                <div class="section-label">
+                    GEOLOCATED CASES
+                </div>
+
+                <h2>
+                    Mapped Health Reports
+                </h2>
+
+            </div>
+
+
+            <div
+                id="mappedReportList"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading mapped reports...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESPONSIBLE SURVEILLANCE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-top:20px;
+                background:#eff6ff;
+                border-color:#bfdbfe;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    gap:14px;
+                    align-items:flex-start;
+                "
+            >
+
+                <div
+                    style="
+                        width:44px;
+                        height:44px;
+                        flex:0 0 44px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:13px;
+                        background:white;
+                        font-size:21px;
+                    "
+                >
+                    ℹ️
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:16px;
+                        "
+                    >
+                        Interpreting GIS Signals
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:6px;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.8;
+                        "
+                    >
+                        A concentration of reports or a potential
+                        cluster is an early-warning surveillance
+                        signal. It does not independently confirm
+                        an outbreak or disease. Professional
+                        veterinary, laboratory and epidemiological
+                        review is required before confirmation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         LEAFLET
+    ====================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- =====================================================
+         GLOBAL SCRIPTS
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/notifications.js"></script>
+
+
+    <!-- =====================================================
+         GIS SCRIPT
+    ====================================================== -->
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                let map = null;
+
+                let reportLayer =
+                    L.layerGroup();
+
+                let clusterLayer =
+                    L.layerGroup();
+
+                let reports = [];
+
+                let clusters = [];
+
+
+                /* ==========================================
+                   INITIALISE MAP
+                =========================================== */
+
+                function initialiseMap() {
+
+                    map =
+                        L.map(
+                            "map"
+                        ).setView(
+                            [
+                                20.5937,
+                                78.9629
+                            ],
+                            5
+                        );
+
+
+                    L.tileLayer(
+                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        {
+                            maxZoom: 19,
+                            attribution:
+                                "&copy; OpenStreetMap contributors"
+                        }
+                    ).addTo(map);
+
+
+                    reportLayer.addTo(
+                        map
+                    );
+
+
+                    clusterLayer.addTo(
+                        map
+                    );
+
+                }
+
+
+                /* ==========================================
+                   LOAD REPORTS
+                =========================================== */
+
+                async function loadReports() {
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/health-reports",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        reports =
+                            Array.isArray(
+                                response.reports
+                            )
+                                ? response.reports
+                                : [];
+
+
+                        renderReports();
+
+                        updateSummary();
+
+                    } catch (error) {
+
+                        console.error(
+                            "GIS report loading error:",
+                            error
+                        );
+
+
+                        reports = [];
+
+                        renderReports();
+
+                        updateSummary();
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   LOAD CLUSTERS
+                =========================================== */
+
+                async function loadClusters() {
+
+                    const days =
+                        Number(
+                            document.getElementById(
+                                "daysFilter"
+                            ).value
+                        ) || 14;
+
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/clusters/overview?days=" +
+                                encodeURIComponent(
+                                    days
+                                ),
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        const data =
+                            response &&
+                            response.data
+                                ? response.data
+                                : response || {};
+
+
+                        clusters =
+                            getClusterArray(
+                                data,
+                                [
+                                    "locationClusters",
+                                    "locations",
+                                    "location_clusters"
+                                ]
+                            );
+
+
+                        renderClusters();
+
+                        updateSummary();
+
+                    } catch (error) {
+
+                        console.error(
+                            "GIS cluster loading error:",
+                            error
+                        );
+
+
+                        clusters = [];
+
+                        renderClusters();
+
+                        updateSummary();
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   RENDER REPORTS
+                =========================================== */
+
+                function renderReports() {
+
+                    if (!map) {
+                        return;
+                    }
+
+
+                    reportLayer.clearLayers();
+
+
+                    const listContainer =
+                        document.getElementById(
+                            "mappedReportList"
+                        );
+
+
+                    const riskFilter =
+                        document.getElementById(
+                            "riskFilter"
+                        ).value;
+
+
+                    const search =
+                        document.getElementById(
+                            "mapSearch"
+                        ).value
+                            .trim()
+                            .toLowerCase();
+
+
+                    const showReports =
+                        document.getElementById(
+                            "showReports"
+                        ).checked;
+
+
+                    const filteredReports =
+                        reports.filter(
+                            function (
+                                report
+                            ) {
+
+                                const risk =
+                                    String(
+                                        report.riskLevel ||
+                                        report.risk_level ||
+                                        report.severity ||
+                                        "LOW"
+                                    ).toUpperCase();
+
+
+                                const location =
+                                    String(
+                                        report.location ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const animal =
+                                    String(
+                                        report.animalName ||
+                                        report.animal_name ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const matchesRisk =
+                                    riskFilter ===
+                                        "ALL" ||
+                                    risk ===
+                                        riskFilter;
+
+
+                                const matchesSearch =
+                                    !search ||
+                                    location.includes(
+                                        search
+                                    ) ||
+                                    animal.includes(
+                                        search
+                                    );
+
+
+                                const latitude =
+                                    Number(
+                                        report.latitude
+                                    );
+
+
+                                const longitude =
+                                    Number(
+                                        report.longitude
+                                    );
+
+
+                                const validCoordinates =
+                                    Number.isFinite(
+                                        latitude
+                                    ) &&
+                                    Number.isFinite(
+                                        longitude
+                                    );
+
+
+                                return (
+                                    matchesRisk &&
+                                    matchesSearch &&
+                                    validCoordinates
+                                );
+
+                            }
+                        );
+
+
+                    if (
+                        showReports
+                    ) {
+
+                        filteredReports.forEach(
+                            function (
+                                report
+                            ) {
+
+                                const marker =
+                                    createReportMarker(
+                                        report
+                                    );
+
+
+                                if (
+                                    marker
+                                ) {
+                                    marker.addTo(
+                                        reportLayer
+                                    );
+                                }
+
+                            }
+                        );
+
+                    }
+
+
+                    renderReportList(
+                        filteredReports
+                    );
+
+
+                    updateMapView(
+                        filteredReports
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CREATE REPORT MARKER
+                =========================================== */
+
+                function createReportMarker(
+                    report
+                ) {
+
+                    const latitude =
+                        Number(
+                            report.latitude
+                        );
+
+
+                    const longitude =
+                        Number(
+                            report.longitude
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            latitude
+                        ) ||
+                        !Number.isFinite(
+                            longitude
+                        )
+                    ) {
+                        return null;
+                    }
+
+
+                    const risk =
+                        String(
+                            report.riskLevel ||
+                            report.risk_level ||
+                            report.severity ||
+                            "LOW"
+                        ).toUpperCase();
+
+
+                    let iconColor =
+                        "#16a34a";
+
+
+                    if (
+                        risk === "HIGH"
+                    ) {
+                        iconColor =
+                            "#dc2626";
+                    } else if (
+                        risk === "MEDIUM"
+                    ) {
+                        iconColor =
+                            "#f59e0b";
+                    }
+
+
+                    const icon =
+                        L.divIcon(
+                            {
+                                className:
+                                    "uyirthulir-map-marker",
+
+                                html:
+                                    `
+                                    <div
+                                        style="
+                                            width:18px;
+                                            height:18px;
+                                            border-radius:50%;
+                                            background:${iconColor};
+                                            border:3px solid white;
+                                            box-shadow:
+                                                0 2px 8px rgba(
+                                                    15,
+                                                    23,
+                                                    42,
+                                                    0.35
+                                                );
+                                        "
+                                    ></div>
+                                    `,
+
+                                iconSize:
+                                    [
+                                        18,
+                                        18
+                                    ],
+
+                                iconAnchor:
+                                    [
+                                        9,
+                                        9
+                                    ]
+                            }
+                        );
+
+
+                    const marker =
+                        L.marker(
+                            [
+                                latitude,
+                                longitude
+                            ],
+                            {
+                                icon:
+                                    icon
+                            }
+                        );
+
+
+                    const animal =
+                        report.animalName ||
+                        report.animal_name ||
+                        "Unknown Animal";
+
+
+                    const species =
+                        report.species ||
+                        "Unknown";
+
+
+                    const location =
+                        report.location ||
+                        "Unknown Location";
+
+
+                    const score =
+                        report.riskScore ??
+                        report.risk_score ??
+                        "-";
+
+
+                    const status =
+                        report.status ||
+                        "PENDING";
+
+
+                    const reportId =
+                        report.reportId ||
+                        report.report_id ||
+                        report.id ||
+                        "-";
+
+
+                    marker.bindPopup(
+                        `
+                        <div
+                            style="
+                                min-width:220px;
+                                font-family:Arial,sans-serif;
+                            "
+                        >
+
+                            <strong
+                                style="
+                                    font-size:15px;
+                                "
+                            >
+                                ${escapeHtml(
+                                    animal
+                                )}
+                            </strong>
+
+                            <div
+                                style="
+                                    margin-top:3px;
+                                    color:#64748b;
+                                    font-size:11px;
+                                "
+                            >
+                                ${escapeHtml(
+                                    species
+                                )}
+                            </div>
+
+                            <div
+                                style="
+                                    margin-top:10px;
+                                    padding-top:9px;
+                                    border-top:
+                                        1px solid #e2e8f0;
+                                "
+                            >
+
+                                <div
+                                    style="
+                                        font-size:11px;
+                                    "
+                                >
+                                    <b>Report:</b>
+                                    ${escapeHtml(
+                                        String(
+                                            reportId
+                                        )
+                                    )}
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        font-size:11px;
+                                    "
+                                >
+                                    <b>Location:</b>
+                                    ${escapeHtml(
+                                        location
+                                    )}
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        font-size:11px;
+                                    "
+                                >
+                                    <b>Risk:</b>
+                                    ${escapeHtml(
+                                        risk
+                                    )}
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        font-size:11px;
+                                    "
+                                >
+                                    <b>Risk Score:</b>
+                                    ${escapeHtml(
+                                        String(
+                                            score
+                                        )
+                                    )}
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        font-size:11px;
+                                    "
+                                >
+                                    <b>Status:</b>
+                                    ${escapeHtml(
+                                        status
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </div>
+                        `
+                    );
+
+
+                    return marker;
+
+                }
+
+
+                /* ==========================================
+                   RENDER CLUSTERS
+                =========================================== */
+
+                function renderClusters() {
+
+                    if (!map) {
+                        return;
+                    }
+
+
+                    clusterLayer.clearLayers();
+
+
+                    const container =
+                        document.getElementById(
+                            "clusterList"
+                        );
+
+
+                    const showClusters =
+                        document.getElementById(
+                            "showClusters"
+                        ).checked;
+
+
+                    if (
+                        container
+                    ) {
+                        container.innerHTML =
+                            "";
+                    }
+
+
+                    const visibleClusters =
+                        clusters.filter(
+                            function (
+                                cluster
+                            ) {
+
+                                const location =
+                                    String(
+                                        cluster.location ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const search =
+                                    document.getElementById(
+                                        "mapSearch"
+                                    ).value
+                                        .trim()
+                                        .toLowerCase();
+
+
+                                return (
+                                    !search ||
+                                    location.includes(
+                                        search
+                                    )
+                                );
+
+                            }
+                        );
+
+
+                    if (
+                        showClusters
+                    ) {
+
+                        visibleClusters.forEach(
+                            function (
+                                cluster
+                            ) {
+
+                                const latitude =
+                                    Number(
+                                        cluster.latitude
+                                    );
+
+
+                                const longitude =
+                                    Number(
+                                        cluster.longitude
+                                    );
+
+
+                                if (
+                                    !Number.isFinite(
+                                        latitude
+                                    ) ||
+                                    !Number.isFinite(
+                                        longitude
+                                    )
+                                ) {
+                                    return;
+                                }
+
+
+                                const score =
+                                    Number(
+                                        cluster.clusterScore ||
+                                        cluster.score ||
+                                        0
+                                    );
+
+
+                                const priority =
+                                    String(
+                                        cluster.priority ||
+                                        "WATCH"
+                                    ).toUpperCase();
+
+
+                                let borderColor =
+                                    "#2563eb";
+
+
+                                if (
+                                    priority ===
+                                    "HIGH PRIORITY"
+                                ) {
+                                    borderColor =
+                                        "#dc2626";
+                                } else if (
+                                    priority ===
+                                    "MODERATE PRIORITY"
+                                ) {
+                                    borderColor =
+                                        "#f59e0b";
+                                }
+
+
+                                const radius =
+                                    Math.max(
+                                        250,
+                                        Math.min(
+                                            2500,
+                                            400 +
+                                            (
+                                                score *
+                                                18
+                                            )
+                                        )
+                                    );
+
+
+                                const circle =
+                                    L.circle(
+                                        [
+                                            latitude,
+                                            longitude
+                                        ],
+                                        {
+                                            radius:
+                                                radius,
+
+                                            color:
+                                                borderColor,
+
+                                            weight:
+                                                3,
+
+                                            fillOpacity:
+                                                0.08
+                                        }
+                                    );
+
+
+                                circle.bindPopup(
+                                    `
+                                    <div
+                                        style="
+                                            min-width:220px;
+                                            font-family:Arial,sans-serif;
+                                        "
+                                    >
+
+                                        <strong>
+                                            Potential Cluster Signal
+                                        </strong>
+
+                                        <div
+                                            style="
+                                                margin-top:7px;
+                                                font-size:11px;
+                                            "
+                                        >
+                                            <b>Location:</b>
+                                            ${escapeHtml(
+                                                cluster.location ||
+                                                "Unknown"
+                                            )}
+                                        </div>
+
+                                        <div
+                                            style="
+                                                margin-top:4px;
+                                                font-size:11px;
+                                            "
+                                        >
+                                            <b>Cluster Score:</b>
+                                            ${escapeHtml(
+                                                String(
+                                                    score
+                                                )
+                                            )}
+                                        </div>
+
+                                        <div
+                                            style="
+                                                margin-top:4px;
+                                                font-size:11px;
+                                            "
+                                        >
+                                            <b>Priority:</b>
+                                            ${escapeHtml(
+                                                priority
+                                            )}
+                                        </div>
+
+                                        <div
+                                            style="
+                                                margin-top:4px;
+                                                font-size:11px;
+                                            "
+                                        >
+                                            <b>Reports:</b>
+                                            ${escapeHtml(
+                                                String(
+                                                    cluster.reportCount ||
+                                                    cluster.totalReports ||
+                                                    0
+                                                )
+                                            )}
+                                        </div>
+
+                                    </div>
+                                    `
+                                );
+
+
+                                circle.addTo(
+                                    clusterLayer
+                                );
+
+                            }
+                        );
+
+                    }
+
+
+                    renderClusterList(
+                        visibleClusters
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CLUSTER LIST
+                =========================================== */
+
+                function renderClusterList(
+                    list
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "clusterList"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    if (
+                        !list.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    🗺️
+                                </div>
+
+                                <h3>
+                                    No cluster signals found
+                                </h3>
+
+                                <p>
+                                    Continue monitoring recent
+                                    livestock health reports.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    list
+                        .slice(
+                            0,
+                            10
+                        )
+                        .forEach(
+                            function (
+                                cluster
+                            ) {
+
+                                const score =
+                                    Number(
+                                        cluster.clusterScore ||
+                                        cluster.score ||
+                                        0
+                                    );
+
+
+                                const priority =
+                                    String(
+                                        cluster.priority ||
+                                        "WATCH"
+                                    ).toUpperCase();
+
+
+                                let badgeClass =
+                                    "status-low";
+
+
+                                if (
+                                    priority ===
+                                    "HIGH PRIORITY"
+                                ) {
+                                    badgeClass =
+                                        "status-high";
+                                } else if (
+                                    priority ===
+                                    "MODERATE PRIORITY"
+                                ) {
+                                    badgeClass =
+                                        "status-medium";
+                                }
+
+
+                                const card =
+                                    document.createElement(
+                                        "div"
+                                    );
+
+
+                                card.className =
+                                    "dashboard-card";
+
+
+                                card.style.marginBottom =
+                                    "12px";
+
+
+                                card.innerHTML =
+                                    `
+                                    <div
+                                        style="
+                                            display:flex;
+                                            justify-content:space-between;
+                                            align-items:flex-start;
+                                            gap:15px;
+                                        "
+                                    >
+
+                                        <div>
+
+                                            <h3
+                                                style="
+                                                    font-size:16px;
+                                                "
+                                            >
+                                                📍
+                                                ${escapeHtml(
+                                                    cluster.location ||
+                                                    "Unknown Location"
+                                                )}
+                                            </h3>
+
+                                            <div
+                                                style="
+                                                    margin-top:4px;
+                                                    color:#64748b;
+                                                    font-size:11px;
+                                                "
+                                            >
+                                                ${
+                                                    cluster.reportCount ||
+                                                    cluster.totalReports ||
+                                                    0
+                                                }
+                                                reports
+                                            </div>
+
+                                        </div>
+
+
+                                        <span
+                                            class="
+                                                status-badge
+                                                ${badgeClass}
+                                            "
+                                        >
+                                            ${escapeHtml(
+                                                priority
+                                            )}
+                                        </span>
+
+                                    </div>
+
+
+                                    <div
+                                        style="
+                                            display:grid;
+                                            grid-template-columns:
+                                                repeat(
+                                                    3,
+                                                    minmax(0, 1fr)
+                                                );
+                                            gap:12px;
+                                            margin-top:15px;
+                                        "
+                                    >
+
+                                        <div>
+
+                                            <div
+                                                class="dashboard-label"
+                                            >
+                                                Cluster Score
+                                            </div>
+
+                                            <strong>
+                                                ${escapeHtml(
+                                                    String(
+                                                        score
+                                                    )
+                                                )}
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <div
+                                                class="dashboard-label"
+                                            >
+                                                Emerging Signal
+                                            </div>
+
+                                            <strong
+                                                style="
+                                                    font-size:11px;
+                                                "
+                                            >
+                                                ${
+                                                    cluster.potentialEmergingCluster
+                                                        ? "Potential"
+                                                        : "Monitoring"
+                                                }
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <div
+                                                class="dashboard-label"
+                                            >
+                                                Repeated Symptoms
+                                            </div>
+
+                                            <strong
+                                                style="
+                                                    font-size:11px;
+                                                "
+                                            >
+                                                ${
+                                                    Array.isArray(
+                                                        cluster.repeatedSymptoms
+                                                    )
+                                                        ? cluster.repeatedSymptoms
+                                                            .slice(
+                                                                0,
+                                                                2
+                                                            )
+                                                            .join(
+                                                                ", "
+                                                            )
+                                                        : "-"
+                                                }
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+                                    `;
+
+
+                                container.appendChild(
+                                    card
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                /* ==========================================
+                   REPORT LIST
+                =========================================== */
+
+                function renderReportList(
+                    list
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "mappedReportList"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    if (
+                        !list.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    📍
+                                </div>
+
+                                <h3>
+                                    No mapped reports
+                                </h3>
+
+                                <p>
+                                    Reports with valid latitude
+                                    and longitude will appear here.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    const rows =
+                        list
+                            .slice(
+                                0,
+                                30
+                            )
+                            .map(
+                                function (
+                                    report
+                                ) {
+
+                                    const risk =
+                                        String(
+                                            report.riskLevel ||
+                                            report.risk_level ||
+                                            report.severity ||
+                                            "LOW"
+                                        ).toUpperCase();
+
+
+                                    let riskClass =
+                                        "status-low";
+
+
+                                    if (
+                                        risk ===
+                                        "HIGH"
+                                    ) {
+                                        riskClass =
+                                            "status-high";
+                                    } else if (
+                                        risk ===
+                                        "MEDIUM"
+                                    ) {
+                                        riskClass =
+                                            "status-medium";
+                                    }
+
+
+                                    return `
+                                    <tr>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.reportId ||
+                                                report.report_id ||
+                                                report.id ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.animalName ||
+                                                report.animal_name ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                report.location ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="
+                                                    status-badge
+                                                    ${riskClass}
+                                                "
+                                            >
+                                                ${escapeHtml(
+                                                    risk
+                                                )}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                String(
+                                                    report.riskScore ??
+                                                    report.risk_score ??
+                                                    "-"
+                                                )
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="
+                                                    btn
+                                                    btn-secondary
+                                                    focus-report-button
+                                                "
+                                                style="
+                                                    padding:6px 9px;
+                                                    font-size:10px;
+                                                "
+                                                data-lat="${escapeHtml(
+                                                    String(
+                                                        report.latitude
+                                                    )
+                                                )}"
+                                                data-lng="${escapeHtml(
+                                                    String(
+                                                        report.longitude
+                                                    )
+                                                )}"
+                                            >
+                                                View
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                    container.innerHTML =
+                        `
+                        <div class="table-wrapper">
+
+                            <table class="data-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Report ID
+                                        </th>
+
+                                        <th>
+                                            Animal
+                                        </th>
+
+                                        <th>
+                                            Location
+                                        </th>
+
+                                        <th>
+                                            Risk
+                                        </th>
+
+                                        <th>
+                                            Score
+                                        </th>
+
+                                        <th>
+                                            Map
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    ${rows}
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        `;
+
+
+                    container
+                        .querySelectorAll(
+                            ".focus-report-button"
+                        )
+                        .forEach(
+                            function (
+                                button
+                            ) {
+
+                                button.addEventListener(
+                                    "click",
+                                    function () {
+
+                                        const latitude =
+                                            Number(
+                                                button.dataset.lat
+                                            );
+
+
+                                        const longitude =
+                                            Number(
+                                                button.dataset.lng
+                                            );
+
+
+                                        if (
+                                            map &&
+                                            Number.isFinite(
+                                                latitude
+                                            ) &&
+                                            Number.isFinite(
+                                                longitude
+                                            )
+                                        ) {
+
+                                            map.setView(
+                                                [
+                                                    latitude,
+                                                    longitude
+                                                ],
+                                                15
+                                            );
+
+                                        }
+
+                                    }
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                /* ==========================================
+                   SUMMARY
+                =========================================== */
+
+                function updateSummary() {
+
+                    const riskFilter =
+                        document.getElementById(
+                            "riskFilter"
+                        ).value;
+
+
+                    const search =
+                        document.getElementById(
+                            "mapSearch"
+                        ).value
+                            .trim()
+                            .toLowerCase();
+
+
+                    const filtered =
+                        reports.filter(
+                            function (
+                                report
+                            ) {
+
+                                const risk =
+                                    String(
+                                        report.riskLevel ||
+                                        report.risk_level ||
+                                        report.severity ||
+                                        "LOW"
+                                    ).toUpperCase();
+
+
+                                const location =
+                                    String(
+                                        report.location ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const animal =
+                                    String(
+                                        report.animalName ||
+                                        report.animal_name ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const latitude =
+                                    Number(
+                                        report.latitude
+                                    );
+
+
+                                const longitude =
+                                    Number(
+                                        report.longitude
+                                    );
+
+
+                                return (
+                                    (
+                                        riskFilter ===
+                                            "ALL" ||
+                                        risk ===
+                                            riskFilter
+                                    ) &&
+                                    (
+                                        !search ||
+                                        location.includes(
+                                            search
+                                        ) ||
+                                        animal.includes(
+                                            search
+                                        )
+                                    ) &&
+                                    Number.isFinite(
+                                        latitude
+                                    ) &&
+                                    Number.isFinite(
+                                        longitude
+                                    )
+                                );
+
+                            }
+                        );
+
+
+                    const high =
+                        filtered.filter(
+                            function (
+                                report
+                            ) {
+
+                                return (
+                                    String(
+                                        report.riskLevel ||
+                                        report.risk_level ||
+                                        report.severity ||
+                                        "LOW"
+                                    ).toUpperCase() ===
+                                    "HIGH"
+                                );
+
+                            }
+                        ).length;
+
+
+                    const medium =
+                        filtered.filter(
+                            function (
+                                report
+                            ) {
+
+                                return (
+                                    String(
+                                        report.riskLevel ||
+                                        report.risk_level ||
+                                        report.severity ||
+                                        "LOW"
+                                    ).toUpperCase() ===
+                                    "MEDIUM"
+                                );
+
+                            }
+                        ).length;
+
+
+                    const potentialClusters =
+                        clusters.filter(
+                            function (
+                                cluster
+                            ) {
+
+                                return (
+                                    cluster.potentialEmergingCluster ===
+                                    true
+                                );
+
+                            }
+                        ).length;
+
+
+                    setText(
+                        "mappedReports",
+                        filtered.length
+                    );
+
+
+                    setText(
+                        "mappedHighRisk",
+                        high
+                    );
+
+
+                    setText(
+                        "mappedMediumRisk",
+                        medium
+                    );
+
+
+                    setText(
+                        "mappedClusters",
+                        potentialClusters
+                    );
+
+                }
+
+
+                /* ==========================================
+                   MAP VIEW
+                =========================================== */
+
+                function updateMapView(
+                    list
+                ) {
+
+                    if (
+                        !map ||
+                        !list.length
+                    ) {
+                        return;
+                    }
+
+
+                    const bounds =
+                        L.latLngBounds([]);
+
+
+                    list.forEach(
+                        function (
+                            report
+                        ) {
+
+                            const latitude =
+                                Number(
+                                    report.latitude
+                                );
+
+
+                            const longitude =
+                                Number(
+                                    report.longitude
+                                );
+
+
+                            if (
+                                Number.isFinite(
+                                    latitude
+                                ) &&
+                                Number.isFinite(
+                                    longitude
+                                )
+                            ) {
+
+                                bounds.extend(
+                                    [
+                                        latitude,
+                                        longitude
+                                    ]
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    if (
+                        bounds.isValid()
+                    ) {
+
+                        map.fitBounds(
+                            bounds.pad(
+                                0.15
+                            )
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   UTILITY
+                =========================================== */
+
+                function getClusterArray(
+                    data,
+                    keys
+                ) {
+
+                    for (
+                        const key of keys
+                    ) {
+
+                        if (
+                            Array.isArray(
+                                data[key]
+                            )
+                        ) {
+                            return data[key];
+                        }
+
+                    }
+
+                    return [];
+
+                }
+
+
+                function setText(
+                    id,
+                    value
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (element) {
+
+                        element.textContent =
+                            String(
+                                value === null ||
+                                value === undefined
+                                    ? 0
+                                    : value
+                            );
+
+                    }
+
+                }
+
+
+                function escapeHtml(
+                    value
+                ) {
+
+                    return String(
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value
+                    )
+                        .replaceAll(
+                            "&",
+                            "&amp;"
+                        )
+                        .replaceAll(
+                            "<",
+                            "&lt;"
+                        )
+                        .replaceAll(
+                            ">",
+                            "&gt;"
+                        )
+                        .replaceAll(
+                            '"',
+                            "&quot;"
+                        )
+                        .replaceAll(
+                            "'",
+                            "&#039;"
+                        );
+
+                }
+
+
+                /* ==========================================
+                   FILTER EVENTS
+                =========================================== */
+
+                document
+                    .getElementById(
+                        "riskFilter"
+                    )
+                    .addEventListener(
+                        "change",
+                        function () {
+
+                            renderReports();
+                            updateSummary();
+
+                        }
+                    );
+
+
+                document
+                    .getElementById(
+                        "mapSearch"
+                    )
+                    .addEventListener(
+                        "input",
+                        function () {
+
+                            renderReports();
+                            renderClusters();
+                            updateSummary();
+
+                        }
+                    );
+
+
+                document
+                    .getElementById(
+                        "daysFilter"
+                    )
+                    .addEventListener(
+                        "change",
+                        async function () {
+
+                            await loadClusters();
+
+                        }
+                    );
+
+
+                document
+                    .getElementById(
+                        "showReports"
+                    )
+                    .addEventListener(
+                        "change",
+                        function () {
+
+                            renderReports();
+
+                        }
+                    );
+
+
+                document
+                    .getElementById(
+                        "showClusters"
+                    )
+                    .addEventListener(
+                        "change",
+                        function () {
+
+                            renderClusters();
+
+                        }
+                    );
+
+
+                /* ==========================================
+                   REFRESH
+                =========================================== */
+
+                document
+                    .getElementById(
+                        "refreshMap"
+                    )
+                    .addEventListener(
+                        "click",
+                        async function () {
+
+                            const button =
+                                document.getElementById(
+                                    "refreshMap"
+                                );
+
+
+                            const status =
+                                document.getElementById(
+                                    "mapStatus"
+                                );
+
+
+                            button.disabled =
+                                true;
+
+
+                            button.textContent =
+                                "⏳ Loading...";
+
+
+                            if (status) {
+
+                                status.textContent =
+                                    "Refreshing";
+
+                            }
+
+
+                            try {
+
+                                await Promise.all(
+                                    [
+                                        loadReports(),
+                                        loadClusters()
+                                    ]
+                                );
+
+
+                                if (status) {
+
+                                    status.textContent =
+                                        "Live";
+
+                                    status.className =
+                                        "status-badge status-low";
+
+                                }
+
+                            } finally {
+
+                                button.disabled =
+                                    false;
+
+                                button.textContent =
+                                    "🔄 Refresh Map";
+
+                            }
+
+                        }
+                    );
+
+
+                /* ==========================================
+                   INITIALISE
+                =========================================== */
+
+                initialiseMap();
+
+
+                Promise.all(
+                    [
+                        loadReports(),
+                        loadClusters()
+                    ]
+                ).then(
+                    function () {
+
+                        const status =
+                            document.getElementById(
+                                "mapStatus"
+                            );
+
+
+                        if (status) {
+
+                            status.textContent =
+                                "Live";
+
+                            status.className =
+                                "status-badge status-low";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+    </script>
+
+</body>
+</html>

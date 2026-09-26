@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Alerts | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="farmer-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🐄
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    Livestock Health Surveillance
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-low"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    FARMER
+                </span>
+            </span>
+
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                User
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <!-- PAGE HEADING -->
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-end;
+                gap:20px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div class="section-label">
+                    HEALTH ALERTS
+                </div>
+
+                <h1 class="dashboard-title">
+                    Alerts & Notifications
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Review health-risk notifications and
+                    important surveillance messages.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="refreshAlerts"
+                class="btn btn-secondary"
+            >
+                🔄 Refresh
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
+
+        <section
+            class="dashboard-grid"
+            style="margin-bottom:25px;"
+        >
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔔
+                </div>
+
+                <div class="dashboard-label">
+                    Total Alerts
+                </div>
+
+                <div
+                    id="totalAlerts"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔵
+                </div>
+
+                <div class="dashboard-label">
+                    Unread Alerts
+                </div>
+
+                <div
+                    id="unreadAlerts"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔴
+                </div>
+
+                <div class="dashboard-label">
+                    High Priority
+                </div>
+
+                <div
+                    id="highPriorityAlerts"
+                    class="dashboard-value"
+                    style="color:#dc2626;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🟠
+                </div>
+
+                <div class="dashboard-label">
+                    Medium Priority
+                </div>
+
+                <div
+                    id="mediumPriorityAlerts"
+                    class="dashboard-value"
+                    style="color:#d97706;"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Notification Controls
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Manage the notifications associated
+                        with your account.
+                    </p>
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    "
+                >
+
+                    <button
+                        type="button"
+                        id="markAllRead"
+                        class="btn btn-primary"
+                        style="
+                            padding:9px 13px;
+                            font-size:12px;
+                        "
+                    >
+                        ✓ Mark All as Read
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FILTER
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        minmax(0, 1fr)
+                        190px;
+                    gap:12px;
+                    align-items:end;
+                "
+            >
+
+                <div class="form-group" style="margin:0;">
+
+                    <label for="alertSearch">
+                        Search Alerts
+                    </label>
+
+                    <input
+                        id="alertSearch"
+                        type="text"
+                        class="form-control"
+                        placeholder="Search title, message or location"
+                    >
+
+                </div>
+
+
+                <div class="form-group" style="margin:0;">
+
+                    <label for="alertFilter">
+                        Filter
+                    </label>
+
+                    <select
+                        id="alertFilter"
+                        class="form-select"
+                    >
+
+                        <option value="ALL">
+                            All Alerts
+                        </option>
+
+                        <option value="UNREAD">
+                            Unread
+                        </option>
+
+                        <option value="HIGH">
+                            High Priority
+                        </option>
+
+                        <option value="MEDIUM">
+                            Medium Priority
+                        </option>
+
+                        <option value="LOW">
+                            Low Priority
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ALERT LIST
+        ================================================== -->
+
+        <section class="dashboard-section">
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                    margin-bottom:20px;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Notifications
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Latest notifications from the
+                        livestock health surveillance system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="alertsContainer"
+                data-alerts-container
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading alerts...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESPONSIBLE SURVEILLANCE NOTICE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-top:25px;
+                background:#eff6ff;
+                border-color:#bfdbfe;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    align-items:flex-start;
+                    gap:14px;
+                "
+            >
+
+                <div
+                    style="
+                        width:42px;
+                        height:42px;
+                        flex:0 0 42px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:12px;
+                        background:white;
+                        font-size:20px;
+                    "
+                >
+                    ℹ️
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:15px;
+                        "
+                    >
+                        About Health Alerts
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:6px;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.7;
+                        "
+                    >
+                        Alerts are intended to support early
+                        warning and coordinated response.
+                        A risk alert or cluster signal does not
+                        by itself confirm a disease or outbreak.
+                        Veterinary, laboratory and epidemiological
+                        review may be required.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/notifications.js"></script>
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                let allAlerts = [];
+
+
+                /* ==========================================
+                   LOAD ALERTS
+                =========================================== */
+
+                async function loadAlerts() {
+
+                    const container =
+                        document.getElementById(
+                            "alertsContainer"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    container.innerHTML =
+                        `
+                        <div class="loading">
+                            <span class="spinner"></span>
+                            Loading alerts...
+                        </div>
+                        `;
+
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/notifications",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        allAlerts =
+                            Array.isArray(
+                                response.notifications
+                            )
+                                ? response.notifications
+                                : [];
+
+
+                        updateSummary(
+                            allAlerts
+                        );
+
+
+                        renderAlerts(
+                            allAlerts
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Unable to load alerts:",
+                            error
+                        );
+
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div
+                                    class="empty-state-icon"
+                                >
+                                    ⚠️
+                                </div>
+
+                                <h3>
+                                    Unable to load alerts
+                                </h3>
+
+                                <p>
+                                    ${
+                                        escapeHtml(
+                                            error.message ||
+                                            "Please try again."
+                                        )
+                                    }
+                                </p>
+
+                            </div>
+                            `;
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   SUMMARY
+                =========================================== */
+
+                function updateSummary(
+                    alerts
+                ) {
+
+                    let unread = 0;
+                    let high = 0;
+                    let medium = 0;
+
+
+                    alerts.forEach(
+                        function (alert) {
+
+                            if (
+                                !alert.isRead
+                            ) {
+                                unread += 1;
+                            }
+
+
+                            const priority =
+                                String(
+                                    alert.priority ||
+                                    "LOW"
+                                ).toUpperCase();
+
+
+                            if (
+                                priority ===
+                                "HIGH"
+                            ) {
+                                high += 1;
+                            }
+
+
+                            if (
+                                priority ===
+                                "MEDIUM"
+                            ) {
+                                medium += 1;
+                            }
+
+                        }
+                    );
+
+
+                    const totalElement =
+                        document.getElementById(
+                            "totalAlerts"
+                        );
+
+
+                    const unreadElement =
+                        document.getElementById(
+                            "unreadAlerts"
+                        );
+
+
+                    const highElement =
+                        document.getElementById(
+                            "highPriorityAlerts"
+                        );
+
+
+                    const mediumElement =
+                        document.getElementById(
+                            "mediumPriorityAlerts"
+                        );
+
+
+                    if (totalElement) {
+                        totalElement.textContent =
+                            alerts.length;
+                    }
+
+
+                    if (unreadElement) {
+                        unreadElement.textContent =
+                            unread;
+                    }
+
+
+                    if (highElement) {
+                        highElement.textContent =
+                            high;
+                    }
+
+
+                    if (mediumElement) {
+                        mediumElement.textContent =
+                            medium;
+                    }
+
+                }
+
+
+                /* ==========================================
+                   RENDER ALERTS
+                =========================================== */
+
+                function renderAlerts(
+                    alerts
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "alertsContainer"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    const search =
+                        document
+                            .getElementById(
+                                "alertSearch"
+                            )
+                            .value
+                            .trim()
+                            .toLowerCase();
+
+
+                    const filter =
+                        document
+                            .getElementById(
+                                "alertFilter"
+                            )
+                            .value;
+
+
+                    const filtered =
+                        alerts.filter(
+                            function (alert) {
+
+                                const title =
+                                    String(
+                                        alert.title ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const message =
+                                    String(
+                                        alert.message ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const location =
+                                    String(
+                                        alert.relatedLocation ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const searchable =
+                                    title +
+                                    " " +
+                                    message +
+                                    " " +
+                                    location;
+
+
+                                const matchesSearch =
+                                    !search ||
+                                    searchable.includes(
+                                        search
+                                    );
+
+
+                                const priority =
+                                    String(
+                                        alert.priority ||
+                                        "LOW"
+                                    ).toUpperCase();
+
+
+                                let matchesFilter =
+                                    true;
+
+
+                                if (
+                                    filter ===
+                                    "UNREAD"
+                                ) {
+                                    matchesFilter =
+                                        !alert.isRead;
+                                }
+
+
+                                if (
+                                    [
+                                        "HIGH",
+                                        "MEDIUM",
+                                        "LOW"
+                                    ].includes(
+                                        filter
+                                    )
+                                ) {
+                                    matchesFilter =
+                                        priority ===
+                                        filter;
+                                }
+
+
+                                return (
+                                    matchesSearch &&
+                                    matchesFilter
+                                );
+
+                            }
+                        );
+
+
+                    container.innerHTML =
+                        "";
+
+
+                    if (
+                        !filtered.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div
+                                    class="empty-state-icon"
+                                >
+                                    🔔
+                                </div>
+
+                                <h3>
+                                    No alerts found
+                                </h3>
+
+                                <p>
+                                    There are no notifications
+                                    matching the current filter.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    filtered.forEach(
+                        function (alert) {
+
+                            container.appendChild(
+                                createAlertCard(
+                                    alert
+                                )
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CREATE ALERT CARD
+                =========================================== */
+
+                function createAlertCard(
+                    alert
+                ) {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    const isRead =
+                        Boolean(
+                            alert.isRead
+                        );
+
+
+                    const priority =
+                        String(
+                            alert.priority ||
+                            "LOW"
+                        ).toUpperCase();
+
+
+                    let priorityClass =
+                        "status-low";
+
+
+                    if (
+                        priority ===
+                        "HIGH"
+                    ) {
+                        priorityClass =
+                            "status-high";
+                    } else if (
+                        priority ===
+                        "MEDIUM"
+                    ) {
+                        priorityClass =
+                            "status-medium";
+                    }
+
+
+                    card.className =
+                        "dashboard-card";
+
+
+                    if (!isRead) {
+                        card.style.borderColor =
+                            "#bfdbfe";
+
+                        card.style.background =
+                            "#f8fbff";
+                    }
+
+
+                    const title =
+                        alert.title ||
+                        "Health Notification";
+
+
+                    const message =
+                        alert.message ||
+                        "";
+
+
+                    const location =
+                        alert.relatedLocation ||
+                        "";
+
+
+                    const createdAt =
+                        alert.createdAt ||
+                        "";
+
+
+                    const reportId =
+                        alert.relatedReportId ||
+                        "";
+
+
+                    card.innerHTML =
+                        `
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:space-between;
+                                align-items:flex-start;
+                                gap:15px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    display:flex;
+                                    align-items:flex-start;
+                                    gap:12px;
+                                "
+                            >
+
+                                <div
+                                    style="
+                                        width:42px;
+                                        height:42px;
+                                        flex:0 0 42px;
+                                        display:grid;
+                                        place-items:center;
+                                        border-radius:12px;
+                                        background:#eff6ff;
+                                        font-size:20px;
+                                    "
+                                >
+                                    ${
+                                        priority ===
+                                        "HIGH"
+                                            ? "🚨"
+                                            : priority ===
+                                              "MEDIUM"
+                                                ? "⚠️"
+                                                : "🔔"
+                                    }
+                                </div>
+
+
+                                <div>
+
+                                    <h3
+                                        style="
+                                            font-size:16px;
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            title
+                                        )}
+                                    </h3>
+
+                                    <div
+                                        style="
+                                            margin-top:4px;
+                                            color:#64748b;
+                                            font-size:11px;
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            alert.notificationType ||
+                                            "SYSTEM"
+                                        )}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <span
+                                class="
+                                    status-badge
+                                    ${priorityClass}
+                                "
+                            >
+                                ${escapeHtml(
+                                    priority
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                margin-top:16px;
+                                color:#475569;
+                                font-size:12px;
+                                line-height:1.7;
+                            "
+                        >
+                            ${escapeHtml(
+                                message
+                            )}
+                        </div>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                flex-wrap:wrap;
+                                gap:15px;
+                                margin-top:16px;
+                                padding-top:13px;
+                                border-top:1px solid #e2e8f0;
+                            "
+                        >
+
+                            ${
+                                location
+                                    ? `
+                                    <div>
+                                        <div class="dashboard-label">
+                                            Location
+                                        </div>
+
+                                        <strong
+                                            style="
+                                                font-size:12px;
+                                            "
+                                        >
+                                            ${escapeHtml(
+                                                location
+                                            )}
+                                        </strong>
+                                    </div>
+                                    `
+                                    : ""
+                            }
+
+
+                            ${
+                                reportId
+                                    ? `
+                                    <div>
+                                        <div class="dashboard-label">
+                                            Report ID
+                                        </div>
+
+                                        <strong
+                                            style="
+                                                font-size:12px;
+                                            "
+                                        >
+                                            ${escapeHtml(
+                                                reportId
+                                            )}
+                                        </strong>
+                                    </div>
+                                    `
+                                    : ""
+                            }
+
+
+                            <div>
+                                <div class="dashboard-label">
+                                    Date
+                                </div>
+
+                                <strong
+                                    style="
+                                        font-size:12px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        formatDate(
+                                            createdAt
+                                        )
+                                    )}
+                                </strong>
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:flex-end;
+                                gap:8px;
+                                flex-wrap:wrap;
+                                margin-top:17px;
+                            "
+                        >
+
+                            ${
+                                !isRead
+                                    ? `
+                                    <button
+                                        type="button"
+                                        class="btn btn-secondary mark-read-button"
+                                        style="
+                                            padding:8px 11px;
+                                            font-size:11px;
+                                        "
+                                    >
+                                        ✓ Mark as Read
+                                    </button>
+                                    `
+                                    : `
+                                    <span
+                                        class="
+                                            status-badge
+                                            status-low
+                                        "
+                                    >
+                                        ✓ Read
+                                    </span>
+                                    `
+                            }
+
+
+                            ${
+                                reportId
+                                    ? `
+                                    <button
+                                        type="button"
+                                        class="
+                                            btn
+                                            btn-primary
+                                            open-report-button
+                                        "
+                                        style="
+                                            padding:8px 11px;
+                                            font-size:11px;
+                                        "
+                                    >
+                                        View Case
+                                    </button>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+                        `;
+
+
+                    const markReadButton =
+                        card.querySelector(
+                            ".mark-read-button"
+                        );
+
+
+                    if (markReadButton) {
+
+                        markReadButton.addEventListener(
+                            "click",
+                            async function () {
+
+                                await markAlertRead(
+                                    alert.id
+                                );
+
+                            }
+                        );
+
+                    }
+
+
+                    const openButton =
+                        card.querySelector(
+                            ".open-report-button"
+                        );
+
+
+                    if (openButton) {
+
+                        openButton.addEventListener(
+                            "click",
+                            async function () {
+
+                                if (
+                                    !alert.isRead
+                                ) {
+                                    await markAlertRead(
+                                        alert.id
+                                    );
+                                }
+
+
+                                openRelatedCase(
+                                    alert
+                                );
+
+                            }
+                        );
+
+                    }
+
+
+                    return card;
+
+                }
+
+
+                /* ==========================================
+                   MARK ONE READ
+                =========================================== */
+
+                async function markAlertRead(
+                    id
+                ) {
+
+                    if (!id) {
+                        return;
+                    }
+
+
+                    try {
+
+                        await apiRequest(
+                            "/notifications/" +
+                            encodeURIComponent(
+                                id
+                            ) +
+                            "/read",
+                            {
+                                method: "PUT"
+                            }
+                        );
+
+
+                        const alert =
+                            allAlerts.find(
+                                function (
+                                    item
+                                ) {
+                                    return (
+                                        Number(
+                                            item.id
+                                        ) ===
+                                        Number(id)
+                                    );
+                                }
+                            );
+
+
+                        if (alert) {
+                            alert.isRead =
+                                true;
+                        }
+
+
+                        updateSummary(
+                            allAlerts
+                        );
+
+
+                        renderAlerts(
+                            allAlerts
+                        );
+
+
+                    } catch (error) {
+
+                        showToast(
+                            error.message ||
+                            "Unable to mark alert as read.",
+                            "error"
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   MARK ALL READ
+                =========================================== */
+
+                async function markAllAlertsRead() {
+
+                    try {
+
+                        await apiRequest(
+                            "/notifications/read-all",
+                            {
+                                method: "PUT"
+                            }
+                        );
+
+
+                        allAlerts =
+                            allAlerts.map(
+                                function (
+                                    alert
+                                ) {
+                                    return {
+                                        ...alert,
+                                        isRead: true
+                                    };
+                                }
+                            );
+
+
+                        updateSummary(
+                            allAlerts
+                        );
+
+
+                        renderAlerts(
+                            allAlerts
+                        );
+
+
+                        if (
+                            typeof showToast ===
+                            "function"
+                        ) {
+                            showToast(
+                                "All notifications marked as read.",
+                                "success"
+                            );
+                        }
+
+
+                        if (
+                            typeof loadUnreadCount ===
+                            "function"
+                        ) {
+                            await loadUnreadCount();
+                        }
+
+                    } catch (error) {
+
+                        showToast(
+                            error.message ||
+                            "Unable to mark all notifications as read.",
+                            "error"
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   OPEN RELATED CASE
+                =========================================== */
+
+                function openRelatedCase(
+                    alert
+                ) {
+
+                    const role =
+                        typeof getCurrentRole ===
+                        "function"
+                            ? getCurrentRole()
+                            : null;
+
+
+                    const reportId =
+                        alert.relatedReportId;
+
+
+                    if (!reportId) {
+                        return;
+                    }
+
+
+                    if (
+                        role ===
+                        "VETERINARIAN"
+                    ) {
+
+                        window.location.href =
+                            "investigation.html" +
+                            "?report_id=" +
+                            encodeURIComponent(
+                                reportId
+                            );
+
+                        return;
+                    }
+
+
+                    if (
+                        [
+                            "DISTRICT_OFFICER",
+                            "STATE_ADMIN",
+                            "SUPER_ADMIN"
+                        ].includes(
+                            role
+                        )
+                    ) {
+
+                        window.location.href =
+                            "government-dashboard.html" +
+                            "?report_id=" +
+                            encodeURIComponent(
+                                reportId
+                            );
+
+                        return;
+                    }
+
+
+                    showToast(
+                        "The related case is not available for this role.",
+                        "info"
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SEARCH / FILTER
+                =========================================== */
+
+                const searchInput =
+                    document.getElementById(
+                        "alertSearch"
+                    );
+
+
+                const filterInput =
+                    document.getElementById(
+                        "alertFilter"
+                    );
+
+
+                if (searchInput) {
+
+                    searchInput.addEventListener(
+                        "input",
+                        function () {
+
+                            renderAlerts(
+                                allAlerts
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                if (filterInput) {
+
+                    filterInput.addEventListener(
+                        "change",
+                        function () {
+
+                            renderAlerts(
+                                allAlerts
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   REFRESH
+                =========================================== */
+
+                const refreshButton =
+                    document.getElementById(
+                        "refreshAlerts"
+                    );
+
+
+                if (refreshButton) {
+
+                    refreshButton.addEventListener(
+                        "click",
+                        async function () {
+
+                            refreshButton.disabled =
+                                true;
+
+                            refreshButton.textContent =
+                                "⏳ Loading...";
+
+
+                            try {
+
+                                await loadAlerts();
+
+                                if (
+                                    typeof loadUnreadCount ===
+                                    "function"
+                                ) {
+                                    await loadUnreadCount();
+                                }
+
+                            } finally {
+
+                                refreshButton.disabled =
+                                    false;
+
+                                refreshButton.textContent =
+                                    "🔄 Refresh";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   MARK ALL
+                =========================================== */
+
+                const markAllButton =
+                    document.getElementById(
+                        "markAllRead"
+                    );
+
+
+                if (markAllButton) {
+
+                    markAllButton.addEventListener(
+                        "click",
+                        markAllAlertsRead
+                    );
+
+                }
+
+
+                /* ==========================================
+                   DATE FORMAT
+                =========================================== */
+
+                function formatDate(
+                    value
+                ) {
+
+                    if (!value) {
+                        return "-";
+                    }
+
+
+                    const date =
+                        new Date(value);
+
+
+                    if (
+                        Number.isNaN(
+                            date.getTime()
+                        )
+                    ) {
+                        return String(
+                            value
+                        );
+                    }
+
+
+                    return date.toLocaleString();
+
+                }
+
+
+                /* ==========================================
+                   ESCAPE HTML
+                =========================================== */
+
+                function escapeHtml(
+                    value
+                ) {
+
+                    return String(
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value
+                    )
+                        .replaceAll(
+                            "&",
+                            "&amp;"
+                        )
+                        .replaceAll(
+                            "<",
+                            "&lt;"
+                        )
+                        .replaceAll(
+                            ">",
+                            "&gt;"
+                        )
+                        .replaceAll(
+                            '"',
+                            "&quot;"
+                        )
+                        .replaceAll(
+                            "'",
+                            "&#039;"
+                        );
+
+                }
+
+
+                /* ==========================================
+                   INITIAL LOAD
+                =========================================== */
+
+                loadAlerts();
+
+            }
+        );
+    </script>
+
+</body>
+</html>

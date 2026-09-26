@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Report Animal Health | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="farmer-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🐄
+            </div>
+
+            <div class="brand-text">
+                <strong>UyirThulir</strong>
+
+                <span>
+                    Livestock Health Surveillance
+                </span>
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-low"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    FARMER
+                </span>
+            </span>
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                Farmer
+            </span>
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <!-- PAGE HEADING -->
+
+        <div style="margin-bottom:25px;">
+
+            <div class="section-label">
+                FIELD HEALTH REPORTING
+            </div>
+
+            <h1 class="dashboard-title">
+                Report Animal Health
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Record symptoms and observations from the field.
+                The platform will generate an AI-assisted risk
+                signal to support appropriate veterinary review.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+            id="healthReportForm"
+            data-form="health-report"
+        >
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        minmax(0, 1.5fr)
+                        minmax(300px, 0.8fr);
+                    gap:25px;
+                    align-items:start;
+                "
+            >
+
+                <!-- =========================================
+                     LEFT COLUMN
+                ========================================== -->
+
+                <div>
+
+                    <!-- ANIMAL DETAILS -->
+
+                    <section class="dashboard-section">
+
+                        <h2>
+                            Animal Details
+                        </h2>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="animalName">
+                                    Animal Name
+                                </label>
+
+                                <input
+                                    id="animalName"
+                                    name="animalName"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Example: Lakshmi"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="species">
+                                    Species
+                                </label>
+
+                                <select
+                                    id="species"
+                                    name="species"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select species
+                                    </option>
+
+                                    <option value="Cattle">
+                                        Cattle
+                                    </option>
+
+                                    <option value="Buffalo">
+                                        Buffalo
+                                    </option>
+
+                                    <option value="Goat">
+                                        Goat
+                                    </option>
+
+                                    <option value="Sheep">
+                                        Sheep
+                                    </option>
+
+                                    <option value="Poultry">
+                                        Poultry
+                                    </option>
+
+                                    <option value="Pig">
+                                        Pig
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- SYMPTOMS -->
+
+                    <section class="dashboard-section">
+
+                        <h2>
+                            Health Observations
+                        </h2>
+
+                        <div class="form-group">
+
+                            <label for="symptoms">
+                                Symptoms
+                            </label>
+
+                            <textarea
+                                id="symptoms"
+                                name="symptoms"
+                                class="form-textarea"
+                                placeholder="Example: Loss of appetite, fever, coughing"
+                            ></textarea>
+
+                            <div
+                                style="
+                                    margin-top:6px;
+                                    color:#94a3b8;
+                                    font-size:11px;
+                                "
+                            >
+                                Enter multiple symptoms separated
+                                by commas or on separate lines.
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="severity">
+                                    Severity
+                                </label>
+
+                                <select
+                                    id="severity"
+                                    name="severity"
+                                    class="form-select"
+                                >
+
+                                    <option value="">
+                                        Select severity
+                                    </option>
+
+                                    <option value="MILD">
+                                        Mild
+                                    </option>
+
+                                    <option value="MODERATE">
+                                        Moderate
+                                    </option>
+
+                                    <option value="SEVERE">
+                                        Severe
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="description">
+                                    Additional Description
+                                </label>
+
+                                <input
+                                    id="description"
+                                    name="description"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Any additional observation"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- LOCATION -->
+
+                    <section class="dashboard-section">
+
+                        <h2>
+                            Location
+                        </h2>
+
+                        <div class="form-group">
+
+                            <label for="location">
+                                Search Location
+                            </label>
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:8px;
+                                "
+                            >
+
+                                <input
+                                    id="location"
+                                    name="location"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Search village, town or district"
+                                >
+
+                                <button
+                                    type="button"
+                                    id="locationSearchButton"
+                                    class="btn btn-secondary"
+                                    style="
+                                        flex-shrink:0;
+                                    "
+                                >
+                                    Search
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                gap:8px;
+                                flex-wrap:wrap;
+                                margin-bottom:15px;
+                            "
+                        >
+
+                            <button
+                                type="button"
+                                id="currentLocationButton"
+                                class="btn btn-secondary"
+                                style="
+                                    font-size:12px;
+                                    padding:9px 12px;
+                                "
+                            >
+                                📍 Use Current Location
+                            </button>
+
+                            <span
+                                id="locationMessage"
+                                style="
+                                    align-self:center;
+                                    color:#64748b;
+                                    font-size:11px;
+                                "
+                            ></span>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:grid;
+                                grid-template-columns:
+                                    repeat(2, minmax(0, 1fr));
+                                gap:12px;
+                            "
+                        >
+
+                            <div class="form-group">
+
+                                <label for="latitude">
+                                    Latitude
+                                </label>
+
+                                <input
+                                    id="latitude"
+                                    name="latitude"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Latitude"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="longitude">
+                                    Longitude
+                                </label>
+
+                                <input
+                                    id="longitude"
+                                    name="longitude"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Longitude"
+                                    readonly
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="reportMap"
+                            class="map-container"
+                            style="
+                                min-height:350px;
+                                margin-top:8px;
+                            "
+                        ></div>
+
+                    </section>
+
+
+                    <!-- EVIDENCE -->
+
+                    <section class="dashboard-section">
+
+                        <h2>
+                            Supporting Evidence
+                        </h2>
+
+                        <p
+                            style="
+                                margin-bottom:18px;
+                                color:#64748b;
+                                font-size:12px;
+                            "
+                        >
+                            Photos and audio are optional but
+                            can help veterinary review.
+                        </p>
+
+
+                        <!-- PHOTO -->
+
+                        <div class="form-group">
+
+                            <label for="photo">
+                                Photo
+                            </label>
+
+                            <div class="file-upload">
+
+                                <div
+                                    style="
+                                        font-size:26px;
+                                    "
+                                >
+                                    📷
+                                </div>
+
+                                <strong>
+                                    Upload Animal Photo
+                                </strong>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    JPG, JPEG, PNG or WEBP
+                                </div>
+
+                                <input
+                                    id="photo"
+                                    name="photo"
+                                    type="file"
+                                    accept="
+                                        image/jpeg,
+                                        image/png,
+                                        image/webp
+                                    "
+                                >
+
+                            </div>
+
+                            <div
+                                id="photoPreview"
+                                style="
+                                    margin-top:12px;
+                                "
+                            ></div>
+
+                        </div>
+
+
+                        <!-- AUDIO -->
+
+                        <div class="form-group">
+
+                            <label for="audio">
+                                Audio
+                            </label>
+
+                            <div class="file-upload">
+
+                                <div
+                                    style="
+                                        font-size:26px;
+                                    "
+                                >
+                                    🎙️
+                                </div>
+
+                                <strong>
+                                    Upload Animal Audio
+                                </strong>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    MP3, WAV, M4A, AAC, OGG or WEBM
+                                </div>
+
+                                <input
+                                    id="audio"
+                                    name="audio"
+                                    type="file"
+                                    accept="
+                                        audio/*,
+                                        .mp3,
+                                        .wav,
+                                        .m4a,
+                                        .aac,
+                                        .ogg,
+                                        .webm
+                                    "
+                                >
+
+                            </div>
+
+                            <div
+                                id="audioPreview"
+                                style="
+                                    margin-top:12px;
+                                "
+                            ></div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- =========================================
+                     RIGHT COLUMN
+                ========================================== -->
+
+                <div
+                    style="
+                        position:sticky;
+                        top:95px;
+                    "
+                >
+
+                    <!-- AI RISK -->
+
+                    <section
+                        id="riskPreview"
+                        class="dashboard-section"
+                        style="
+                            display:block;
+                            background:white;
+                        "
+                    >
+
+                        <div
+                            style="
+                                display:flex;
+                                align-items:center;
+                                gap:10px;
+                                margin-bottom:18px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    width:46px;
+                                    height:46px;
+                                    display:grid;
+                                    place-items:center;
+                                    border-radius:14px;
+                                    background:#eff6ff;
+                                    font-size:23px;
+                                "
+                            >
+                                🤖
+                            </div>
+
+                            <div>
+
+                                <h2
+                                    style="
+                                        margin-bottom:2px;
+                                    "
+                                >
+                                    AI Risk Preview
+                                </h2>
+
+                                <span
+                                    style="
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    Early-warning support
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                padding:22px;
+                                border-radius:18px;
+                                background:#f8fafc;
+                                text-align:center;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    color:#64748b;
+                                    font-size:11px;
+                                "
+                            >
+                                Risk Score
+                            </div>
+
+                            <div
+                                id="riskScoreDisplay"
+                                data-risk-score
+                                style="
+                                    margin-top:4px;
+                                    font-size:52px;
+                                    font-weight:850;
+                                "
+                            >
+                                15
+                            </div>
+
+                            <span
+                                id="riskLevelDisplay"
+                                data-risk-level
+                                class="
+                                    status-badge
+                                    status-low
+                                "
+                                style="
+                                    margin-top:8px;
+                                "
+                            >
+                                LOW
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                margin-top:18px;
+                                padding:15px;
+                                border-radius:14px;
+                                background:#eff6ff;
+                                color:#475569;
+                                font-size:11px;
+                                line-height:1.7;
+                            "
+                        >
+
+                            <strong>
+                                AI-assisted assessment
+                            </strong>
+
+                            <br>
+
+                            This signal is intended to support
+                            veterinary triage and early warning.
+                            It is not an autonomous disease diagnosis.
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="calculateRisk"
+                            data-calculate-risk
+                            class="btn btn-secondary"
+                            style="
+                                width:100%;
+                                margin-top:15px;
+                            "
+                        >
+                            Recalculate Risk
+                        </button>
+
+                    </section>
+
+
+                    <!-- REPORT SUBMISSION -->
+
+                    <section
+                        class="dashboard-section"
+                        style="
+                            margin-top:18px;
+                        "
+                    >
+
+                        <h2>
+                            Submit Report
+                        </h2>
+
+                        <p
+                            style="
+                                color:#64748b;
+                                font-size:12px;
+                                line-height:1.7;
+                            "
+                        >
+                            Check the information before
+                            submitting the health report.
+                        </p>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            style="
+                                width:100%;
+                                margin-top:18px;
+                            "
+                        >
+                            Submit Health Report
+                        </button>
+
+
+                        <a
+                            href="farmer-dashboard.html"
+                            class="btn btn-secondary"
+                            style="
+                                width:100%;
+                                margin-top:10px;
+                            "
+                        >
+                            Cancel
+                        </a>
+
+                    </section>
+
+
+                    <!-- RESPONSE WORKFLOW -->
+
+                    <section
+                        class="dashboard-section"
+                        style="
+                            margin-top:18px;
+                        "
+                    >
+
+                        <h2>
+                            What Happens Next?
+                        </h2>
+
+                        <div
+                            style="
+                                display:flex;
+                                flex-direction:column;
+                                gap:13px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:10px;
+                                    align-items:flex-start;
+                                "
+                            >
+
+                                <span
+                                    style="
+                                        width:28px;
+                                        height:28px;
+                                        flex:0 0 28px;
+                                        display:grid;
+                                        place-items:center;
+                                        border-radius:50%;
+                                        background:#eff6ff;
+                                        color:#2563eb;
+                                        font-size:11px;
+                                        font-weight:800;
+                                    "
+                                >
+                                    1
+                                </span>
+
+                                <span
+                                    style="
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    Your observation is stored
+                                    as a health report.
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:10px;
+                                    align-items:flex-start;
+                                "
+                            >
+
+                                <span
+                                    style="
+                                        width:28px;
+                                        height:28px;
+                                        flex:0 0 28px;
+                                        display:grid;
+                                        place-items:center;
+                                        border-radius:50%;
+                                        background:#eff6ff;
+                                        color:#2563eb;
+                                        font-size:11px;
+                                        font-weight:800;
+                                    "
+                                >
+                                    2
+                                </span>
+
+                                <span
+                                    style="
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    An AI-assisted risk signal
+                                    is generated.
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:10px;
+                                    align-items:flex-start;
+                                "
+                            >
+
+                                <span
+                                    style="
+                                        width:28px;
+                                        height:28px;
+                                        flex:0 0 28px;
+                                        display:grid;
+                                        place-items:center;
+                                        border-radius:50%;
+                                        background:#eff6ff;
+                                        color:#2563eb;
+                                        font-size:11px;
+                                        font-weight:800;
+                                    "
+                                >
+                                    3
+                                </span>
+
+                                <span
+                                    style="
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    Relevant high-risk signals
+                                    can reach veterinary and
+                                    surveillance teams.
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:10px;
+                                    align-items:flex-start;
+                                "
+                            >
+
+                                <span
+                                    style="
+                                        width:28px;
+                                        height:28px;
+                                        flex:0 0 28px;
+                                        display:grid;
+                                        place-items:center;
+                                        border-radius:50%;
+                                        background:#eff6ff;
+                                        color:#2563eb;
+                                        font-size:11px;
+                                        font-weight:800;
+                                    "
+                                >
+                                    4
+                                </span>
+
+                                <span
+                                    style="
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    Veterinary and laboratory
+                                    review can follow when needed.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/farmer.js"></script>
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                let map = null;
+                let marker = null;
+
+
+                /* ==========================================
+                   MAP INITIALISATION
+                =========================================== */
+
+                function initialiseMap(
+                    latitude = 20.5937,
+                    longitude = 78.9629,
+                    zoom = 5
+                ) {
+
+                    const mapContainer =
+                        document.getElementById(
+                            "reportMap"
+                        );
+
+                    if (
+                        !mapContainer ||
+                        typeof L === "undefined"
+                    ) {
+                        return;
+                    }
+
+
+                    map =
+                        L.map(
+                            "reportMap"
+                        ).setView(
+                            [
+                                latitude,
+                                longitude
+                            ],
+                            zoom
+                        );
+
+
+                    L.tileLayer(
+                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        {
+                            maxZoom: 19,
+                            attribution:
+                                "&copy; OpenStreetMap contributors"
+                        }
+                    ).addTo(map);
+
+
+                    map.on(
+                        "click",
+                        function (event) {
+
+                            setLocation(
+                                event.latlng.lat,
+                                event.latlng.lng
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SET LOCATION
+                =========================================== */
+
+                function setLocation(
+                    latitude,
+                    longitude,
+                    locationName = ""
+                ) {
+
+                    const latitudeInput =
+                        document.getElementById(
+                            "latitude"
+                        );
+
+                    const longitudeInput =
+                        document.getElementById(
+                            "longitude"
+                        );
+
+                    const locationInput =
+                        document.getElementById(
+                            "location"
+                        );
+
+
+                    if (latitudeInput) {
+                        latitudeInput.value =
+                            Number(latitude).toFixed(6);
+                    }
+
+
+                    if (longitudeInput) {
+                        longitudeInput.value =
+                            Number(longitude).toFixed(6);
+                    }
+
+
+                    if (
+                        locationName &&
+                        locationInput
+                    ) {
+                        locationInput.value =
+                            locationName;
+                    }
+
+
+                    if (!map) {
+                        return;
+                    }
+
+
+                    if (marker) {
+                        marker.setLatLng(
+                            [
+                                latitude,
+                                longitude
+                            ]
+                        );
+                    } else {
+                        marker =
+                            L.marker(
+                                [
+                                    latitude,
+                                    longitude
+                                ]
+                            )
+                                .addTo(map);
+                    }
+
+
+                    marker.bindPopup(
+                        "Selected livestock report location"
+                    );
+
+
+                    map.setView(
+                        [
+                            latitude,
+                            longitude
+                        ],
+                        15
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CURRENT LOCATION
+                =========================================== */
+
+                const currentLocationButton =
+                    document.getElementById(
+                        "currentLocationButton"
+                    );
+
+
+                if (currentLocationButton) {
+
+                    currentLocationButton.addEventListener(
+                        "click",
+                        function () {
+
+                            const message =
+                                document.getElementById(
+                                    "locationMessage"
+                                );
+
+
+                            if (
+                                !navigator.geolocation
+                            ) {
+
+                                if (message) {
+                                    message.textContent =
+                                        "Geolocation is not supported by this browser.";
+                                }
+
+                                return;
+                            }
+
+
+                            if (message) {
+                                message.textContent =
+                                    "Finding your location...";
+                            }
+
+
+                            navigator.geolocation.getCurrentPosition(
+                                async function (position) {
+
+                                    const latitude =
+                                        position.coords.latitude;
+
+                                    const longitude =
+                                        position.coords.longitude;
+
+
+                                    setLocation(
+                                        latitude,
+                                        longitude
+                                    );
+
+
+                                    if (message) {
+                                        message.textContent =
+                                            "Location detected.";
+                                    }
+
+
+                                    try {
+
+                                        const response =
+                                            await fetch(
+                                                "https://nominatim.openstreetmap.org/reverse" +
+                                                "?format=jsonv2" +
+                                                "&lat=" +
+                                                encodeURIComponent(
+                                                    latitude
+                                                ) +
+                                                "&lon=" +
+                                                encodeURIComponent(
+                                                    longitude
+                                                )
+                                            );
+
+
+                                        if (
+                                            response.ok
+                                        ) {
+
+                                            const data =
+                                                await response.json();
+
+
+                                            if (
+                                                data &&
+                                                data.display_name
+                                            ) {
+
+                                                setLocation(
+                                                    latitude,
+                                                    longitude,
+                                                    data.display_name
+                                                );
+
+                                                if (message) {
+                                                    message.textContent =
+                                                        "Location detected.";
+                                                }
+
+                                            }
+
+                                        }
+
+                                    } catch (error) {
+
+                                        console.error(
+                                            "Reverse geocoding error:",
+                                            error
+                                        );
+
+                                    }
+
+                                },
+                                function (error) {
+
+                                    console.error(
+                                        "Geolocation error:",
+                                        error
+                                    );
+
+
+                                    if (message) {
+                                        message.textContent =
+                                            "Unable to get current location.";
+                                    }
+
+                                },
+                                {
+                                    enableHighAccuracy: true,
+                                    timeout: 10000,
+                                    maximumAge: 300000
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   LOCATION SEARCH
+                =========================================== */
+
+                const locationSearchButton =
+                    document.getElementById(
+                        "locationSearchButton"
+                    );
+
+
+                if (locationSearchButton) {
+
+                    locationSearchButton.addEventListener(
+                        "click",
+                        async function () {
+
+                            const input =
+                                document.getElementById(
+                                    "location"
+                                );
+
+
+                            const message =
+                                document.getElementById(
+                                    "locationMessage"
+                                );
+
+
+                            const query =
+                                input
+                                    ? input.value.trim()
+                                    : "";
+
+
+                            if (!query) {
+
+                                if (message) {
+                                    message.textContent =
+                                        "Enter a location first.";
+                                }
+
+                                return;
+                            }
+
+
+                            if (message) {
+                                message.textContent =
+                                    "Searching location...";
+                            }
+
+
+                            try {
+
+                                const response =
+                                    await fetch(
+                                        "https://nominatim.openstreetmap.org/search" +
+                                        "?format=jsonv2" +
+                                        "&limit=1" +
+                                        "&q=" +
+                                        encodeURIComponent(
+                                            query
+                                        )
+                                    );
+
+
+                                if (
+                                    !response.ok
+                                ) {
+                                    throw new Error(
+                                        "Location search failed."
+                                    );
+                                }
+
+
+                                const data =
+                                    await response.json();
+
+
+                                if (
+                                    !data ||
+                                    !data.length
+                                ) {
+
+                                    if (message) {
+                                        message.textContent =
+                                            "Location not found.";
+                                    }
+
+                                    return;
+                                }
+
+
+                                const result =
+                                    data[0];
+
+
+                                const latitude =
+                                    Number(
+                                        result.lat
+                                    );
+
+                                const longitude =
+                                    Number(
+                                        result.lon
+                                    );
+
+
+                                setLocation(
+                                    latitude,
+                                    longitude,
+                                    result.display_name ||
+                                    query
+                                );
+
+
+                                if (message) {
+                                    message.textContent =
+                                        "Location selected.";
+                                }
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Location search error:",
+                                    error
+                                );
+
+
+                                if (message) {
+                                    message.textContent =
+                                        "Unable to search location.";
+                                }
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   PHOTO PREVIEW
+                =========================================== */
+
+                const photoInput =
+                    document.getElementById(
+                        "photo"
+                    );
+
+
+                const photoPreview =
+                    document.getElementById(
+                        "photoPreview"
+                    );
+
+
+                if (
+                    photoInput &&
+                    photoPreview
+                ) {
+
+                    photoInput.addEventListener(
+                        "change",
+                        function () {
+
+                            photoPreview.innerHTML =
+                                "";
+
+
+                            const file =
+                                photoInput.files &&
+                                photoInput.files[0];
+
+
+                            if (!file) {
+                                return;
+                            }
+
+
+                            const url =
+                                URL.createObjectURL(
+                                    file
+                                );
+
+
+                            photoPreview.innerHTML =
+                                `
+                                <div
+                                    style="
+                                        padding:12px;
+                                        border:1px solid #e2e8f0;
+                                        border-radius:12px;
+                                        background:#f8fafc;
+                                    "
+                                >
+                                    <img
+                                        src="${url}"
+                                        alt="Animal preview"
+                                        style="
+                                            max-height:220px;
+                                            width:100%;
+                                            object-fit:contain;
+                                            border-radius:10px;
+                                        "
+                                    >
+                                </div>
+                                `;
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   AUDIO PREVIEW
+                =========================================== */
+
+                const audioInput =
+                    document.getElementById(
+                        "audio"
+                    );
+
+
+                const audioPreview =
+                    document.getElementById(
+                        "audioPreview"
+                    );
+
+
+                if (
+                    audioInput &&
+                    audioPreview
+                ) {
+
+                    audioInput.addEventListener(
+                        "change",
+                        function () {
+
+                            audioPreview.innerHTML =
+                                "";
+
+
+                            const file =
+                                audioInput.files &&
+                                audioInput.files[0];
+
+
+                            if (!file) {
+                                return;
+                            }
+
+
+                            const url =
+                                URL.createObjectURL(
+                                    file
+                                );
+
+
+                            audioPreview.innerHTML =
+                                `
+                                <div
+                                    style="
+                                        padding:12px;
+                                        border:1px solid #e2e8f0;
+                                        border-radius:12px;
+                                        background:#f8fafc;
+                                    "
+                                >
+
+                                    <div
+                                        style="
+                                            color:#64748b;
+                                            font-size:11px;
+                                            margin-bottom:8px;
+                                        "
+                                    >
+                                        Selected audio:
+                                        ${escapeHtml(
+                                            file.name
+                                        )}
+                                    </div>
+
+                                    <audio
+                                        controls
+                                        src="${url}"
+                                        style="width:100%;"
+                                    ></audio>
+
+                                </div>
+                                `;
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   INITIAL RISK DISPLAY
+                =========================================== */
+
+                if (
+                    typeof updateRiskPreview ===
+                    "function"
+                ) {
+                    updateRiskPreview();
+                }
+
+
+                /* ==========================================
+                   INITIAL MAP
+                =========================================== */
+
+                initialiseMap();
+
+
+                /* ==========================================
+                   ESCAPE HTML
+                =========================================== */
+
+                function escapeHtml(
+                    value
+                ) {
+
+                    return String(
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value
+                    )
+                        .replaceAll(
+                            "&",
+                            "&amp;"
+                        )
+                        .replaceAll(
+                            "<",
+                            "&lt;"
+                        )
+                        .replaceAll(
+                            ">",
+                            "&gt;"
+                        )
+                        .replaceAll(
+                            '"',
+                            "&quot;"
+                        )
+                        .replaceAll(
+                            "'",
+                            "&#039;"
+                        );
+
+                }
+
+            }
+        );
+    </script>
+
+</body>
+</html>

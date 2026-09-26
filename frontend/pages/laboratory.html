@@ -1,0 +1,3307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Laboratory | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="laboratory.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🧪
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    Laboratory Validation
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-progress"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    LAB_STAFF
+                </span>
+            </span>
+
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                Laboratory Staff
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-end;
+                gap:20px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div class="section-label">
+                    LABORATORY OPERATIONS
+                </div>
+
+                <h1 class="dashboard-title">
+                    Laboratory Validation
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Review submitted cases, record laboratory
+                    tests and results, and forward validated
+                    information to livestock health surveillance.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="refreshCases"
+                class="btn btn-secondary"
+            >
+                🔄 Refresh
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
+
+        <section
+            class="dashboard-grid"
+            style="margin-bottom:25px;"
+        >
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🧪
+                </div>
+
+                <div class="dashboard-label">
+                    Laboratory Cases
+                </div>
+
+                <div
+                    id="totalLabCases"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🟢
+                </div>
+
+                <div class="dashboard-label">
+                    Positive Results
+                </div>
+
+                <div
+                    id="positiveCases"
+                    class="dashboard-value"
+                    style="color:#16a34a;"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🔴
+                </div>
+
+                <div class="dashboard-label">
+                    Negative Results
+                </div>
+
+                <div
+                    id="negativeCases"
+                    class="dashboard-value"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:8px;
+                    "
+                >
+                    🟠
+                </div>
+
+                <div class="dashboard-label">
+                    Inconclusive
+                </div>
+
+                <div
+                    id="inconclusiveCases"
+                    class="dashboard-value"
+                    style="color:#d97706;"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CASE SELECTION
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Laboratory Case Queue
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Cases forwarded for laboratory validation.
+                    </p>
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        gap:8px;
+                        flex-wrap:wrap;
+                    "
+                >
+
+                    <input
+                        id="caseSearch"
+                        type="text"
+                        class="form-control"
+                        placeholder="Search report ID, animal or location"
+                        style="width:260px;"
+                    >
+
+
+                    <select
+                        id="caseFilter"
+                        class="form-select"
+                        style="width:170px;"
+                    >
+
+                        <option value="ALL">
+                            All Cases
+                        </option>
+
+                        <option value="SENT TO LAB">
+                            Sent to Lab
+                        </option>
+
+                        <option value="VALIDATED">
+                            Validated
+                        </option>
+
+                        <option value="UNDER INVESTIGATION">
+                            Under Investigation
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="caseList"
+                style="margin-top:20px;"
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading laboratory cases...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SELECTED CASE
+        ================================================== -->
+
+        <section
+            id="selectedCaseSection"
+            class="dashboard-section"
+            style="display:none; margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:flex-start;
+                    gap:20px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <div class="section-label">
+                        SELECTED CASE
+                    </div>
+
+                    <h2
+                        id="selectedReportId"
+                        style="
+                            margin-top:3px;
+                            font-size:24px;
+                        "
+                    >
+                        -
+                    </h2>
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        gap:8px;
+                        flex-wrap:wrap;
+                    "
+                >
+
+                    <span
+                        id="selectedRiskBadge"
+                        class="
+                            status-badge
+                            status-low
+                        "
+                    >
+                        LOW
+                    </span>
+
+                    <span
+                        id="selectedStatusBadge"
+                        class="
+                            status-badge
+                            status-pending
+                        "
+                    >
+                        PENDING
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CASE DETAILS -->
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(
+                            4,
+                            minmax(0, 1fr)
+                        );
+                    gap:15px;
+                    margin-top:20px;
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-label">
+                        Animal
+                    </div>
+
+                    <strong
+                        id="selectedAnimal"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <div class="dashboard-label">
+                        Species
+                    </div>
+
+                    <strong
+                        id="selectedSpecies"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <div class="dashboard-label">
+                        Location
+                    </div>
+
+                    <strong
+                        id="selectedLocation"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <div class="dashboard-label">
+                        Risk Score
+                    </div>
+
+                    <strong
+                        id="selectedRiskScore"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:20px;
+                    padding-top:15px;
+                    border-top:1px solid #e2e8f0;
+                "
+            >
+
+                <div class="dashboard-label">
+                    Symptoms
+                </div>
+
+                <div
+                    id="selectedSymptoms"
+                    style="
+                        margin-top:5px;
+                        color:#475569;
+                        font-size:12px;
+                        line-height:1.7;
+                    "
+                >
+                    -
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LAB FORM
+        ================================================== -->
+
+        <section
+            id="laboratoryFormSection"
+            class="dashboard-section"
+            style="display:none;"
+        >
+
+            <div>
+
+                <h2>
+                    Laboratory Test Details
+                </h2>
+
+                <p
+                    style="
+                        margin-top:4px;
+                        color:#64748b;
+                        font-size:12px;
+                    "
+                >
+                    Record the test performed and the laboratory
+                    findings for the selected case.
+                </p>
+
+            </div>
+
+
+            <form
+                id="laboratoryForm"
+                style="margin-top:20px;"
+            >
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:
+                            repeat(
+                                2,
+                                minmax(0, 1fr)
+                            );
+                        gap:17px;
+                    "
+                >
+
+                    <!-- SAMPLE ID -->
+
+                    <div class="form-group">
+
+                        <label for="sampleId">
+                            Sample ID
+                        </label>
+
+                        <input
+                            id="sampleId"
+                            name="sampleId"
+                            type="text"
+                            class="form-control"
+                            placeholder="Example: LAB-2026-001"
+                        >
+
+                    </div>
+
+
+                    <!-- SAMPLE TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="sampleType">
+                            Sample Type
+                        </label>
+
+                        <select
+                            id="sampleType"
+                            name="sampleType"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select sample type
+                            </option>
+
+                            <option value="Milk">
+                                Milk
+                            </option>
+
+                            <option value="Blood">
+                                Blood
+                            </option>
+
+                            <option value="Serum">
+                                Serum
+                            </option>
+
+                            <option value="Swab">
+                                Swab
+                            </option>
+
+                            <option value="Stool">
+                                Stool
+                            </option>
+
+                            <option value="Urine">
+                                Urine
+                            </option>
+
+                            <option value="Tissue">
+                                Tissue
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TEST TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="testType">
+                            Test Type
+                        </label>
+
+                        <select
+                            id="testType"
+                            name="testType"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select test type
+                            </option>
+
+                            <option value="Microscopic Examination">
+                                Microscopic Examination
+                            </option>
+
+                            <option value="Culture/Isolation">
+                                Culture / Isolation
+                            </option>
+
+                            <option value="PCR/Molecular Test">
+                                PCR / Molecular Test
+                            </option>
+
+                            <option value="Serological Test">
+                                Serological Test
+                            </option>
+
+                            <option value="Rapid Diagnostic Test">
+                                Rapid Diagnostic Test
+                            </option>
+
+                            <option value="Milk Quality Analysis">
+                                Milk Quality Analysis
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- RESULT -->
+
+                    <div class="form-group">
+
+                        <label for="result">
+                            Result
+                        </label>
+
+                        <select
+                            id="result"
+                            name="result"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select result
+                            </option>
+
+                            <option value="NEGATIVE">
+                                Negative
+                            </option>
+
+                            <option value="POSITIVE">
+                                Positive
+                            </option>
+
+                            <option value="INCONCLUSIVE">
+                                Inconclusive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ASSAY REFERENCE -->
+
+                    <div class="form-group">
+
+                        <label for="assayReference">
+                            Assay Reference
+                        </label>
+
+                        <input
+                            id="assayReference"
+                            name="assayReference"
+                            type="text"
+                            class="form-control"
+                            placeholder="Optional laboratory reference"
+                        >
+
+                    </div>
+
+
+                    <!-- VALIDATION DATE -->
+
+                    <div class="form-group">
+
+                        <label for="validationDate">
+                            Validation Date
+                        </label>
+
+                        <input
+                            id="validationDate"
+                            name="validationDate"
+                            type="date"
+                            class="form-control"
+                        >
+
+                    </div>
+
+
+                    <!-- FINDINGS -->
+
+                    <div
+                        class="form-group"
+                        style="
+                            grid-column:1 / -1;
+                        "
+                    >
+
+                        <label for="findings">
+                            Findings
+                        </label>
+
+                        <textarea
+                            id="findings"
+                            name="findings"
+                            class="form-textarea"
+                            placeholder="Record laboratory observations and findings."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- SURVEILLANCE CLASSIFICATION -->
+
+                    <div
+                        class="form-group"
+                        style="
+                            grid-column:1 / -1;
+                        "
+                    >
+
+                        <label for="surveillanceClassification">
+                            Surveillance Classification
+                        </label>
+
+                        <select
+                            id="surveillanceClassification"
+                            name="surveillanceClassification"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select classification
+                            </option>
+
+                            <option value="NOT CLASSIFIED">
+                                Not Classified
+                            </option>
+
+                            <option value="VALIDATED CASE">
+                                Validated Case
+                            </option>
+
+                            <option value="NEGATIVE SURVEILLANCE">
+                                Negative Surveillance
+                            </option>
+
+                            <option value="REQUIRES FURTHER INVESTIGATION">
+                                Requires Further Investigation
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:flex-end;
+                        gap:10px;
+                        flex-wrap:wrap;
+                        margin-top:10px;
+                    "
+                >
+
+                    <button
+                        type="button"
+                        id="clearLaboratoryForm"
+                        class="btn btn-secondary"
+                    >
+                        Clear
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveLabResult"
+                        class="btn btn-primary"
+                    >
+                        Save Validation
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="sendSurveillance"
+                        class="btn btn-primary"
+                        style="
+                            background:#0f766e;
+                        "
+                    >
+                        Send to Surveillance
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="laboratoryMessage"
+                style="margin-top:18px;"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESPONSIBLE VALIDATION NOTICE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-top:25px;
+                background:#eff6ff;
+                border-color:#bfdbfe;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    align-items:flex-start;
+                    gap:14px;
+                "
+            >
+
+                <div
+                    style="
+                        width:42px;
+                        height:42px;
+                        flex:0 0 42px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:12px;
+                        background:white;
+                        font-size:20px;
+                    "
+                >
+                    🧪
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:15px;
+                        "
+                    >
+                        Laboratory Validation
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:6px;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.7;
+                        "
+                    >
+                        Laboratory results provide an important
+                        validation step in the surveillance workflow.
+                        AI risk signals and preliminary veterinary
+                        assessments should not be treated as confirmed
+                        disease diagnoses without appropriate testing
+                        and professional review.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/notifications.js"></script>
+
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+
+                let allCases = [];
+                let selectedCase = null;
+                let existingLabRecord = null;
+
+
+                /* ==========================================
+                   URL PARAMETERS
+                =========================================== */
+
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+
+                const requestedReportId =
+                    params.get(
+                        "report_id"
+                    ) ||
+                    params.get(
+                        "reportId"
+                    ) ||
+                    params.get(
+                        "id"
+                    );
+
+
+                /* ==========================================
+                   LOAD CASES
+                =========================================== */
+
+                async function loadCases() {
+
+                    const container =
+                        document.getElementById(
+                            "caseList"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    container.innerHTML =
+                        `
+                        <div class="loading">
+                            <span class="spinner"></span>
+                            Loading laboratory cases...
+                        </div>
+                        `;
+
+
+                    try {
+
+                        /*
+                         * The laboratory endpoint returns
+                         * laboratory records. We also load
+                         * health reports so that cases that are
+                         * newly sent to the laboratory can be
+                         * selected immediately.
+                         */
+
+                        let laboratoryResponse =
+                            null;
+
+
+                        try {
+
+                            laboratoryResponse =
+                                await apiRequest(
+                                    "/laboratory",
+                                    {
+                                        method: "GET"
+                                    }
+                                );
+
+                        } catch (error) {
+
+                            console.warn(
+                                "Laboratory records could not be loaded:",
+                                error
+                            );
+
+                        }
+
+
+                        const reportsResponse =
+                            await apiRequest(
+                                "/health-reports",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        const reports =
+                            Array.isArray(
+                                reportsResponse.reports
+                            )
+                                ? reportsResponse.reports
+                                : [];
+
+
+                        const labRecords =
+                            laboratoryResponse &&
+                            Array.isArray(
+                                laboratoryResponse.records
+                            )
+                                ? laboratoryResponse.records
+                                : [];
+
+
+                        const recordsByReport =
+                            {};
+
+
+                        labRecords.forEach(
+                            function (record) {
+
+                                const key =
+                                    String(
+                                        record.reportId ||
+                                        record.report_id ||
+                                        ""
+                                    );
+
+
+                                if (key) {
+                                    recordsByReport[key] =
+                                        record;
+                                }
+
+                            }
+                        );
+
+
+                        allCases =
+                            reports
+                                .filter(
+                                    function (report) {
+
+                                        const status =
+                                            String(
+                                                report.status ||
+                                                ""
+                                            ).toUpperCase();
+
+
+                                        const reportKey =
+                                            String(
+                                                report.reportId ||
+                                                report.report_id ||
+                                                report.id ||
+                                                ""
+                                            );
+
+
+                                        return (
+                                            status ===
+                                                "SENT TO LAB" ||
+                                            status ===
+                                                "VALIDATED" ||
+                                            status ===
+                                                "UNDER INVESTIGATION" ||
+                                            Boolean(
+                                                recordsByReport[
+                                                    reportKey
+                                                ]
+                                            )
+                                        );
+
+                                    }
+                                )
+                                .map(
+                                    function (report) {
+
+                                        const key =
+                                            String(
+                                                report.reportId ||
+                                                report.report_id ||
+                                                report.id ||
+                                                ""
+                                            );
+
+
+                                        return {
+                                            ...report,
+                                            laboratoryRecord:
+                                                recordsByReport[
+                                                    key
+                                                ] || null
+                                        };
+
+                                    }
+                                );
+
+
+                        updateSummary(
+                            allCases
+                        );
+
+
+                        renderCases(
+                            allCases
+                        );
+
+
+                        if (
+                            requestedReportId
+                        ) {
+
+                            const requestedCase =
+                                allCases.find(
+                                    function (
+                                        item
+                                    ) {
+
+                                        const id =
+                                            String(
+                                                item.reportId ||
+                                                item.report_id ||
+                                                item.id ||
+                                                ""
+                                            );
+
+
+                                        return (
+                                            id ===
+                                            String(
+                                                requestedReportId
+                                            )
+                                        );
+
+                                    }
+                                );
+
+
+                            if (
+                                requestedCase
+                            ) {
+
+                                await selectCase(
+                                    requestedCase
+                                );
+
+                            }
+
+                        }
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Unable to load laboratory cases:",
+                            error
+                        );
+
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    ⚠️
+                                </div>
+
+                                <h3>
+                                    Unable to load cases
+                                </h3>
+
+                                <p>
+                                    ${escapeHtml(
+                                        error.message ||
+                                        "Please try again."
+                                    )}
+                                </p>
+
+                            </div>
+                            `;
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   SUMMARY
+                =========================================== */
+
+                function updateSummary(
+                    cases
+                ) {
+
+                    let positive = 0;
+                    let negative = 0;
+                    let inconclusive = 0;
+
+
+                    cases.forEach(
+                        function (item) {
+
+                            const result =
+                                String(
+                                    item.laboratoryRecord &&
+                                    item.laboratoryRecord.result
+                                        ? item.laboratoryRecord.result
+                                        : ""
+                                ).toUpperCase();
+
+
+                            if (
+                                result ===
+                                "POSITIVE"
+                            ) {
+                                positive += 1;
+                            }
+
+
+                            if (
+                                result ===
+                                "NEGATIVE"
+                            ) {
+                                negative += 1;
+                            }
+
+
+                            if (
+                                result ===
+                                "INCONCLUSIVE"
+                            ) {
+                                inconclusive += 1;
+                            }
+
+                        }
+                    );
+
+
+                    setText(
+                        "totalLabCases",
+                        cases.length
+                    );
+
+
+                    setText(
+                        "positiveCases",
+                        positive
+                    );
+
+
+                    setText(
+                        "negativeCases",
+                        negative
+                    );
+
+
+                    setText(
+                        "inconclusiveCases",
+                        inconclusive
+                    );
+
+                }
+
+
+                /* ==========================================
+                   RENDER CASE LIST
+                =========================================== */
+
+                function renderCases(
+                    cases
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "caseList"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    const search =
+                        document
+                            .getElementById(
+                                "caseSearch"
+                            )
+                            .value
+                            .trim()
+                            .toLowerCase();
+
+
+                    const filter =
+                        document
+                            .getElementById(
+                                "caseFilter"
+                            )
+                            .value
+                            .toUpperCase();
+
+
+                    const filtered =
+                        cases.filter(
+                            function (item) {
+
+                                const reportId =
+                                    String(
+                                        item.reportId ||
+                                        item.report_id ||
+                                        item.id ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const animal =
+                                    String(
+                                        item.animalName ||
+                                        item.animal_name ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const location =
+                                    String(
+                                        item.location ||
+                                        ""
+                                    ).toLowerCase();
+
+
+                                const searchable =
+                                    reportId +
+                                    " " +
+                                    animal +
+                                    " " +
+                                    location;
+
+
+                                const matchesSearch =
+                                    !search ||
+                                    searchable.includes(
+                                        search
+                                    );
+
+
+                                const status =
+                                    String(
+                                        item.status ||
+                                        ""
+                                    ).toUpperCase();
+
+
+                                let matchesFilter =
+                                    true;
+
+
+                                if (
+                                    filter !==
+                                    "ALL"
+                                ) {
+                                    matchesFilter =
+                                        status ===
+                                        filter;
+                                }
+
+
+                                return (
+                                    matchesSearch &&
+                                    matchesFilter
+                                );
+
+                            }
+                        );
+
+
+                    container.innerHTML =
+                        "";
+
+
+                    if (
+                        !filtered.length
+                    ) {
+
+                        container.innerHTML =
+                            `
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+                                    🧪
+                                </div>
+
+                                <h3>
+                                    No laboratory cases found
+                                </h3>
+
+                                <p>
+                                    Cases sent for laboratory
+                                    validation will appear here.
+                                </p>
+
+                            </div>
+                            `;
+
+                        return;
+                    }
+
+
+                    filtered.forEach(
+                        function (item) {
+
+                            container.appendChild(
+                                createCaseCard(
+                                    item
+                                )
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CASE CARD
+                =========================================== */
+
+                function createCaseCard(
+                    item
+                ) {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "dashboard-card";
+
+
+                    card.style.marginBottom =
+                        "12px";
+
+
+                    const reportId =
+                        item.reportId ||
+                        item.report_id ||
+                        item.id ||
+                        "-";
+
+
+                    const animal =
+                        item.animalName ||
+                        item.animal_name ||
+                        "Unknown Animal";
+
+
+                    const species =
+                        item.species ||
+                        "Unknown";
+
+
+                    const location =
+                        item.location ||
+                        "Unknown Location";
+
+
+                    const risk =
+                        String(
+                            item.riskLevel ||
+                            item.risk_level ||
+                            item.severity ||
+                            "LOW"
+                        ).toUpperCase();
+
+
+                    const status =
+                        String(
+                            item.status ||
+                            "PENDING"
+                        ).toUpperCase();
+
+
+                    const labRecord =
+                        item.laboratoryRecord;
+
+
+                    const result =
+                        labRecord &&
+                        labRecord.result
+                            ? String(
+                                labRecord.result
+                            ).toUpperCase()
+                            : "NOT RECORDED";
+
+
+                    let riskClass =
+                        "status-low";
+
+
+                    if (
+                        risk === "HIGH"
+                    ) {
+                        riskClass =
+                            "status-high";
+                    } else if (
+                        risk === "MEDIUM"
+                    ) {
+                        riskClass =
+                            "status-medium";
+                    }
+
+
+                    let resultClass =
+                        "status-pending";
+
+
+                    if (
+                        result === "POSITIVE"
+                    ) {
+                        resultClass =
+                            "status-high";
+                    } else if (
+                        result === "NEGATIVE"
+                    ) {
+                        resultClass =
+                            "status-low";
+                    } else if (
+                        result ===
+                        "INCONCLUSIVE"
+                    ) {
+                        resultClass =
+                            "status-medium";
+                    }
+
+
+                    card.innerHTML =
+                        `
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:space-between;
+                                align-items:flex-start;
+                                gap:15px;
+                                flex-wrap:wrap;
+                            "
+                        >
+
+                            <div>
+
+                                <h3
+                                    style="
+                                        font-size:17px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        animal
+                                    )}
+                                </h3>
+
+                                <div
+                                    style="
+                                        margin-top:3px;
+                                        color:#64748b;
+                                        font-size:11px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        species
+                                    )}
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:7px;
+                                    flex-wrap:wrap;
+                                "
+                            >
+
+                                <span
+                                    class="
+                                        status-badge
+                                        ${riskClass}
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        risk
+                                    )}
+                                </span>
+
+
+                                <span
+                                    class="
+                                        status-badge
+                                        ${resultClass}
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        result
+                                    )}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:grid;
+                                grid-template-columns:
+                                    repeat(
+                                        3,
+                                        minmax(0, 1fr)
+                                    );
+                                gap:15px;
+                                margin-top:15px;
+                            "
+                        >
+
+                            <div>
+
+                                <div
+                                    class="dashboard-label"
+                                >
+                                    Report ID
+                                </div>
+
+                                <strong
+                                    style="
+                                        font-size:12px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        String(
+                                            reportId
+                                        )
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <div
+                                    class="dashboard-label"
+                                >
+                                    Location
+                                </div>
+
+                                <strong
+                                    style="
+                                        font-size:12px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        location
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <div
+                                    class="dashboard-label"
+                                >
+                                    Status
+                                </div>
+
+                                <strong
+                                    style="
+                                        font-size:12px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        status
+                                    )}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:flex-end;
+                                margin-top:15px;
+                            "
+                        >
+
+                            <button
+                                type="button"
+                                class="
+                                    btn
+                                    btn-primary
+                                    select-case-button
+                                "
+                                style="
+                                    padding:8px 12px;
+                                    font-size:11px;
+                                "
+                            >
+                                ${
+                                    labRecord
+                                        ? "Open Validation"
+                                        : "Start Validation"
+                                }
+                            </button>
+
+                        </div>
+                        `;
+
+
+                    const selectButton =
+                        card.querySelector(
+                            ".select-case-button"
+                        );
+
+
+                    if (selectButton) {
+
+                        selectButton.addEventListener(
+                            "click",
+                            function () {
+
+                                selectCase(
+                                    item
+                                );
+
+                            }
+                        );
+
+                    }
+
+
+                    return card;
+
+                }
+
+
+                /* ==========================================
+                   SELECT CASE
+                =========================================== */
+
+                async function selectCase(
+                    item
+                ) {
+
+                    selectedCase =
+                        item;
+
+
+                    existingLabRecord =
+                        item.laboratoryRecord ||
+                        null;
+
+
+                    document.getElementById(
+                        "selectedCaseSection"
+                    ).style.display =
+                        "block";
+
+
+                    document.getElementById(
+                        "laboratoryFormSection"
+                    ).style.display =
+                        "block";
+
+
+                    renderSelectedCase(
+                        item
+                    );
+
+
+                    if (
+                        existingLabRecord
+                    ) {
+
+                        populateLabForm(
+                            existingLabRecord
+                        );
+
+                    } else {
+
+                        clearLabForm();
+
+                    }
+
+
+                    const reportId =
+                        item.reportId ||
+                        item.report_id ||
+                        item.id;
+
+
+                    /*
+                     * Try to retrieve the freshest laboratory
+                     * record for this specific case.
+                     */
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/laboratory/" +
+                                encodeURIComponent(
+                                    reportId
+                                ),
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        if (
+                            response &&
+                            response.record
+                        ) {
+
+                            existingLabRecord =
+                                response.record;
+
+                            populateLabForm(
+                                existingLabRecord
+                            );
+
+                        }
+
+                    } catch (error) {
+
+                        if (
+                            error.status !==
+                            404
+                        ) {
+
+                            console.warn(
+                                "Unable to load individual laboratory record:",
+                                error
+                            );
+
+                        }
+
+                    }
+
+
+                    document.getElementById(
+                        "laboratoryFormSection"
+                    ).scrollIntoView(
+                        {
+                            behavior: "smooth",
+                            block: "start"
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   RENDER SELECTED CASE
+                =========================================== */
+
+                function renderSelectedCase(
+                    item
+                ) {
+
+                    const reportId =
+                        item.reportId ||
+                        item.report_id ||
+                        item.id ||
+                        "-";
+
+
+                    const animal =
+                        item.animalName ||
+                        item.animal_name ||
+                        "-";
+
+
+                    const species =
+                        item.species ||
+                        "-";
+
+
+                    const location =
+                        item.location ||
+                        "-";
+
+
+                    const score =
+                        item.riskScore ??
+                        item.risk_score ??
+                        "-";
+
+
+                    const risk =
+                        String(
+                            item.riskLevel ||
+                            item.risk_level ||
+                            item.severity ||
+                            "LOW"
+                        ).toUpperCase();
+
+
+                    const status =
+                        String(
+                            item.status ||
+                            "PENDING"
+                        ).toUpperCase();
+
+
+                    const symptoms =
+                        parseSymptoms(
+                            item.symptoms
+                        );
+
+
+                    setText(
+                        "selectedReportId",
+                        reportId
+                    );
+
+
+                    setText(
+                        "selectedAnimal",
+                        animal
+                    );
+
+
+                    setText(
+                        "selectedSpecies",
+                        species
+                    );
+
+
+                    setText(
+                        "selectedLocation",
+                        location
+                    );
+
+
+                    setText(
+                        "selectedRiskScore",
+                        score
+                    );
+
+
+                    setText(
+                        "selectedSymptoms",
+                        symptoms.length
+                            ? symptoms.join(
+                                ", "
+                            )
+                            : "No symptoms available."
+                    );
+
+
+                    updateRiskBadge(
+                        risk
+                    );
+
+
+                    updateStatusBadge(
+                        status
+                    );
+
+                }
+
+
+                /* ==========================================
+                   POPULATE LAB FORM
+                =========================================== */
+
+                function populateLabForm(
+                    record
+                ) {
+
+                    setValue(
+                        "sampleId",
+                        record.sampleId ||
+                        record.sample_id ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "sampleType",
+                        record.sampleType ||
+                        record.sample_type ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "testType",
+                        record.testType ||
+                        record.test_type ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "result",
+                        record.result ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "assayReference",
+                        record.assayReference ||
+                        record.assay_reference ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "findings",
+                        record.findings ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "surveillanceClassification",
+                        record.surveillanceClassification ||
+                        record.surveillance_classification ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "validationDate",
+                        formatDateForInput(
+                            record.validationDate ||
+                            record.validation_date
+                        )
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CLEAR FORM
+                =========================================== */
+
+                function clearLabForm() {
+
+                    const form =
+                        document.getElementById(
+                            "laboratoryForm"
+                        );
+
+
+                    if (form) {
+                        form.reset();
+                    }
+
+
+                    const today =
+                        new Date();
+
+
+                    setValue(
+                        "validationDate",
+                        today
+                            .toISOString()
+                            .split("T")[0]
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SAVE VALIDATION
+                =========================================== */
+
+                const laboratoryForm =
+                    document.getElementById(
+                        "laboratoryForm"
+                    );
+
+
+                if (laboratoryForm) {
+
+                    laboratoryForm.addEventListener(
+                        "submit",
+                        async function (
+                            event
+                        ) {
+
+                            event.preventDefault();
+
+
+                            if (
+                                !selectedCase
+                            ) {
+
+                                showLabMessage(
+                                    "Please select a laboratory case first.",
+                                    "error"
+                                );
+
+                                return;
+                            }
+
+
+                            const reportId =
+                                selectedCase.reportId ||
+                                selectedCase.report_id ||
+                                selectedCase.id;
+
+
+                            const result =
+                                getValue(
+                                    "result"
+                                );
+
+
+                            const testType =
+                                getValue(
+                                    "testType"
+                                );
+
+
+                            if (
+                                !testType
+                            ) {
+
+                                showLabMessage(
+                                    "Please select the test type.",
+                                    "error"
+                                );
+
+                                return;
+                            }
+
+
+                            if (
+                                !result
+                            ) {
+
+                                showLabMessage(
+                                    "Please select the laboratory result.",
+                                    "error"
+                                );
+
+                                return;
+                            }
+
+
+                            const payload = {
+                                sampleId:
+                                    getValue(
+                                        "sampleId"
+                                    ),
+
+                                sampleType:
+                                    getValue(
+                                        "sampleType"
+                                    ),
+
+                                testType:
+                                    testType,
+
+                                result:
+                                    result,
+
+                                assayReference:
+                                    getValue(
+                                        "assayReference"
+                                    ),
+
+                                findings:
+                                    getValue(
+                                        "findings"
+                                    ),
+
+                                surveillanceClassification:
+                                    getValue(
+                                        "surveillanceClassification"
+                                    ),
+
+                                validationDate:
+                                    getValue(
+                                        "validationDate"
+                                    )
+                            };
+
+
+                            const button =
+                                document.getElementById(
+                                    "saveLabResult"
+                                );
+
+
+                            const originalText =
+                                button
+                                    ? button.textContent
+                                    : "";
+
+
+                            if (button) {
+
+                                button.disabled =
+                                    true;
+
+                                button.textContent =
+                                    "Saving...";
+
+                            }
+
+
+                            try {
+
+                                const response =
+                                    await apiRequest(
+                                        "/laboratory/" +
+                                        encodeURIComponent(
+                                            reportId
+                                        ),
+                                        {
+                                            method: "POST",
+                                            body:
+                                                JSON.stringify(
+                                                    payload
+                                                )
+                                        }
+                                    );
+
+
+                                existingLabRecord =
+                                    response.record ||
+                                    response.data ||
+                                    payload;
+
+
+                                selectedCase.laboratoryRecord =
+                                    existingLabRecord;
+
+
+                                showLabMessage(
+                                    response.message ||
+                                    "Laboratory result saved successfully.",
+                                    "success"
+                                );
+
+
+                                updateSelectedResult(
+                                    result
+                                );
+
+
+                                await loadCasesWithoutReset();
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Laboratory save error:",
+                                    error
+                                );
+
+
+                                showLabMessage(
+                                    error.message ||
+                                    "Unable to save laboratory result.",
+                                    "error"
+                                );
+
+                            } finally {
+
+                                if (button) {
+
+                                    button.disabled =
+                                        false;
+
+                                    button.textContent =
+                                        originalText ||
+                                        "Save Validation";
+
+                                }
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SEND TO SURVEILLANCE
+                =========================================== */
+
+                const sendButton =
+                    document.getElementById(
+                        "sendSurveillance"
+                    );
+
+
+                if (sendButton) {
+
+                    sendButton.addEventListener(
+                        "click",
+                        async function () {
+
+                            if (
+                                !selectedCase
+                            ) {
+
+                                showLabMessage(
+                                    "Please select a case first.",
+                                    "error"
+                                );
+
+                                return;
+                            }
+
+
+                            const reportId =
+                                selectedCase.reportId ||
+                                selectedCase.report_id ||
+                                selectedCase.id;
+
+
+                            if (
+                                !existingLabRecord
+                            ) {
+
+                                showLabMessage(
+                                    "Save the laboratory validation result before sending it to surveillance.",
+                                    "warning"
+                                );
+
+                                return;
+                            }
+
+
+                            sendButton.disabled =
+                                true;
+
+
+                            const originalText =
+                                sendButton.textContent;
+
+
+                            sendButton.textContent =
+                                "Sending...";
+
+
+                            try {
+
+                                const response =
+                                    await apiRequest(
+                                        "/laboratory/" +
+                                        encodeURIComponent(
+                                            reportId
+                                        ) +
+                                        "/surveillance",
+                                        {
+                                            method: "PUT",
+                                            body:
+                                                JSON.stringify(
+                                                    {
+                                                        sentToSurveillance:
+                                                            true
+                                                    }
+                                                )
+                                        }
+                                    );
+
+
+                                showLabMessage(
+                                    response.message ||
+                                    "Case sent to surveillance successfully.",
+                                    "success"
+                                );
+
+
+                                selectedCase.status =
+                                    "VALIDATED";
+
+
+                                updateStatusBadge(
+                                    "VALIDATED"
+                                );
+
+
+                                await loadCasesWithoutReset();
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Surveillance submission error:",
+                                    error
+                                );
+
+
+                                showLabMessage(
+                                    error.message ||
+                                    "Unable to send case to surveillance.",
+                                    "error"
+                                );
+
+                            } finally {
+
+                                sendButton.disabled =
+                                    false;
+
+                                sendButton.textContent =
+                                    originalText;
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CLEAR BUTTON
+                =========================================== */
+
+                const clearButton =
+                    document.getElementById(
+                        "clearLaboratoryForm"
+                    );
+
+
+                if (clearButton) {
+
+                    clearButton.addEventListener(
+                        "click",
+                        function () {
+
+                            clearLabForm();
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SEARCH
+                =========================================== */
+
+                const searchInput =
+                    document.getElementById(
+                        "caseSearch"
+                    );
+
+
+                const filterInput =
+                    document.getElementById(
+                        "caseFilter"
+                    );
+
+
+                if (searchInput) {
+
+                    searchInput.addEventListener(
+                        "input",
+                        function () {
+
+                            renderCases(
+                                allCases
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                if (filterInput) {
+
+                    filterInput.addEventListener(
+                        "change",
+                        function () {
+
+                            renderCases(
+                                allCases
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   REFRESH
+                =========================================== */
+
+                const refreshButton =
+                    document.getElementById(
+                        "refreshCases"
+                    );
+
+
+                if (refreshButton) {
+
+                    refreshButton.addEventListener(
+                        "click",
+                        async function () {
+
+                            refreshButton.disabled =
+                                true;
+
+                            refreshButton.textContent =
+                                "⏳ Loading...";
+
+
+                            try {
+
+                                await loadCasesWithoutReset();
+
+                            } finally {
+
+                                refreshButton.disabled =
+                                    false;
+
+                                refreshButton.textContent =
+                                    "🔄 Refresh";
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   REFRESH WITHOUT CLOSING SELECTED CASE
+                =========================================== */
+
+                async function loadCasesWithoutReset() {
+
+                    try {
+
+                        const laboratoryResponse =
+                            await apiRequest(
+                                "/laboratory",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        const reportsResponse =
+                            await apiRequest(
+                                "/health-reports",
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        const reports =
+                            Array.isArray(
+                                reportsResponse.reports
+                            )
+                                ? reportsResponse.reports
+                                : [];
+
+
+                        const labRecords =
+                            laboratoryResponse &&
+                            Array.isArray(
+                                laboratoryResponse.records
+                            )
+                                ? laboratoryResponse.records
+                                : [];
+
+
+                        const recordsByReport =
+                            {};
+
+
+                        labRecords.forEach(
+                            function (record) {
+
+                                const id =
+                                    String(
+                                        record.reportId ||
+                                        record.report_id ||
+                                        ""
+                                    );
+
+
+                                if (id) {
+                                    recordsByReport[id] =
+                                        record;
+                                }
+
+                            }
+                        );
+
+
+                        allCases =
+                            reports
+                                .filter(
+                                    function (report) {
+
+                                        const status =
+                                            String(
+                                                report.status ||
+                                                ""
+                                            ).toUpperCase();
+
+
+                                        const id =
+                                            String(
+                                                report.reportId ||
+                                                report.report_id ||
+                                                report.id ||
+                                                ""
+                                            );
+
+
+                                        return (
+                                            status ===
+                                                "SENT TO LAB" ||
+                                            status ===
+                                                "VALIDATED" ||
+                                            status ===
+                                                "UNDER INVESTIGATION" ||
+                                            Boolean(
+                                                recordsByReport[
+                                                    id
+                                                ]
+                                            )
+                                        );
+
+                                    }
+                                )
+                                .map(
+                                    function (report) {
+
+                                        const id =
+                                            String(
+                                                report.reportId ||
+                                                report.report_id ||
+                                                report.id ||
+                                                ""
+                                            );
+
+
+                                        return {
+                                            ...report,
+                                            laboratoryRecord:
+                                                recordsByReport[
+                                                    id
+                                                ] || null
+                                        };
+
+                                    }
+                                );
+
+
+                        updateSummary(
+                            allCases
+                        );
+
+
+                        renderCases(
+                            allCases
+                        );
+
+
+                        if (
+                            selectedCase
+                        ) {
+
+                            const selectedId =
+                                String(
+                                    selectedCase.reportId ||
+                                    selectedCase.report_id ||
+                                    selectedCase.id ||
+                                    ""
+                                );
+
+
+                            const refreshed =
+                                allCases.find(
+                                    function (
+                                        item
+                                    ) {
+
+                                        const id =
+                                            String(
+                                                item.reportId ||
+                                                item.report_id ||
+                                                item.id ||
+                                                ""
+                                            );
+
+
+                                        return (
+                                            id ===
+                                            selectedId
+                                        );
+
+                                    }
+                                );
+
+
+                            if (
+                                refreshed
+                            ) {
+
+                                selectedCase =
+                                    refreshed;
+
+
+                                existingLabRecord =
+                                    refreshed.laboratoryRecord ||
+                                    existingLabRecord;
+
+
+                                renderSelectedCase(
+                                    refreshed
+                                );
+
+                            }
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Refresh error:",
+                            error
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   BADGES
+                =========================================== */
+
+                function updateRiskBadge(
+                    risk
+                ) {
+
+                    const badge =
+                        document.getElementById(
+                            "selectedRiskBadge"
+                        );
+
+
+                    if (!badge) {
+                        return;
+                    }
+
+
+                    const value =
+                        String(
+                            risk || "LOW"
+                        ).toUpperCase();
+
+
+                    badge.textContent =
+                        value;
+
+
+                    badge.classList.remove(
+                        "status-high",
+                        "status-medium",
+                        "status-low"
+                    );
+
+
+                    if (
+                        value === "HIGH"
+                    ) {
+
+                        badge.classList.add(
+                            "status-high"
+                        );
+
+                    } else if (
+                        value === "MEDIUM"
+                    ) {
+
+                        badge.classList.add(
+                            "status-medium"
+                        );
+
+                    } else {
+
+                        badge.classList.add(
+                            "status-low"
+                        );
+
+                    }
+
+                }
+
+
+                function updateStatusBadge(
+                    status
+                ) {
+
+                    const badge =
+                        document.getElementById(
+                            "selectedStatusBadge"
+                        );
+
+
+                    if (!badge) {
+                        return;
+                    }
+
+
+                    const value =
+                        String(
+                            status || "PENDING"
+                        ).toUpperCase();
+
+
+                    badge.textContent =
+                        value;
+
+
+                    badge.classList.remove(
+                        "status-high",
+                        "status-medium",
+                        "status-low",
+                        "status-pending",
+                        "status-progress",
+                        "status-validated"
+                    );
+
+
+                    if (
+                        value ===
+                        "VALIDATED"
+                    ) {
+
+                        badge.classList.add(
+                            "status-validated"
+                        );
+
+                    } else if (
+                        value ===
+                            "SENT TO LAB" ||
+                        value ===
+                            "UNDER INVESTIGATION"
+                    ) {
+
+                        badge.classList.add(
+                            "status-progress"
+                        );
+
+                    } else if (
+                        value ===
+                        "REJECTED"
+                    ) {
+
+                        badge.classList.add(
+                            "status-high"
+                        );
+
+                    } else {
+
+                        badge.classList.add(
+                            "status-pending"
+                        );
+
+                    }
+
+                }
+
+
+                function updateSelectedResult(
+                    result
+                ) {
+
+                    if (
+                        !selectedCase
+                    ) {
+                        return;
+                    }
+
+
+                    selectedCase.laboratoryRecord =
+                        selectedCase.laboratoryRecord ||
+                        {};
+
+
+                    selectedCase.laboratoryRecord.result =
+                        result;
+
+                }
+
+
+                /* ==========================================
+                   GENERAL HELPERS
+                =========================================== */
+
+                function getValue(
+                    id
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (!element) {
+                        return "";
+                    }
+
+
+                    return element.value.trim();
+
+                }
+
+
+                function setValue(
+                    id,
+                    value
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (!element) {
+                        return;
+                    }
+
+
+                    element.value =
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value;
+
+                }
+
+
+                function setText(
+                    id,
+                    value
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (element) {
+
+                        element.textContent =
+                            value === null ||
+                            value === undefined
+                                ? ""
+                                : String(
+                                    value
+                                );
+
+                    }
+
+                }
+
+
+                function parseSymptoms(
+                    value
+                ) {
+
+                    if (
+                        Array.isArray(value)
+                    ) {
+                        return value
+                            .filter(Boolean);
+                    }
+
+
+                    if (!value) {
+                        return [];
+                    }
+
+
+                    const text =
+                        String(
+                            value
+                        ).trim();
+
+
+                    if (!text) {
+                        return [];
+                    }
+
+
+                    try {
+
+                        const parsed =
+                            JSON.parse(
+                                text
+                            );
+
+
+                        if (
+                            Array.isArray(
+                                parsed
+                            )
+                        ) {
+                            return parsed
+                                .filter(Boolean);
+                        }
+
+                    } catch (error) {
+                        // Treat as plain text.
+                    }
+
+
+                    return text
+                        .split(
+                            /[,;\n]+/
+                        )
+                        .map(
+                            function (
+                                item
+                            ) {
+                                return item.trim();
+                            }
+                        )
+                        .filter(Boolean);
+
+                }
+
+
+                function formatDateForInput(
+                    value
+                ) {
+
+                    if (!value) {
+                        return "";
+                    }
+
+
+                    const text =
+                        String(
+                            value
+                        );
+
+
+                    if (
+                        /^\d{4}-\d{2}-\d{2}$/
+                            .test(text)
+                    ) {
+                        return text;
+                    }
+
+
+                    const date =
+                        new Date(
+                            value
+                        );
+
+
+                    if (
+                        Number.isNaN(
+                            date.getTime()
+                        )
+                    ) {
+                        return "";
+                    }
+
+
+                    return (
+                        date.getFullYear() +
+                        "-" +
+                        String(
+                            date.getMonth() + 1
+                        ).padStart(
+                            2,
+                            "0"
+                        ) +
+                        "-" +
+                        String(
+                            date.getDate()
+                        ).padStart(
+                            2,
+                            "0"
+                        )
+                    );
+
+                }
+
+
+                function showLabMessage(
+                    message,
+                    type
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "laboratoryMessage"
+                        );
+
+
+                    if (!container) {
+
+                        if (
+                            typeof showToast ===
+                            "function"
+                        ) {
+                            showToast(
+                                message,
+                                type
+                            );
+                        }
+
+                        return;
+                    }
+
+
+                    let className =
+                        "alert-error";
+
+
+                    if (
+                        type ===
+                        "success"
+                    ) {
+                        className =
+                            "alert-success";
+                    } else if (
+                        type ===
+                        "warning"
+                    ) {
+                        className =
+                            "alert-warning";
+                    } else if (
+                        type ===
+                        "info"
+                    ) {
+                        className =
+                            "alert-info";
+                    }
+
+
+                    container.innerHTML =
+                        `
+                        <div
+                            class="alert ${className}"
+                        >
+                            ${escapeHtml(
+                                message
+                            )}
+                        </div>
+                        `;
+
+                }
+
+
+                function escapeHtml(
+                    value
+                ) {
+
+                    return String(
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value
+                    )
+                        .replaceAll(
+                            "&",
+                            "&amp;"
+                        )
+                        .replaceAll(
+                            "<",
+                            "&lt;"
+                        )
+                        .replaceAll(
+                            ">",
+                            "&gt;"
+                        )
+                        .replaceAll(
+                            '"',
+                            "&quot;"
+                        )
+                        .replaceAll(
+                            "'",
+                            "&#039;"
+                        );
+
+                }
+
+
+                /* ==========================================
+                   INITIAL LOAD
+                =========================================== */
+
+                await loadCases();
+
+            }
+        );
+    </script>
+
+</body>
+</html>

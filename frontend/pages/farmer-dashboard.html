@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Farmer Dashboard | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="farmer-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🐄
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    Livestock Health Surveillance
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-low"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    FARMER
+                </span>
+            </span>
+
+
+            <span
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+                data-user-name
+            >
+                Farmer
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <!-- PAGE TITLE -->
+
+        <div>
+
+            <div
+                class="section-label"
+                style="
+                    margin-bottom:4px;
+                "
+            >
+                LIVESTOCK HEALTH
+            </div>
+
+            <h1 class="dashboard-title">
+                Farmer Dashboard
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Monitor your animals, submit health reports,
+                and track the status of your livestock health
+                observations.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================== -->
+
+        <div
+            style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <a
+                href="report-health.html"
+                class="btn btn-primary"
+            >
+                ➕ Report Animal Health
+            </a>
+
+
+            <a
+                href="animals.html"
+                class="btn btn-secondary"
+            >
+                🐄 My Animals
+            </a>
+
+
+            <a
+                href="alerts.html"
+                class="btn btn-secondary"
+            >
+                🔔 Alerts
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section>
+
+            <div class="dashboard-grid">
+
+                <!-- Animals -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        🐄
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Monitored Animals
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="monitoredAnimals"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- Reports -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        📋
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Total Reports
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="totalReports"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- High Risk -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        🔴
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        High Risk Cases
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="highRiskCases"
+                        style="
+                            color:#dc2626;
+                        "
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- Medium Risk -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        🟠
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Medium Risk Cases
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="mediumRiskCases"
+                        style="
+                            color:#d97706;
+                        "
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- Low Risk -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        🟢
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Low Risk Cases
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="lowRiskCases"
+                        style="
+                            color:#16a34a;
+                        "
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- Validated -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        ✅
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Validated Cases
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="validatedCases"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- Investigation -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        🩺
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Under Investigation
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="underInvestigation"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- Laboratory -->
+
+                <div class="dashboard-card">
+
+                    <div
+                        style="
+                            font-size:25px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        🧪
+                    </div>
+
+                    <div
+                        class="dashboard-label"
+                    >
+                        Sent to Laboratory
+                    </div>
+
+                    <div
+                        class="dashboard-value"
+                        id="sentToLaboratory"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LATEST REPORT
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-top:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        Latest Health Report
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Your most recently submitted
+                        livestock health report.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="report-health.html"
+                    class="btn btn-primary"
+                    style="
+                        padding:10px 14px;
+                        font-size:12px;
+                    "
+                >
+                    New Report
+                </a>
+
+            </div>
+
+
+            <div
+                id="latestReportContainer"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-state-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        No report submitted yet
+                    </h3>
+
+                    <p>
+                        Your latest health report
+                        will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MY REPORTS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-top:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        My Health Reports
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Track your submitted livestock
+                        health observations.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="refreshReportsButton"
+                    class="btn btn-secondary"
+                    style="
+                        padding:9px 13px;
+                        font-size:12px;
+                    "
+                >
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div
+                id="reportsContainer"
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <div class="loading">
+                    <span class="spinner"></span>
+                    Loading reports...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ANIMALS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-top:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <h2>
+                        My Animals
+                    </h2>
+
+                    <p
+                        style="
+                            color:#64748b;
+                            font-size:12px;
+                        "
+                    >
+                        Animals associated with your
+                        livestock health reports.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="animals.html"
+                    class="btn btn-secondary"
+                    style="
+                        padding:9px 13px;
+                        font-size:12px;
+                    "
+                >
+                    View All
+                </a>
+
+            </div>
+
+
+            <div
+                id="animalsContainer"
+                data-animals-container
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(3, minmax(0, 1fr));
+                    gap:15px;
+                    margin-top:20px;
+                "
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-state-icon">
+                        🐄
+                    </div>
+
+                    <h3>
+                        Loading animals...
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESPONSIBLE AI NOTICE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-top:25px;
+                background:#eff6ff;
+                border-color:#bfdbfe;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    gap:15px;
+                    align-items:flex-start;
+                "
+            >
+
+                <div
+                    style="
+                        width:42px;
+                        height:42px;
+                        flex:0 0 42px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:12px;
+                        background:white;
+                        font-size:20px;
+                    "
+                >
+                    🤖
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:16px;
+                        "
+                    >
+                        AI-Assisted Early Warning
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:6px;
+                            color:#475569;
+                            font-size:12px;
+                            line-height:1.7;
+                        "
+                    >
+                        AI-generated risk signals are used
+                        for early warning and prioritisation.
+                        They do not replace veterinary diagnosis,
+                        laboratory testing or professional
+                        investigation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/farmer.js"></script>
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const refreshButton =
+                    document.getElementById(
+                        "refreshReportsButton"
+                    );
+
+                if (refreshButton) {
+
+                    refreshButton.addEventListener(
+                        "click",
+                        async function () {
+
+                            refreshButton.disabled =
+                                true;
+
+                            refreshButton.textContent =
+                                "⏳ Loading...";
+
+                            try {
+                                await loadMyReports();
+
+                            } finally {
+
+                                refreshButton.disabled =
+                                    false;
+
+                                refreshButton.textContent =
+                                    "🔄 Refresh";
+                            }
+                        }
+                    );
+                }
+
+
+                /*
+                 * Build the latest report card
+                 * from the locally stored latest report.
+                 */
+
+                const latestReport =
+                    getLatestReport();
+
+
+                const latestContainer =
+                    document.getElementById(
+                        "latestReportContainer"
+                    );
+
+
+                if (
+                    latestReport &&
+                    latestContainer
+                ) {
+
+                    const riskLevel =
+                        String(
+                            latestReport.riskLevel ||
+                            latestReport.risk_level ||
+                            "LOW"
+                        ).toUpperCase();
+
+
+                    let riskClass =
+                        "status-low";
+
+
+                    if (
+                        riskLevel === "HIGH"
+                    ) {
+                        riskClass =
+                            "status-high";
+                    } else if (
+                        riskLevel === "MEDIUM"
+                    ) {
+                        riskClass =
+                            "status-medium";
+                    }
+
+
+                    const animalName =
+                        latestReport.animalName ||
+                        latestReport.animal_name ||
+                        "Unknown Animal";
+
+
+                    const species =
+                        latestReport.species ||
+                        "Unknown";
+
+
+                    const location =
+                        latestReport.location ||
+                        "Unknown Location";
+
+
+                    const status =
+                        latestReport.status ||
+                        "PENDING";
+
+
+                    const score =
+                        latestReport.riskScore ??
+                        latestReport.risk_score ??
+                        "-";
+
+
+                    latestContainer.innerHTML =
+                        `
+                        <div
+                            class="dashboard-card"
+                            style="
+                                border:1px solid #bfdbfe;
+                                background:#f8fbff;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                    align-items:flex-start;
+                                    gap:15px;
+                                    flex-wrap:wrap;
+                                "
+                            >
+
+                                <div>
+
+                                    <div
+                                        class="dashboard-label"
+                                    >
+                                        Animal
+                                    </div>
+
+                                    <h3
+                                        style="
+                                            margin-top:3px;
+                                            font-size:20px;
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            animalName
+                                        )}
+                                    </h3>
+
+                                    <div
+                                        class="dashboard-label"
+                                        style="
+                                            margin-top:4px;
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            species
+                                        )}
+                                    </div>
+
+                                </div>
+
+
+                                <span
+                                    class="
+                                        status-badge
+                                        ${riskClass}
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        riskLevel
+                                    )}
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    display:grid;
+                                    grid-template-columns:
+                                        repeat(3, minmax(0, 1fr));
+                                    gap:15px;
+                                    margin-top:20px;
+                                "
+                            >
+
+                                <div>
+
+                                    <div
+                                        class="dashboard-label"
+                                    >
+                                        Location
+                                    </div>
+
+                                    <strong>
+                                        ${escapeHtml(
+                                            location
+                                        )}
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="dashboard-label"
+                                    >
+                                        Risk Score
+                                    </div>
+
+                                    <strong>
+                                        ${escapeHtml(
+                                            String(score)
+                                        )}
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="dashboard-label"
+                                    >
+                                        Status
+                                    </div>
+
+                                    <strong>
+                                        ${escapeHtml(
+                                            status
+                                        )}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        `;
+                }
+
+            }
+        );
+
+
+        function escapeHtml(value) {
+
+            return String(
+                value === null ||
+                value === undefined
+                    ? ""
+                    : value
+            )
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
+        }
+    </script>
+
+</body>
+
+</html>

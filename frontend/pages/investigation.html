@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Case Investigation | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="dashboard-header">
+
+        <a
+            href="veterinary-dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                🩺
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    UyirThulir
+                </strong>
+
+                <span>
+                    Veterinary Case Investigation
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <span
+                class="status-badge status-progress"
+                style="padding:8px 11px;"
+            >
+                <span data-user-role>
+                    VETERINARIAN
+                </span>
+            </span>
+
+
+            <span
+                data-user-name
+                style="
+                    color:#64748b;
+                    font-size:12px;
+                "
+            >
+                Veterinarian
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-logout
+                style="
+                    padding:9px 13px;
+                    font-size:12px;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-end;
+                gap:20px;
+                flex-wrap:wrap;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div class="section-label">
+                    VETERINARY INVESTIGATION
+                </div>
+
+                <h1 class="dashboard-title">
+                    Case Investigation
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Review the reported health signal, record
+                    clinical observations, and decide whether
+                    the case should move to laboratory validation.
+                </p>
+
+            </div>
+
+
+            <a
+                href="veterinary-dashboard.html"
+                class="btn btn-secondary"
+            >
+                ← Back to Cases
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             REPORT STATUS
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-label">
+                        Report ID
+                    </div>
+
+                    <h2
+                        id="reportIdDisplay"
+                        style="
+                            margin-top:3px;
+                            font-size:23px;
+                        "
+                    >
+                        Loading...
+                    </h2>
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        gap:10px;
+                        align-items:center;
+                        flex-wrap:wrap;
+                    "
+                >
+
+                    <span
+                        id="reportRiskBadge"
+                        class="
+                            status-badge
+                            status-low
+                        "
+                    >
+                        LOW
+                    </span>
+
+                    <span
+                        id="reportStatusBadge"
+                        class="
+                            status-badge
+                            status-pending
+                        "
+                    >
+                        PENDING
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CASE INFORMATION
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="margin-bottom:25px;"
+        >
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        minmax(0, 1fr)
+                        minmax(0, 1fr);
+                    gap:25px;
+                "
+            >
+
+                <!-- LEFT -->
+
+                <div>
+
+                    <h2>
+                        Reported Case
+                    </h2>
+
+
+                    <div
+                        style="
+                            display:grid;
+                            grid-template-columns:
+                                repeat(2, minmax(0, 1fr));
+                            gap:15px;
+                            margin-top:20px;
+                        "
+                    >
+
+                        <div>
+
+                            <div class="dashboard-label">
+                                Animal Name
+                            </div>
+
+                            <strong
+                                id="caseAnimalName"
+                                style="
+                                    display:block;
+                                    margin-top:3px;
+                                    font-size:15px;
+                                "
+                            >
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="dashboard-label">
+                                Species
+                            </div>
+
+                            <strong
+                                id="caseSpecies"
+                                style="
+                                    display:block;
+                                    margin-top:3px;
+                                    font-size:15px;
+                                "
+                            >
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="dashboard-label">
+                                Severity
+                            </div>
+
+                            <strong
+                                id="caseSeverity"
+                                style="
+                                    display:block;
+                                    margin-top:3px;
+                                    font-size:15px;
+                                "
+                            >
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="dashboard-label">
+                                Risk Score
+                            </div>
+
+                            <strong
+                                id="caseRiskScore"
+                                style="
+                                    display:block;
+                                    margin-top:3px;
+                                    font-size:15px;
+                                "
+                            >
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                grid-column:1 / -1;
+                            "
+                        >
+
+                            <div class="dashboard-label">
+                                Location
+                            </div>
+
+                            <strong
+                                id="caseLocation"
+                                style="
+                                    display:block;
+                                    margin-top:3px;
+                                    font-size:15px;
+                                "
+                            >
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT -->
+
+                <div>
+
+                    <h2>
+                        Reported Symptoms
+                    </h2>
+
+                    <div
+                        id="caseSymptoms"
+                        style="
+                            margin-top:20px;
+                            padding:17px;
+                            min-height:110px;
+                            border:1px solid #e2e8f0;
+                            border-radius:14px;
+                            background:#f8fafc;
+                            color:#475569;
+                            font-size:13px;
+                            line-height:1.7;
+                        "
+                    >
+                        No symptoms available.
+                    </div>
+
+
+                    <div
+                        style="
+                            margin-top:15px;
+                        "
+                    >
+
+                        <div class="dashboard-label">
+                            Description
+                        </div>
+
+                        <div
+                            id="caseDescription"
+                            style="
+                                margin-top:5px;
+                                color:#475569;
+                                font-size:12px;
+                                line-height:1.7;
+                            "
+                        >
+                            No description available.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             INVESTIGATION FORM
+        ================================================== -->
+
+        <form
+            id="investigationForm"
+        >
+
+            <section
+                class="dashboard-section"
+                style="margin-bottom:25px;"
+            >
+
+                <h2>
+                    Clinical Examination
+                </h2>
+
+                <p
+                    style="
+                        margin-top:4px;
+                        color:#64748b;
+                        font-size:12px;
+                    "
+                >
+                    Record the observations made during
+                    veterinary examination.
+                </p>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        display:grid;
+                        grid-template-columns:
+                            repeat(2, minmax(0, 1fr));
+                        gap:17px;
+                    "
+                >
+
+                    <div class="form-group">
+
+                        <label for="temperature">
+                            Temperature
+                        </label>
+
+                        <input
+                            id="temperature"
+                            name="temperature"
+                            type="text"
+                            class="form-control"
+                            placeholder="Example: 39.5 °C"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="respiration">
+                            Respiration
+                        </label>
+
+                        <input
+                            id="respiration"
+                            name="respiration"
+                            type="text"
+                            class="form-control"
+                            placeholder="Example: Normal / Rapid"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="hydration">
+                            Hydration
+                        </label>
+
+                        <select
+                            id="hydration"
+                            name="hydration"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select hydration status
+                            </option>
+
+                            <option value="Normal">
+                                Normal
+                            </option>
+
+                            <option value="Mild Dehydration">
+                                Mild Dehydration
+                            </option>
+
+                            <option value="Moderate Dehydration">
+                                Moderate Dehydration
+                            </option>
+
+                            <option value="Severe Dehydration">
+                                Severe Dehydration
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="appetite">
+                            Appetite
+                        </label>
+
+                        <select
+                            id="appetite"
+                            name="appetite"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select appetite
+                            </option>
+
+                            <option value="Normal">
+                                Normal
+                            </option>
+
+                            <option value="Reduced">
+                                Reduced
+                            </option>
+
+                            <option value="Poor">
+                                Poor
+                            </option>
+
+                            <option value="Absent">
+                                Absent
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="behaviour">
+                            Behaviour
+                        </label>
+
+                        <select
+                            id="behaviour"
+                            name="behaviour"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select behaviour
+                            </option>
+
+                            <option value="Normal">
+                                Normal
+                            </option>
+
+                            <option value="Lethargic">
+                                Lethargic
+                            </option>
+
+                            <option value="Restless">
+                                Restless
+                            </option>
+
+                            <option value="Aggressive">
+                                Aggressive
+                            </option>
+
+                            <option value="Depressed">
+                                Depressed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="visibleSigns">
+                            Visible Signs
+                        </label>
+
+                        <input
+                            id="visibleSigns"
+                            name="visibleSigns"
+                            type="text"
+                            class="form-control"
+                            placeholder="Visible signs observed during examination"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="form-group"
+                        style="
+                            grid-column:1 / -1;
+                        "
+                    >
+
+                        <label for="preliminaryAssessment">
+                            Preliminary Assessment
+                        </label>
+
+                        <textarea
+                            id="preliminaryAssessment"
+                            name="preliminaryAssessment"
+                            class="form-textarea"
+                            placeholder="Record your professional preliminary assessment."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SAMPLE COLLECTION
+            ================================================== -->
+
+            <section
+                class="dashboard-section"
+                style="margin-bottom:25px;"
+            >
+
+                <h2>
+                    Sample Collection
+                </h2>
+
+                <p
+                    style="
+                        margin-top:4px;
+                        color:#64748b;
+                        font-size:12px;
+                    "
+                >
+                    Record sample details when laboratory
+                    validation is required.
+                </p>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        display:grid;
+                        grid-template-columns:
+                            repeat(2, minmax(0, 1fr));
+                        gap:17px;
+                    "
+                >
+
+                    <div class="form-group">
+
+                        <label for="sampleType">
+                            Sample Type
+                        </label>
+
+                        <select
+                            id="sampleType"
+                            name="sampleType"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select sample type
+                            </option>
+
+                            <option value="Milk">
+                                Milk
+                            </option>
+
+                            <option value="Blood">
+                                Blood
+                            </option>
+
+                            <option value="Serum">
+                                Serum
+                            </option>
+
+                            <option value="Swab">
+                                Swab
+                            </option>
+
+                            <option value="Stool">
+                                Stool
+                            </option>
+
+                            <option value="Urine">
+                                Urine
+                            </option>
+
+                            <option value="Tissue">
+                                Tissue
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="collectionDate">
+                            Collection Date
+                        </label>
+
+                        <input
+                            id="collectionDate"
+                            name="collectionDate"
+                            type="date"
+                            class="form-control"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="form-group"
+                        style="
+                            grid-column:1 / -1;
+                        "
+                    >
+
+                        <label for="collectionNotes">
+                            Collection Notes
+                        </label>
+
+                        <textarea
+                            id="collectionNotes"
+                            name="collectionNotes"
+                            class="form-textarea"
+                            placeholder="Record sample collection details."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 INVESTIGATION STATUS
+            ================================================== -->
+
+            <section
+                class="dashboard-section"
+                style="margin-bottom:25px;"
+            >
+
+                <h2>
+                    Investigation Status
+                </h2>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        display:grid;
+                        grid-template-columns:
+                            minmax(0, 1fr)
+                            minmax(260px, 0.55fr);
+                        gap:20px;
+                        align-items:start;
+                    "
+                >
+
+                    <div class="form-group">
+
+                        <label for="investigationStatus">
+                            Case Status
+                        </label>
+
+                        <select
+                            id="investigationStatus"
+                            name="status"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="NEW">
+                                New
+                            </option>
+
+                            <option value="UNDER INVESTIGATION">
+                                Under Investigation
+                            </option>
+
+                            <option value="SENT TO LAB">
+                                Sent to Laboratory
+                            </option>
+
+                            <option value="VALIDATED">
+                                Validated
+                            </option>
+
+                            <option value="REJECTED">
+                                Rejected
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        style="
+                            padding:16px;
+                            border-radius:14px;
+                            background:#eff6ff;
+                            border:1px solid #bfdbfe;
+                            color:#475569;
+                            font-size:11px;
+                            line-height:1.7;
+                        "
+                    >
+
+                        <strong>
+                            Workflow guidance
+                        </strong>
+
+                        <br>
+
+                        Use <b>Under Investigation</b> while
+                        reviewing the case. Select
+                        <b>Sent to Laboratory</b> when a sample
+                        needs diagnostic validation.
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <section
+                class="dashboard-section"
+            >
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:flex-end;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    "
+                >
+
+                    <a
+                        href="veterinary-dashboard.html"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        id="saveInvestigation"
+                        class="btn btn-primary"
+                    >
+                        Save Investigation
+                    </button>
+
+                </div>
+
+            </section>
+
+        </form>
+
+
+        <!-- =================================================
+             STATUS MESSAGE
+        ================================================== -->
+
+        <div
+            id="investigationMessage"
+            style="
+                margin-top:20px;
+            "
+        ></div>
+
+
+        <!-- =================================================
+             RESPONSIBLE AI NOTICE
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            style="
+                margin-top:25px;
+                background:#f8fafc;
+            "
+        >
+
+            <div
+                style="
+                    display:flex;
+                    align-items:flex-start;
+                    gap:14px;
+                "
+            >
+
+                <div
+                    style="
+                        width:42px;
+                        height:42px;
+                        flex:0 0 42px;
+                        display:grid;
+                        place-items:center;
+                        border-radius:12px;
+                        background:#eff6ff;
+                        font-size:20px;
+                    "
+                >
+                    ℹ️
+                </div>
+
+
+                <div>
+
+                    <h3
+                        style="
+                            font-size:15px;
+                        "
+                    >
+                        Investigation Note
+                    </h3>
+
+                    <p
+                        style="
+                            margin-top:5px;
+                            color:#64748b;
+                            font-size:12px;
+                            line-height:1.7;
+                        "
+                    >
+                        The AI risk score is an early-warning
+                        prioritisation signal. The veterinary
+                        investigation and laboratory process
+                        provide the professional validation
+                        pathway for the reported case.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/notifications.js"></script>
+
+
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+
+                let currentReport = null;
+                let currentInvestigation = null;
+
+
+                /* ==========================================
+                   QUERY PARAMETER
+                =========================================== */
+
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+
+                const reportId =
+                    params.get("report_id") ||
+                    params.get("reportId") ||
+                    params.get("id");
+
+
+                const reportIdDisplay =
+                    document.getElementById(
+                        "reportIdDisplay"
+                    );
+
+
+                if (
+                    !reportId
+                ) {
+
+                    if (reportIdDisplay) {
+                        reportIdDisplay.textContent =
+                            "No report selected";
+                    }
+
+
+                    showMessage(
+                        "No report ID was provided. Please select a case from the veterinary dashboard.",
+                        "error"
+                    );
+
+
+                    return;
+                }
+
+
+                /* ==========================================
+                   LOAD REPORT
+                =========================================== */
+
+                async function loadReport() {
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/health-reports/" +
+                                encodeURIComponent(
+                                    reportId
+                                ),
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        currentReport =
+                            response.report ||
+                            response.data ||
+                            response;
+
+
+                        renderReport(
+                            currentReport
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Unable to load report:",
+                            error
+                        );
+
+
+                        showMessage(
+                            error.message ||
+                            "Unable to load the selected report.",
+                            "error"
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   LOAD INVESTIGATION
+                =========================================== */
+
+                async function loadInvestigation() {
+
+                    try {
+
+                        const response =
+                            await apiRequest(
+                                "/investigations/" +
+                                encodeURIComponent(
+                                    reportId
+                                ),
+                                {
+                                    method: "GET"
+                                }
+                            );
+
+
+                        currentInvestigation =
+                            response.investigation ||
+                            response.data ||
+                            null;
+
+
+                        if (
+                            currentInvestigation
+                        ) {
+                            populateInvestigationForm(
+                                currentInvestigation
+                            );
+                        }
+
+
+                    } catch (error) {
+
+                        if (
+                            error.status !== 404
+                        ) {
+
+                            console.error(
+                                "Unable to load investigation:",
+                                error
+                            );
+
+                        }
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   RENDER REPORT
+                =========================================== */
+
+                function renderReport(
+                    report
+                ) {
+
+                    if (!report) {
+                        return;
+                    }
+
+
+                    setText(
+                        "reportIdDisplay",
+                        report.reportId ||
+                        report.report_id ||
+                        report.id ||
+                        reportId
+                    );
+
+
+                    setText(
+                        "caseAnimalName",
+                        report.animalName ||
+                        report.animal_name ||
+                        "-"
+                    );
+
+
+                    setText(
+                        "caseSpecies",
+                        report.species ||
+                        "-"
+                    );
+
+
+                    setText(
+                        "caseSeverity",
+                        report.severity ||
+                        "-"
+                    );
+
+
+                    setText(
+                        "caseRiskScore",
+                        report.riskScore ??
+                        report.risk_score ??
+                        "-"
+                    );
+
+
+                    setText(
+                        "caseLocation",
+                        report.location ||
+                        "-"
+                    );
+
+
+                    setText(
+                        "caseDescription",
+                        report.description ||
+                        "No description available."
+                    );
+
+
+                    renderRiskBadge(
+                        report.riskLevel ||
+                        report.risk_level ||
+                        report.severity ||
+                        "LOW"
+                    );
+
+
+                    renderStatusBadge(
+                        report.status ||
+                        "PENDING"
+                    );
+
+
+                    renderSymptoms(
+                        report.symptoms
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SYMPTOMS
+                =========================================== */
+
+                function renderSymptoms(
+                    value
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "caseSymptoms"
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    const symptoms =
+                        parseSymptoms(
+                            value
+                        );
+
+
+                    if (
+                        !symptoms.length
+                    ) {
+
+                        container.textContent =
+                            "No symptoms available.";
+
+                        return;
+                    }
+
+
+                    container.innerHTML =
+                        symptoms
+                            .map(
+                                function (symptom) {
+                                    return (
+                                        `<span
+                                            class="status-badge status-pending"
+                                            style="
+                                                margin:0 6px 6px 0;
+                                            "
+                                        >
+                                            ${escapeHtml(
+                                                symptom
+                                            )}
+                                        </span>`
+                                    );
+                                }
+                            )
+                            .join("");
+
+                }
+
+
+                /* ==========================================
+                   POPULATE INVESTIGATION FORM
+                =========================================== */
+
+                function populateInvestigationForm(
+                    investigation
+                ) {
+
+                    setInputValue(
+                        "temperature",
+                        investigation.temperature
+                    );
+
+
+                    setInputValue(
+                        "respiration",
+                        investigation.respiration
+                    );
+
+
+                    setInputValue(
+                        "hydration",
+                        investigation.hydration
+                    );
+
+
+                    setInputValue(
+                        "appetite",
+                        investigation.appetite
+                    );
+
+
+                    setInputValue(
+                        "behaviour",
+                        investigation.behaviour
+                    );
+
+
+                    setInputValue(
+                        "visibleSigns",
+                        investigation.visibleSigns
+                    );
+
+
+                    setInputValue(
+                        "sampleType",
+                        investigation.sampleType
+                    );
+
+
+                    setInputValue(
+                        "collectionDate",
+                        formatDateForInput(
+                            investigation.collectionDate
+                        )
+                    );
+
+
+                    setInputValue(
+                        "collectionNotes",
+                        investigation.collectionNotes
+                    );
+
+
+                    setInputValue(
+                        "preliminaryAssessment",
+                        investigation.preliminaryAssessment
+                    );
+
+
+                    setInputValue(
+                        "investigationStatus",
+                        investigation.status ||
+                        "NEW"
+                    );
+
+                }
+
+
+                /* ==========================================
+                   SAVE INVESTIGATION
+                =========================================== */
+
+                const form =
+                    document.getElementById(
+                        "investigationForm"
+                    );
+
+
+                if (form) {
+
+                    form.addEventListener(
+                        "submit",
+                        async function (
+                            event
+                        ) {
+
+                            event.preventDefault();
+
+
+                            const button =
+                                document.getElementById(
+                                    "saveInvestigation"
+                                );
+
+
+                            const originalText =
+                                button
+                                    ? button.textContent
+                                    : "";
+
+
+                            if (button) {
+
+                                button.disabled =
+                                    true;
+
+                                button.textContent =
+                                    "Saving...";
+
+                            }
+
+
+                            const payload = {
+                                status:
+                                    getInputValue(
+                                        "investigationStatus"
+                                    ),
+
+                                temperature:
+                                    getInputValue(
+                                        "temperature"
+                                    ),
+
+                                respiration:
+                                    getInputValue(
+                                        "respiration"
+                                    ),
+
+                                hydration:
+                                    getInputValue(
+                                        "hydration"
+                                    ),
+
+                                appetite:
+                                    getInputValue(
+                                        "appetite"
+                                    ),
+
+                                behaviour:
+                                    getInputValue(
+                                        "behaviour"
+                                    ),
+
+                                visible_signs:
+                                    getInputValue(
+                                        "visibleSigns"
+                                    ),
+
+                                sample_type:
+                                    getInputValue(
+                                        "sampleType"
+                                    ),
+
+                                collection_date:
+                                    getInputValue(
+                                        "collectionDate"
+                                    ),
+
+                                collection_notes:
+                                    getInputValue(
+                                        "collectionNotes"
+                                    ),
+
+                                preliminary_assessment:
+                                    getInputValue(
+                                        "preliminaryAssessment"
+                                    ),
+
+                                surveillance_flag:
+                                    document.getElementById(
+                                        "surveillanceFlag"
+                                    )
+                                        ? document.getElementById(
+                                            "surveillanceFlag"
+                                        ).value
+                                        : ""
+                            };
+
+
+                            const camelPayload = {
+                                status:
+                                    payload.status,
+
+                                temperature:
+                                    payload.temperature,
+
+                                respiration:
+                                    payload.respiration,
+
+                                hydration:
+                                    payload.hydration,
+
+                                appetite:
+                                    payload.appetite,
+
+                                behaviour:
+                                    payload.behaviour,
+
+                                visibleSigns:
+                                    payload.visible_signs,
+
+                                sampleType:
+                                    payload.sample_type,
+
+                                collectionDate:
+                                    payload.collection_date,
+
+                                collectionNotes:
+                                    payload.collection_notes,
+
+                                preliminaryAssessment:
+                                    payload.preliminary_assessment,
+
+                                surveillanceFlag:
+                                    payload.surveillance_flag
+                            };
+
+
+                            try {
+
+                                const response =
+                                    await apiRequest(
+                                        "/investigations/" +
+                                        encodeURIComponent(
+                                            reportId
+                                        ),
+                                        {
+                                            method: "POST",
+                                            body:
+                                                JSON.stringify(
+                                                    camelPayload
+                                                )
+                                        }
+                                    );
+
+
+                                currentInvestigation =
+                                    response.investigation ||
+                                    response.data ||
+                                    response;
+
+
+                                showMessage(
+                                    response.message ||
+                                    "Investigation details saved successfully.",
+                                    "success"
+                                );
+
+
+                                renderStatusBadge(
+                                    camelPayload.status
+                                );
+
+
+                                if (
+                                    camelPayload.status ===
+                                    "SENT TO LAB"
+                                ) {
+
+                                    showMessage(
+                                        "Investigation saved and the case has been marked for laboratory validation.",
+                                        "success"
+                                    );
+
+                                }
+
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Investigation save error:",
+                                    error
+                                );
+
+
+                                showMessage(
+                                    error.message ||
+                                    "Unable to save investigation.",
+                                    "error"
+                                );
+
+                            } finally {
+
+                                if (button) {
+
+                                    button.disabled =
+                                        false;
+
+                                    button.textContent =
+                                        originalText ||
+                                        "Save Investigation";
+
+                                }
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   RISK BADGE
+                =========================================== */
+
+                function renderRiskBadge(
+                    risk
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            "reportRiskBadge"
+                        );
+
+
+                    if (!element) {
+                        return;
+                    }
+
+
+                    const normalized =
+                        String(
+                            risk || "LOW"
+                        ).toUpperCase();
+
+
+                    element.textContent =
+                        normalized;
+
+
+                    element.classList.remove(
+                        "status-high",
+                        "status-medium",
+                        "status-low"
+                    );
+
+
+                    if (
+                        normalized ===
+                        "HIGH"
+                    ) {
+
+                        element.classList.add(
+                            "status-high"
+                        );
+
+                    } else if (
+                        normalized ===
+                        "MEDIUM"
+                    ) {
+
+                        element.classList.add(
+                            "status-medium"
+                        );
+
+                    } else {
+
+                        element.classList.add(
+                            "status-low"
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   STATUS BADGE
+                =========================================== */
+
+                function renderStatusBadge(
+                    status
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            "reportStatusBadge"
+                        );
+
+
+                    if (!element) {
+                        return;
+                    }
+
+
+                    const normalized =
+                        String(
+                            status || "PENDING"
+                        ).toUpperCase();
+
+
+                    element.textContent =
+                        normalized;
+
+
+                    element.classList.remove(
+                        "status-high",
+                        "status-medium",
+                        "status-low",
+                        "status-pending",
+                        "status-progress",
+                        "status-validated"
+                    );
+
+
+                    if (
+                        normalized ===
+                        "VALIDATED"
+                    ) {
+
+                        element.classList.add(
+                            "status-validated"
+                        );
+
+                    } else if (
+                        normalized ===
+                        "UNDER INVESTIGATION" ||
+                        normalized ===
+                        "SENT TO LAB"
+                    ) {
+
+                        element.classList.add(
+                            "status-progress"
+                        );
+
+                    } else if (
+                        normalized ===
+                        "REJECTED"
+                    ) {
+
+                        element.classList.add(
+                            "status-high"
+                        );
+
+                    } else {
+
+                        element.classList.add(
+                            "status-pending"
+                        );
+
+                    }
+
+                }
+
+
+                /* ==========================================
+                   HELPERS
+                =========================================== */
+
+                function getInputValue(
+                    id
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (!element) {
+                        return "";
+                    }
+
+
+                    return element.value.trim();
+
+                }
+
+
+                function setInputValue(
+                    id,
+                    value
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (!element) {
+                        return;
+                    }
+
+
+                    element.value =
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value;
+
+                }
+
+
+                function setText(
+                    id,
+                    value
+                ) {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (element) {
+
+                        element.textContent =
+                            value === null ||
+                            value === undefined
+                                ? ""
+                                : String(value);
+
+                    }
+
+                }
+
+
+                function parseSymptoms(
+                    value
+                ) {
+
+                    if (
+                        Array.isArray(value)
+                    ) {
+                        return value
+                            .filter(Boolean);
+                    }
+
+
+                    if (!value) {
+                        return [];
+                    }
+
+
+                    const text =
+                        String(
+                            value
+                        ).trim();
+
+
+                    if (!text) {
+                        return [];
+                    }
+
+
+                    try {
+
+                        const parsed =
+                            JSON.parse(
+                                text
+                            );
+
+
+                        if (
+                            Array.isArray(
+                                parsed
+                            )
+                        ) {
+                            return parsed
+                                .filter(Boolean);
+                        }
+
+                    } catch (error) {
+                        // Treat it as plain text below.
+                    }
+
+
+                    return text
+                        .split(
+                            /[,;\n]+/
+                        )
+                        .map(
+                            function (
+                                item
+                            ) {
+                                return item.trim();
+                            }
+                        )
+                        .filter(Boolean);
+
+                }
+
+
+                function formatDateForInput(
+                    value
+                ) {
+
+                    if (!value) {
+                        return "";
+                    }
+
+
+                    const text =
+                        String(
+                            value
+                        );
+
+
+                    if (
+                        /^\d{4}-\d{2}-\d{2}$/
+                            .test(text)
+                    ) {
+                        return text;
+                    }
+
+
+                    const date =
+                        new Date(
+                            value
+                        );
+
+
+                    if (
+                        Number.isNaN(
+                            date.getTime()
+                        )
+                    ) {
+                        return "";
+                    }
+
+
+                    return (
+                        date.getFullYear() +
+                        "-" +
+                        String(
+                            date.getMonth() + 1
+                        ).padStart(
+                            2,
+                            "0"
+                        ) +
+                        "-" +
+                        String(
+                            date.getDate()
+                        ).padStart(
+                            2,
+                            "0"
+                        )
+                    );
+
+                }
+
+
+                function escapeHtml(
+                    value
+                ) {
+
+                    return String(
+                        value === null ||
+                        value === undefined
+                            ? ""
+                            : value
+                    )
+                        .replaceAll(
+                            "&",
+                            "&amp;"
+                        )
+                        .replaceAll(
+                            "<",
+                            "&lt;"
+                        )
+                        .replaceAll(
+                            ">",
+                            "&gt;"
+                        )
+                        .replaceAll(
+                            '"',
+                            "&quot;"
+                        )
+                        .replaceAll(
+                            "'",
+                            "&#039;"
+                        );
+
+                }
+
+
+                function showMessage(
+                    message,
+                    type
+                ) {
+
+                    const container =
+                        document.getElementById(
+                            "investigationMessage"
+                        );
+
+
+                    if (!container) {
+
+                        if (
+                            typeof showToast ===
+                            "function"
+                        ) {
+                            showToast(
+                                message,
+                                type
+                            );
+                        }
+
+                        return;
+                    }
+
+
+                    container.innerHTML =
+                        `
+                        <div
+                            class="
+                                alert
+                                ${
+                                    type ===
+                                    "success"
+                                        ? "alert-success"
+                                        : type ===
+                                          "warning"
+                                            ? "alert-warning"
+                                            : "alert-error"
+                                }
+                        >
+                            ${escapeHtml(
+                                message
+                            )}
+                        </div>
+                        `;
+
+
+                    container.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                }
+
+
+                /* ==========================================
+                   LOAD DATA
+                =========================================== */
+
+                await loadReport();
+
+                await loadInvestigation();
+
+            }
+        );
+    </script>
+
+</body>
+</html>

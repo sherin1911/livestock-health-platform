@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+backend/venv/
+venv/
+
+# Environment files
+.env
+.env.*
+
+# SQLite database
+backend/instance/*.db
+backend/*.db
+*.db
+
+# Uploaded files
+backend/uploads/photos/*
+backend/uploads/audio/*
+
+# IDE
+.vscode/

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Register | UyirThulir</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+            <div class="auth-card">
+
+                <!-- =================================================
+                     BRAND
+                ================================================== -->
+
+                <div class="auth-brand">
+
+                    <a
+                        href="../index.html"
+                        class="brand"
+                    >
+
+                        <div class="brand-icon">
+                            🐄
+                        </div>
+
+                        <div class="brand-text">
+
+                            <strong>
+                                UyirThulir
+                            </strong>
+
+                            <span>
+                                Livestock Health Surveillance
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     TITLE
+                ================================================== -->
+
+                <h1 class="auth-title">
+                    Create Your Account
+                </h1>
+
+                <p class="auth-subtitle">
+                    Create your account to participate
+                    in livestock health surveillance.
+                </p>
+
+
+                <!-- =================================================
+                     LANGUAGE
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="languageSelector">
+                        Language
+                    </label>
+
+                    <select
+                        id="languageSelector"
+                        class="form-select language-selector"
+                    >
+
+                        <option value="en">
+                            English
+                        </option>
+
+                        <option value="ta">
+                            தமிழ்
+                        </option>
+
+                        <option value="mr">
+                            मराठी
+                        </option>
+
+                        <option value="hi">
+                            हिन्दी
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================================
+                     MESSAGE
+                ================================================== -->
+
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                    style="display:none;"
+                ></div>
+
+
+                <!-- =================================================
+                     REGISTRATION FORM
+                ================================================== -->
+
+                <form
+                    id="registerForm"
+                    data-auth="register"
+                    novalidate
+                >
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Name
+                        </label>
+
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            class="form-control"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            class="form-control"
+                            placeholder="Choose a username"
+                            autocomplete="username"
+                            minlength="3"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div
+                            style="
+                                position:relative;
+                                display:flex;
+                                align-items:center;
+                            "
+                        >
+
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                class="form-control"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                                style="padding-right:48px;"
+                            >
+
+                            <button
+                                type="button"
+                                data-toggle-password="password"
+                                aria-label="Show or hide password"
+                                style="
+                                    position:absolute;
+                                    right:8px;
+                                    width:36px;
+                                    height:36px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#f1f5f9;
+                                    cursor:pointer;
+                                    font-size:16px;
+                                "
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:6px;
+                                color:#94a3b8;
+                                font-size:11px;
+                            "
+                        >
+                            Minimum 6 characters.
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div
+                            style="
+                                position:relative;
+                                display:flex;
+                                align-items:center;
+                            "
+                        >
+
+                            <input
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                type="password"
+                                class="form-control"
+                                placeholder="Re-enter your password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                                style="padding-right:48px;"
+                            >
+
+                            <button
+                                type="button"
+                                data-toggle-password="confirmPassword"
+                                aria-label="Show or hide password"
+                                style="
+                                    position:absolute;
+                                    right:8px;
+                                    width:36px;
+                                    height:36px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#f1f5f9;
+                                    cursor:pointer;
+                                    font-size:16px;
+                                "
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ROLE INFORMATION -->
+
+                    <div
+                        class="alert alert-info"
+                        style="
+                            margin-top:6px;
+                            margin-bottom:20px;
+                            font-size:11px;
+                        "
+                    >
+
+                        <strong>
+                            Account type:
+                        </strong>
+
+                        Farmer
+
+                        <br>
+
+                        Public registration creates a
+                        Farmer account. Authorized
+                        personnel can be assigned
+                        additional operational roles.
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            style="width:100%;"
+                        >
+                            Register
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- =================================================
+                     ACCOUNT FOOTER
+                ================================================== -->
+
+                <div class="auth-footer">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     HOME
+                ================================================== -->
+
+                <div
+                    style="
+                        margin-top:15px;
+                        text-align:center;
+                        font-size:11px;
+                        color:#94a3b8;
+                    "
+                >
+
+                    <a href="../index.html">
+                        ← Back to Home
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+
+</body>
+</html>
