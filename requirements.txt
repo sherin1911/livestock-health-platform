@@ -7,3 +7,4 @@ joblib
 requests
 Pillow
 flask-cors
+Flask-JWT-Extended
