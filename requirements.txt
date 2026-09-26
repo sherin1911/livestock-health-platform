@@ -6,3 +6,4 @@ scikit-learn
 joblib
 requests
 Pillow
+flask-cors
