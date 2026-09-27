@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_jwt_extended import jwt_required
 
-from utils.authorization import role_required
+from backend.utils.authorization import role_required
 
 import os
 import sqlite3

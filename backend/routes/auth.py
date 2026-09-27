@@ -10,7 +10,7 @@ import os
 import sqlite3
 from datetime import datetime
 
-from utils.authorization import get_current_identity
+from backend.utils.authorization import get_current_identity
 
 
 auth_bp = Blueprint(

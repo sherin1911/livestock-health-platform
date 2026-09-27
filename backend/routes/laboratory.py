@@ -5,7 +5,7 @@ import sqlite3
 import os
 from datetime import datetime
 
-from utils.authorization import role_required
+from backend.utils.authorization import role_required
 
 
 # ============================================================
@@ -817,7 +817,7 @@ def save_laboratory_record():
 
         try:
 
-            from services.notification_service import (
+            from backend.services.notification_service import (
                 create_notification
             )
 
@@ -1257,7 +1257,7 @@ def send_to_surveillance(
 
     try:
 
-        from services.notification_service import (
+        from backend.services.notification_service import (
             create_notification
         )
 

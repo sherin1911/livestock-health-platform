@@ -6,7 +6,7 @@
 (function () {
     "use strict";
 
-    const API_BASE = "http://127.0.0.1:5000/api";
+    const API_BASE = "https://uyirthulir.onrender.com/api";
 
     const TOKEN_KEYS = [
         "uyirthulir_token",
@@ -228,7 +228,7 @@
             console.error("Login error:", error);
 
             showAuthMessage(
-                "Cannot connect to the backend. Make sure Flask is running on http://127.0.0.1:5000",
+                "Cannot connect to the backend. Please check your internet connection and try again.",
                 "error"
             );
         } finally {
@@ -411,7 +411,7 @@
             console.error("Registration error:", error);
 
             showAuthMessage(
-                "Cannot connect to the backend. Make sure Flask is running on http://127.0.0.1:5000",
+                "Cannot connect to the backend. Please check your internet connection and try again.",
                 "error"
             );
         } finally {

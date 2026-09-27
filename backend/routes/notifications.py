@@ -1,13 +1,13 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from services.notification_service import (
+from backend.services.notification_service import (
     get_user_notifications,
     get_unread_count,
     mark_notification_read,
     mark_all_read,
 )
-from utils.authorization import get_current_identity
+from backend.utils.authorization import get_current_identity
 
 
 notifications_bp = Blueprint(

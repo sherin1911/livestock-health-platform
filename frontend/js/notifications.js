@@ -5,7 +5,11 @@
 (function () {
     "use strict";
 
-    const API_BASE = "http://127.0.0.1:5000/api";
+    // Use the shared API URL from app.js.
+    // Fallback to Render backend if app.js is not loaded.
+    const API_BASE =
+        window.API_BASE ||
+        "https://uyirthulir.onrender.com/api";
 
     function getToken() {
         return (

@@ -6,9 +6,9 @@ import os
 import uuid
 from datetime import datetime
 
-from services.notification_service import notify_for_report
-from services.cluster_engine import build_location_clusters
-from utils.authorization import role_required
+from backend.services.notification_service import notify_for_report
+from backend.services.cluster_engine import build_location_clusters
+from backend.utils.authorization import role_required
 
 
 # ============================================================
@@ -523,7 +523,7 @@ def create_health_report():
 
             if matching_cluster:
 
-                from services.notification_service import (
+                from backend.services.notification_service import (
                     notify_for_cluster
                 )
 

@@ -11,7 +11,30 @@
        API CONFIGURATION
     ====================================================== */
 
-    const API_BASE = "http://127.0.0.1:5000/api";
+    /*
+       LOCAL DEVELOPMENT:
+       - When opened directly using file://
+       - Uses Flask at 127.0.0.1:5000
+
+       RENDER / PRODUCTION:
+       - Uses the same domain as the frontend
+       - Example: https://your-frontend.onrender.com/api
+
+       IMPORTANT:
+       If frontend and backend are deployed as separate
+       Render services, change PRODUCTION_API_BASE below
+       to your backend Render URL + /api.
+    */
+
+    const PRODUCTION_API_BASE = "https://uyirthulir.onrender.com/api";
+
+    const API_BASE =
+        window.location.protocol === "file:"
+            ? "https://uyirthulir.onrender.com/api"
+            : (
+                PRODUCTION_API_BASE ||
+                `${window.location.origin}/api`
+            );
 
     window.API_BASE = API_BASE;
 
@@ -686,12 +709,18 @@
             return path;
         }
 
+        /*
+           API paths and uploaded files should use
+           the configured backend base URL instead
+           of hardcoded localhost.
+        */
+
         if (path.startsWith("/api/")) {
-            return "http://127.0.0.1:5000" + path;
+            return API_BASE.replace(/\/api$/, "") + path;
         }
 
         if (path.startsWith("/")) {
-            return "http://127.0.0.1:5000" + path;
+            return API_BASE.replace(/\/api$/, "") + path;
         }
 
         return API_BASE + "/" + path;

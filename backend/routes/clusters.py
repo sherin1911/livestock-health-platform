@@ -1,12 +1,12 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from services.cluster_engine import (
+from backend.services.cluster_engine import (
     get_cluster_overview,
     build_location_clusters,
     build_symptom_clusters,
 )
-from utils.authorization import role_required
+from backend.utils.authorization import role_required
 
 
 clusters_bp = Blueprint(
