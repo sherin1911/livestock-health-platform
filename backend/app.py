@@ -1,4 +1,6 @@
-from flask import Flask, jsonify
+import os
+
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
@@ -20,6 +22,15 @@ from backend.routes.notifications import notifications_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+
+# ============================================================
+# FRONTEND PATH
+# ============================================================
+
+FRONTEND_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "frontend")
+)
 
 
 # ============================================================
@@ -56,6 +67,35 @@ app.register_blueprint(laboratory_bp)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(clusters_bp)
 app.register_blueprint(notifications_bp)
+
+
+# ============================================================
+# FRONTEND
+# ============================================================
+
+@app.route("/", methods=["GET"])
+def frontend_home():
+    """
+    Serve the main Uyirthulir frontend.
+    """
+    return send_from_directory(FRONTEND_DIR, "index.html")
+
+
+@app.route("/<path:path>", methods=["GET"])
+def frontend_files(path):
+    """
+    Serve frontend files such as CSS, JavaScript, images,
+    and HTML pages.
+    """
+
+    file_path = os.path.join(FRONTEND_DIR, path)
+
+    if os.path.isfile(file_path):
+        return send_from_directory(FRONTEND_DIR, path)
+
+    # If the requested frontend route doesn't directly exist,
+    # return the main frontend page.
+    return send_from_directory(FRONTEND_DIR, "index.html")
 
 
 # ============================================================
@@ -132,8 +172,6 @@ def internal_server_error(error):
 # ============================================================
 
 if __name__ == "__main__":
-    import os
-
     port = int(os.environ.get("PORT", 5000))
 
     app.run(
